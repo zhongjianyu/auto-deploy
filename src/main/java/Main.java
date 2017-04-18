@@ -1,5 +1,5 @@
 /**
- * Hello world!
+ * 项目启动程序
  *
  */
 public class Main 
