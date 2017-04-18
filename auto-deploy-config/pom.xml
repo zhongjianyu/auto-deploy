@@ -12,5 +12,6 @@
 	<url>http://maven.apache.org</url>
 
 	<artifactId>auto-deploy-config</artifactId>
+	<packaging>jar</packaging>
 
 </project>
