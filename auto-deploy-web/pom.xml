@@ -9,7 +9,7 @@
 	</parent>
 
 	<name>auto-deploy-web</name>
-	<url>http://maven.apache.org</url>
+	<url>http://maven.apache.org</url> 
 
 	<artifactId>auto-deploy-web</artifactId>
 	<packaging>jar</packaging>

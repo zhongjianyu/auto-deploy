@@ -15,6 +15,7 @@
 		<java.version>1.7</java.version>
 		<org.springframework.boot.version>1.5.2.RELEASE</org.springframework.boot.version>
 		<org.apache.maven.plugins.version>2.19.1</org.apache.maven.plugins.version>
+		<com.baomidou.version>2.0.5</com.baomidou.version>
 	</properties>
 
 	<modules>
@@ -35,6 +36,11 @@
 				<version>${org.springframework.boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus</artifactId>
+				<version>${com.baomidou.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
