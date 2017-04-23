@@ -27,6 +27,8 @@ public class IndexController {
 		user.setName("赵敏");
 		userService.myInsert(user);
 		//System.out.println(environment.getProperty("spring.datasource.url"));
+		User user2 = user.selectById("855802012663709696");
+		System.out.println(user2);
 		return "index";
 	}
 }

@@ -36,4 +36,9 @@ public class User extends Model<User> {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + "]";
+	}
+
 }
