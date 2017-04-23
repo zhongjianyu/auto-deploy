@@ -9,7 +9,7 @@
 	</parent>
 
 	<name>auto-deploy-web</name>
-	<url>http://maven.apache.org</url> 
+	<url>http://maven.apache.org</url>
 
 	<artifactId>auto-deploy-web</artifactId>
 	<packaging>jar</packaging>
@@ -21,6 +21,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -41,6 +45,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- auto-deploy service -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-service</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
