@@ -20,9 +20,16 @@ import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.enums.DBType;
+import com.baomidou.mybatisplus.mapper.IMetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
+/**
+ * mybatisplus配置
+ * 
+ * @author zhongjy
+ *
+ */
 @Configuration
 @MapperScan("auto.deploy.dao.mapper*")
 @EnableConfigurationProperties(MybatisProperties.class)
@@ -41,9 +48,9 @@ public class MybatisPlusConfig {
 
 	@Autowired(required = false)
 	private DatabaseIdProvider databaseIdProvider;
-	
+
 	/**
-	 *	 mybatis-plus分页插件
+	 * mybatis-plus分页插件
 	 */
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
@@ -51,9 +58,10 @@ public class MybatisPlusConfig {
 		page.setDialectType("mysql");
 		return page;
 	}
+
 	/**
-	 * 这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定
-	 * 配置文件和mybatis-boot的配置文件同步
+	 * 这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定 配置文件和mybatis-boot的配置文件同步
+	 * 
 	 * @return
 	 */
 	@Bean
@@ -70,15 +78,20 @@ public class MybatisPlusConfig {
 		}
 		// MP 全局配置，更多内容进入类看注释
 		GlobalConfiguration globalConfig = new GlobalConfiguration();
-		globalConfig.setDbType(DBType.MYSQL.name());//数据库类型
-		// ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
+		globalConfig.setDbType(DBType.MYSQL.name());// 数据库类型
+		// ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID")
+		// ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
 		globalConfig.setIdType(2);
-		//MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true) 开启，该配置可以无。
-		//globalConfig.setDbColumnUnderline(true);
+		// MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true)
+		// 开启，该配置可以无。
+		// globalConfig.setDbColumnUnderline(true);
+		// 自定义填充字段
+		IMetaObjectHandler metaObjectHandler = new MetaObjectHandlerImpl();
+		globalConfig.setMetaObjectHandler(metaObjectHandler);
 		mybatisPlus.setGlobalConfig(globalConfig);
 		MybatisConfiguration mc = new MybatisConfiguration();
 		// 对于完全自定义的mapper需要加此项配置，才能实现下划线转驼峰
-		//mc.setMapUnderscoreToCamelCase(true);
+		// mc.setMapUnderscoreToCamelCase(true);
 		mc.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
 		mybatisPlus.setConfiguration(mc);
 		if (this.databaseIdProvider != null) {

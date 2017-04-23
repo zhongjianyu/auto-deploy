@@ -24,11 +24,15 @@ public class IndexController {
 	@RequestMapping("index")
 	public String index() {
 		User user = new User();
-		user.setName("赵敏");
-		userService.myInsert(user);
-		//System.out.println(environment.getProperty("spring.datasource.url"));
-		User user2 = user.selectById("855802012663709696");
-		System.out.println(user2);
+		// user.setCreateTime(new Date());
+		// user.setName("赵敏");
+		// userService.myInsert(user);
+		user.setId(856003755209052160L);
+		user.setName("赵敏2");
+		user.updateById();
+		// user.update(whereClause, args)
+		// System.out.println(environment.getProperty("spring.datasource.url"));
+		// System.out.println(user);
 		return "index";
 	}
 }
