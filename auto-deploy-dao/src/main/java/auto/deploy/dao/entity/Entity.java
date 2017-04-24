@@ -8,11 +8,12 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.enums.FieldStrategy;
 
 /**
- * 实体父类
  * 
- * @author zhongjy
+ * @描述：实体父类
  *
- * @param <T>
+ * @作者：zhongjy
+ *
+ * @时间：2017年4月24日 下午12:27:26
  */
 public class Entity<T extends Model<T>> extends Model<T> {
 

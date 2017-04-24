@@ -1,5 +1,13 @@
 package auto.deploy.dao.entity;
 
+/**
+ * 
+ * @描述：用户表
+ *
+ * @作者：zhongjy
+ *
+ * @时间：2017年4月24日 下午12:27:57
+ */
 public class User extends Entity<User> {
 
 	/**

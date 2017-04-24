@@ -10,10 +10,12 @@ import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
- * mybatisplus代码生成器
  * 
- * @author zhongjy
+ * @描述：mybatisplus代码生成器
  *
+ * @作者：zhongjy
+ *
+ * @时间：2017年4月24日 下午12:31:13
  */
 public class MpGenerator {
 

@@ -7,10 +7,12 @@ import org.apache.ibatis.reflection.MetaObject;
 import com.baomidou.mybatisplus.mapper.IMetaObjectHandler;
 
 /**
- * 自动填充字段处理
  * 
- * @author zhongjy
+ * @描述：自动填充字段处理
  *
+ * @作者：zhongjy
+ *
+ * @时间：2017年4月24日 下午12:25:48
  */
 public class MetaObjectHandlerImpl implements IMetaObjectHandler {
 

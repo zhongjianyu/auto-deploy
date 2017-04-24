@@ -25,10 +25,12 @@ import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
 /**
- * mybatisplus配置
  * 
- * @author zhongjy
+ * @描述：mybatisplus配置
  *
+ * @作者：zhongjy
+ *
+ * @时间：2017年4月24日 下午12:26:23
  */
 @Configuration
 @MapperScan("auto.deploy.dao.mapper*")
@@ -50,7 +52,14 @@ public class MybatisPlusConfig {
 	private DatabaseIdProvider databaseIdProvider;
 
 	/**
-	 * mybatis-plus分页插件
+	 * 
+	 * @描述：mybatis-plus分页插件
+	 *
+	 * @返回：PaginationInterceptor
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年4月24日 下午12:26:37
 	 */
 	@Bean
 	public PaginationInterceptor paginationInterceptor() {
@@ -60,9 +69,14 @@ public class MybatisPlusConfig {
 	}
 
 	/**
-	 * 这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定 配置文件和mybatis-boot的配置文件同步
 	 * 
-	 * @return
+	 * @描述：这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定 配置文件和mybatis-boot的配置文件同步
+	 *
+	 * @返回：MybatisSqlSessionFactoryBean
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年4月24日 下午12:26:53
 	 */
 	@Bean
 	public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {

@@ -11,10 +11,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @时间：2017年4月21日 上午8:40:51
  */
-//@MapperScan("auto.deploy.dao.mapper*")
 @SpringBootApplication
 public class Main {
 
+	/**
+	 * 
+	 * @描述：项目启动入口方法
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年4月24日 下午12:29:53
+	 */
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(Main.class);
 		application.run(args);
