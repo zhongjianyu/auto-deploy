@@ -29,15 +29,16 @@ public class MpGenerator {
 		gc.setActiveRecord(true);
 		gc.setEnableCache(false);// XML 二级缓存
 		gc.setBaseResultMap(true);// XML ResultMap
-		gc.setBaseColumnList(false);// XML columList
+		gc.setBaseColumnList(true);// XML columList
+		gc.setOpen(true);
 		gc.setAuthor("zhongjy");
 		// 自定义文件命名，注意 %s 会自动填充表实体属性！
 		// gc.setMapperName("%sDao");
 		// gc.setXmlName("%sDao");
-		// gc.setServiceName("MP%sService");
+		gc.setServiceName("%sService");
 		// gc.setServiceImplName("%sServiceDiy");
 		// gc.setControllerName("%sAction");
-		gc.setActiveRecord(false);// 不生成pkVal()方法
+		gc.setActiveRecord(false);// 不生成实体pkVal()方法
 		mpg.setGlobalConfig(gc);
 
 		// 数据源配置
@@ -68,11 +69,10 @@ public class MpGenerator {
 		// 自定义 controller 父类
 		// strategy.setSuperControllerClass("com.baomidou.demo.TestController");
 		// 【实体】是否生成字段常量（默认 false）
-		// public static final String ID = "test_id";
 		// strategy.setEntityColumnConstant(true);
 		// 【实体】是否为构建者模型（默认 false）
 		// public User setName(String name) {this.name = name; return this;}
-		// strategy.setEntityBuliderModel(true);
+		strategy.setEntityBuilderModel(true);
 		mpg.setStrategy(strategy);
 
 		// 包配置

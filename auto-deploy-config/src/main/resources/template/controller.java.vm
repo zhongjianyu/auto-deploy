@@ -7,12 +7,12 @@ import ${superControllerClassPackage};
 #end
 
 /**
- * <p>
- * ${table.comment} 前端控制器
- * </p>
- *
- * @author ${author}
- * @since ${date}
+ * 
+ * @描述：${table.comment}(控制器)
+ * 
+ * @作者：${author}
+ * 
+ * @时间: ${date}
  */
 @Controller
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/${table.entityPath}")

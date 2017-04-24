@@ -4,12 +4,12 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
- * <p>
- * ${table.comment} 服务类
- * </p>
- *
- * @author ${author}
- * @since ${date}
+ * 
+ * @描述：${table.comment}(服务类)
+ * 
+ * @作者：${author}
+ * 
+ * @时间: ${date}
  */
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 	
