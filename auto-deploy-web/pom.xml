@@ -52,6 +52,11 @@
 			<artifactId>auto-deploy-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- java-gitlab-api -->
+		<dependency>
+			<groupId>org.gitlab</groupId>
+			<artifactId>java-gitlab-api</artifactId>
+		</dependency>
 	</dependencies>
 
 
