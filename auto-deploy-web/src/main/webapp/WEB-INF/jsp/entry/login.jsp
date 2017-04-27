@@ -38,7 +38,7 @@ canvas {
 <body>
 	<dl class="admin_login">
 		<dt>
-			<strong>自动化持续集成系统</strong> <em>Continuous Integration MS</em>
+			<strong>自动化持续集成系统</strong> <em>continuous integration ms</em>
 		</dt>
 		<dd class="user_icon">
 			<input type="text" placeholder="账号" class="login_txtbx" />
@@ -58,8 +58,8 @@ canvas {
 			<input type="button" value="立即登陆" class="submit_btn" />
 		</dd>
 		<dd>
-			<p>© 2015-2016 DeathGhost 版权所有</p>
-			<p>陕B2-20080224-1</p>
+			<p>© 2017-2020 auto-deploy 版权所有</p> 
+			<p>闽ICP备12024298号</p>
 		</dd>
 	</dl>
 </body>

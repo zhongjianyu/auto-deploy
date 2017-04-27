@@ -14,7 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
 		<org.springframework.boot.version>1.5.2.RELEASE</org.springframework.boot.version>
-		<org.apache.maven.plugins.version>2.19.1</org.apache.maven.plugins.version>
+		<org.apache.maven.plugins.surefire.version>2.20</org.apache.maven.plugins.surefire.version>
+		<org.apache.maven.plugins.compiler.version>3.5.1</org.apache.maven.plugins.compiler.version>
 		<com.baomidou.version>2.0.5</com.baomidou.version>
 		<mysql.version>5.1.41</mysql.version>
 		<org.springframework.version>4.3.7.RELEASE</org.springframework.version>
@@ -22,6 +23,7 @@
 		<junit.version>4.12</junit.version>
 		<org.apache.velocity.version>1.7</org.apache.velocity.version>
 		<org.gitlab.version>1.2.8</org.gitlab.version>
+		<springloaded.version>1.2.7.RELEASE</springloaded.version>
 	</properties>
 
 	<modules>
@@ -80,6 +82,13 @@
 				<artifactId>java-gitlab-api</artifactId>
 				<version>${org.gitlab.version}</version>
 			</dependency>
+			<!-- springloaded -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>springloaded</artifactId>
+				<version>${springloaded.version}</version>
+			</dependency>
+
 
 			<!-- spring -->
 			<dependency>
