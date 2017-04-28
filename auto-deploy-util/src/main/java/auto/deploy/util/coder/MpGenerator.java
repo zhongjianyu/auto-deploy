@@ -83,12 +83,12 @@ public class MpGenerator {
 
 		// 自定义模板配置(如果设置null则不生成该模块)
 		TemplateConfig tc = new TemplateConfig();
-		tc.setController("template/controller.java.vm");
-		tc.setEntity("template/entity.java.vm");
-		tc.setMapper("template/mapper.java.vm");
-		tc.setXml("template/mapper.xml.vm");
-		tc.setService("template/service.java.vm");
-		tc.setServiceImpl("template/serviceImpl.java.vm");
+		tc.setController("code_template/controller.java.vm");
+		tc.setEntity("code_template/entity.java.vm");
+		tc.setMapper("code_template/mapper.java.vm");
+		tc.setXml("code_template/mapper.xml.vm");
+		tc.setService("code_template/service.java.vm");
+		tc.setServiceImpl("code_template/serviceImpl.java.vm");
 		mpg.setTemplate(tc);
 
 		// 执行生成
