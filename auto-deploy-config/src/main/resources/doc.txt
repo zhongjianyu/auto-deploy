@@ -1,0 +1,9 @@
+启动项目命令(在jar的根目录下执行，windows环境)
+java -Dserver.port=40004 -jar huhamerchapi-1.0.0-exec.jar
+
+linux后台启动(Linux环境)
+nohup java -Dserver.port=40004 -jar huhamerchapi-1.0.0-exec.jar &
+查出进程
+ps -ef | grep 40004
+kill -s 9 线程号
+

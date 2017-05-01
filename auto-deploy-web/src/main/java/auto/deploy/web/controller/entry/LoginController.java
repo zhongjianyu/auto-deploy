@@ -1,5 +1,7 @@
 package auto.deploy.web.controller.entry;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
 	@RequestMapping("login.html")
-	public String index() {
+	public String index(HttpServletRequest request) {
 		return "entry/login";
 	}
 }
