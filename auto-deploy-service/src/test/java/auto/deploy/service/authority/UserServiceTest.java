@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import auto.deploy.dao.entity.User;
+import auto.deploy.dao.entity.AutUser;
 
 /**
  * 
@@ -23,13 +23,23 @@ import auto.deploy.dao.entity.User;
 public class UserServiceTest {
 
 	@Resource
-	private UserService userService;
+	private AutUserService autUserService;
 
 	@Test
-	public void testMyInsert() {
-		User user = new User();
-		user.setName("张无忌");
-		userService.myInsert(user);
+	public void testInsert() {
+		AutUser user = new AutUser();
+		user.setUserName("中间有");
+		user.setUserPwd("pp123");
+		//user.insert();
+		autUserService.insert(user);
+	}
+	
+	@Test
+	public void testSelect() {
+		AutUser user = new AutUser();
+		user.setId(857596529251434496L);
+		user = user.selectById();
+		System.out.println(user);
 	}
 
 }
