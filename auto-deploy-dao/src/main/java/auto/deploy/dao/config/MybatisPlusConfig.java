@@ -98,7 +98,7 @@ public class MybatisPlusConfig {
 		globalConfig.setIdType(2);
 		// MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true)
 		// 开启，该配置可以无。
-		// globalConfig.setDbColumnUnderline(true);
+		globalConfig.setDbColumnUnderline(true);
 		// 自定义填充字段
 		IMetaObjectHandler metaObjectHandler = new MetaObjectHandlerImpl();
 		globalConfig.setMetaObjectHandler(metaObjectHandler);

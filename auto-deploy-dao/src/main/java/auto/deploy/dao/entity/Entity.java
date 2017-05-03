@@ -25,27 +25,27 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	/**
 	 * 主键
 	 */
-	@TableField(validate = FieldStrategy.IGNORED)
+	@TableField(validate = FieldStrategy.IGNORED, value = "id")
 	private Long id;
 	/**
 	 * 创建时间
 	 */
-	@TableField(validate = FieldStrategy.IGNORED)
+	@TableField(validate = FieldStrategy.IGNORED, value = "create_time")
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
-	@TableField(validate = FieldStrategy.IGNORED)
+	@TableField(validate = FieldStrategy.IGNORED, value = "update_time")
 	private Date updateTime;
 	/**
 	 * 版本号
 	 */
-	@TableField(validate = FieldStrategy.IGNORED)
+	@TableField(validate = FieldStrategy.IGNORED, value = "version")
 	private Integer version;
 	/**
 	 * 是否已被删除
 	 */
-	@TableField(validate = FieldStrategy.IGNORED)
+	@TableField(validate = FieldStrategy.IGNORED, value = "is_delete")
 	private Integer isDelete;
 
 	/**
