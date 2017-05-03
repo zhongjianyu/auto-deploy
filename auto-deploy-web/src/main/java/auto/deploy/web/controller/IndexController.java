@@ -6,8 +6,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import auto.deploy.dao.entity.User;
-import auto.deploy.service.authority.UserService;
+import auto.deploy.service.authority.AutUserService;
+import auto.deploy.web.vo.AutUserVO;
 
 /**
  * 
@@ -27,16 +27,16 @@ public class IndexController {
 	private Environment environment;
 
 	@Resource
-	private UserService userService;
+	private AutUserService userService;
 
 	@RequestMapping("index")
 	public String index() {
-		User user = new User();
+		AutUserVO user = new AutUserVO();
 		// user.setCreateTime(new Date());
 		// user.setName("赵敏");
 		// userService.myInsert(user);
 		user.setId(856003755209052160L);
-		user.setName("赵敏2");
+		user.setUserName("赵敏2");
 		user.updateById();
 		// user.update(whereClause, args)
 		// System.out.println(environment.getProperty("spring.datasource.url"));
