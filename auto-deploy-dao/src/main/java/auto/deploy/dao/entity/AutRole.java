@@ -18,6 +18,10 @@ public class AutRole extends Entity<AutRole> {
      * 角色名称
      */
 	private String roleName;
+    /**
+     * 角色代码
+     */
+	private String roleCode;
 
 
 	public String getRoleName() {
@@ -26,6 +30,15 @@ public class AutRole extends Entity<AutRole> {
 
 	public AutRole setRoleName(String roleName) {
 		this.roleName = roleName;
+		return this;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public AutRole setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
 		return this;
 	}
 

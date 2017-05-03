@@ -11,11 +11,15 @@
 		<result column="is_delete" property="isDelete" />
 		<result column="user_pwd" property="userPwd" />
 		<result column="user_name" property="userName" />
+		<result column="is_active" property="isActive" />
+		<result column="is_account_expired" property="isAccountExpired" />
+		<result column="is_account_locked" property="isAccountLocked" />
+		<result column="is_credentials_expired" property="isCredentialsExpired" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, update_time, version, is_delete, user_pwd, user_name
+        id, create_time, update_time, version, is_delete, user_pwd, user_name, is_active, is_account_expired, is_account_locked, is_credentials_expired
     </sql>
 
 </mapper>
