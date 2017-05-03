@@ -26,21 +26,18 @@ public class IndexController {
 	@Resource
 	private Environment environment;
 
-	@Resource
-	private AutUserService userService;
-
 	@RequestMapping("index")
 	public String index() {
-		AutUserVO user = new AutUserVO();
+		//AutUserVO user = new AutUserVO();
 		// user.setCreateTime(new Date());
 		// user.setName("赵敏");
 		// userService.myInsert(user);
-		user.setId(856003755209052160L);
-		user.setUserName("赵敏2");
-		user.updateById();
+		//user.setId(856003755209052160L);
+		//user.setUserName("赵敏2");
+		//user.updateById();
 		// user.update(whereClause, args)
 		// System.out.println(environment.getProperty("spring.datasource.url"));
 		// System.out.println(user);
-		return "index";
+		return "index/index";
 	}
 }

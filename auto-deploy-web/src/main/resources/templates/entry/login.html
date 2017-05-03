@@ -21,33 +21,33 @@ canvas {
 <script src="js/Particleground.js"></script>
 </head>
 <body>
-	<dl class="admin_login">
-		<dt>
-			<strong>自动化持续集成系统</strong> <em>continuous integration ms</em>
-		</dt>
-		<dd class="user_icon">
-			<input type="text" placeholder="账号" class="login_txtbx" />
-		</dd>
-		<dd class="pwd_icon">
-			<input type="password" placeholder="密码" class="login_txtbx" />
-		</dd>
-		<dd class="val_icon" style="background-color: #5cbdaa;">
-			<div class="checkcode" style="background-color: #5cbdaa;">
-				<input type="text" id="J_codetext" placeholder="验证码" maxlength="5"
-					class="login_txtbx"> <img id="validateCode"
-					src="validateCode/codeImg.html">
-			</div>
-			<input type="button" value="刷新验证码" class="ver_btn"
-				onClick="createCode();">
-		</dd>
-		<dd>
-			<input type="button" value="立即登陆" class="submit_btn" />
-		</dd>
-		<dd>
-			<p>© 2017-2020 auto-deploy 版权所有</p>
-			<p>闽ICP备12024298号</p>
-		</dd>
-	</dl>
+	<form action="/j_spring_security_check" method="post">
+		<dl class="admin_login">
+			<dt>
+				<strong>自动化持续集成系统</strong> <em>continuous integration ms</em>
+				<em>${error}</em>
+			</dt>
+			<dd class="user_icon">
+				<input type="text" placeholder="账号" class="login_txtbx" name="loginUserName" />
+			</dd>
+			<dd class="pwd_icon">
+				<input type="password" placeholder="密码" class="login_txtbx" name="loginUserName" /> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</dd>
+			<dd class="val_icon" style="background-color: #5cbdaa;">
+				<div class="checkcode" style="background-color: #5cbdaa;">
+					<input type="text" id="J_codetext" placeholder="验证码" maxlength="5" class="login_txtbx"> <img id="validateCode" src="validateCode/codeImg.html">
+				</div>
+				<input type="button" value="刷新验证码" class="ver_btn" onClick="createCode();">
+			</dd>
+			<dd>
+				<input type="submit" value="立即登陆" class="submit_btn" />
+			</dd>
+			<dd>
+				<p>© 2017-2020 auto-deploy 版权所有</p>
+				<p>闽ICP备12024298号</p>
+			</dd>
+		</dl>
+	</form>
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {

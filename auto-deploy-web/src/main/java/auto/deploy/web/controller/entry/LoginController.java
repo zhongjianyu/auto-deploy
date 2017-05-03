@@ -18,6 +18,7 @@ public class LoginController {
 
 	@RequestMapping("login.html")
 	public String index(HttpServletRequest request) {
+		request.setAttribute("error", "错误的嘻嘻");
 		return "entry/login";
 	}
 }

@@ -31,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
+		String[] limitVisit = { "/login.html", "/validateCode/codeImg.html" };
+		http.authorizeRequests().antMatchers(limitVisit).permitAll()// 访问匹配的url无需认证
+				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
 				.loginPage("/login.html")// 登录表单
 				.loginProcessingUrl("/j_spring_security_check")// 登录请求url
