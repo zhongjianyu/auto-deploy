@@ -54,12 +54,13 @@ public class MpGenerator {
 		StrategyConfig strategy = new StrategyConfig();
 		// strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-		strategy.setInclude(new String[] { "user" }); // 需要生成的表
+		strategy.setDbColumnUnderline(true);
+		strategy.setInclude(new String[] { "aut_user_role"}); // 需要生成的表
 		// strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		// 自定义实体父类
 		strategy.setSuperEntityClass("auto.deploy.dao.entity.Entity");
 		// 自定义实体，公共字段
-		strategy.setSuperEntityColumns(new String[] { "id", "createTime", "updateTime", "version", "isDelete" });
+		strategy.setSuperEntityColumns(new String[] { "id", "create_time", "update_time", "version", "is_delete" });
 		// 自定义 mapper 父类
 		// strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
 		// 自定义 service 父类
@@ -77,8 +78,8 @@ public class MpGenerator {
 
 		// 包配置
 		PackageConfig pc = new PackageConfig();
-		pc.setParent("auto.deploy");
-		pc.setModuleName("test");
+		pc.setParent("auto.deploy.dao");
+		//pc.setModuleName("");
 		mpg.setPackageInfo(pc);
 
 		// 自定义模板配置(如果设置null则不生成该模块)
