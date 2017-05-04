@@ -35,6 +35,7 @@
 		<module>auto-deploy-security</module>
 		<module>auto-deploy-websocket</module>
 		<module>auto-deploy-redis</module>
+		<module>auto-deploy-object</module>
 	</modules>
 
 
