@@ -1,4 +1,4 @@
-package auto.deploy.web.security;
+package auto.deploy.security;
 
 import javax.annotation.Resource;
 

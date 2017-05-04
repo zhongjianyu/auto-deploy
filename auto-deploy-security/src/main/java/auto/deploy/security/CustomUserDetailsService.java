@@ -1,4 +1,4 @@
-package auto.deploy.web.security;
+package auto.deploy.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import auto.deploy.web.vo.AutRoleVO;
-import auto.deploy.web.vo.AutUserVO;
+import auto.deploy.object.vo.AutRoleVO;
+import auto.deploy.object.vo.AutUserVO;
 
 /**
  * 

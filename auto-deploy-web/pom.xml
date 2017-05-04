@@ -29,16 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		<!-- 添加security支持 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<!-- 添加websocket支持 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
 		<!-- spring boot测试 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,6 +39,12 @@
 		<dependency>
 			<groupId>auto-deploy</groupId>
 			<artifactId>auto-deploy-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- auto-deploy security -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-security</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- java-gitlab-api -->

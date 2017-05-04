@@ -1,4 +1,4 @@
-package auto.deploy.web.vo;
+
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import auto.deploy.dao.entity.AutUser;
 
 /**
  * 
- * @描述：用户值对象
+ * @描述：用户�?�对�?
  *
- * @作者：zhongjy
+ * @作�?�：zhongjy
  *
- * @时间：2017年5月3日 下午5:08:24
+ * @时间�?2017�?5�?3�? 下午5:08:24
  */
 public final class AutUserVO extends AutUser {
 

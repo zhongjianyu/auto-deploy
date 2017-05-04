@@ -1,4 +1,4 @@
-package auto.deploy.web.security;
+package auto.deploy.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
