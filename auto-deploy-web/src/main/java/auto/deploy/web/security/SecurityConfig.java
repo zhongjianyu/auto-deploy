@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * 
@@ -23,10 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private CustomSuccessHandler customSuccessHandler;
 	@Resource
 	private CustomUserDetailsService customUserDetailsService;
+	@Resource
+	private CustomPasswordEncoder customPasswordEncoder;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(customPasswordEncoder);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout()// (2)---------------.登出表单配置
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
-				.and().csrf()// 启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
+				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
 				;
 	}
 
