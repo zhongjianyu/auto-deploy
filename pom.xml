@@ -32,6 +32,9 @@
 		<module>auto-deploy-dao</module>
 		<module>auto-deploy-service</module>
 		<module>auto-deploy-web</module>
+		<module>auto-deploy-security</module>
+		<module>auto-deploy-websocket</module>
+		<module>auto-deploy-redis</module>
 	</modules>
 
 
