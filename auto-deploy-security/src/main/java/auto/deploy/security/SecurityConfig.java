@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
@@ -47,6 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
 				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
 				;
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// 不拦截静态资源
+		web.ignoring().antMatchers("/resources/static/**");
 	}
 
 }
