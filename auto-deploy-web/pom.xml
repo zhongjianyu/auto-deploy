@@ -53,6 +53,24 @@
 			<artifactId>auto-deploy-util</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- auto-deploy websocket -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-websocket</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- auto-deploy gitlab -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-gitlab</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- auto-deploy redis -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-redis</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 
