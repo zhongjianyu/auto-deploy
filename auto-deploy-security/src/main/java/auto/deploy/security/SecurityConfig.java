@@ -33,8 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		String[] limitVisit = { "/login.html", "/validateCode/codeImg.html" };
-		http.authorizeRequests().antMatchers(limitVisit).permitAll()// 访问匹配的url无需认证
+		// 允许访问的页面
+		String[] limitVisitHtml = { "/login.html", "/validateCode/codeImg.html", "/index.html" };
+		// 允许访问的资源
+		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
+				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
+		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
+				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
 				.loginPage("/login.html")// 登录表单
@@ -47,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
 				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
-				;
+				.and().headers().defaultsDisabled().cacheControl();// 解决iframe加载问题（x-frame-options）
+		;
 	}
 
 	@Override

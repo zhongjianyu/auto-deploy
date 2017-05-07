@@ -23,7 +23,7 @@ public class IndexController {
 	@Resource
 	private Environment environment;
 
-	@RequestMapping("index")
+	@RequestMapping("index.html")
 	public String index() {
 		//AutUserVO user = new AutUserVO();
 		// user.setCreateTime(new Date());
