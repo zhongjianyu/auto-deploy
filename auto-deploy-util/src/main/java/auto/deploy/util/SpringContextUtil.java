@@ -1,4 +1,4 @@
-package auto.deploy.web.util;
+package auto.deploy.util;
 
 import org.springframework.context.ApplicationContext;
 
