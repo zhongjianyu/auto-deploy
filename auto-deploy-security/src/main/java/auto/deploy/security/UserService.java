@@ -40,19 +40,22 @@ public class UserService {
 	 * @时间：2017年5月7日 下午3:51:32
 	 */
 	public AutUserVO getUserByUserName(String userName) {
-		AutUserVO user = new AutUserVO();
+		AutUserVO user = null;
 		AutUser autUser = autUserService.selectOne(new EntityWrapper<AutUser>().eq("user_name", userName));
-		BeanUtils.copyProperties(autUser, user);
-		List<AutRoleVO> roleList = new ArrayList<AutRoleVO>();
-		AutRoleVO role1 = new AutRoleVO();
-		role1.setRoleCode("sadmin");
-		role1.setRoleName("超级管理员");
-		AutRoleVO role2 = new AutRoleVO();
-		role2.setRoleCode("admin");
-		role2.setRoleName("管理员");
-		roleList.add(role1);
-		roleList.add(role2);
-		user.setRoleList(roleList);
+		if (autUser != null) {
+			user = new AutUserVO();
+			BeanUtils.copyProperties(autUser, user);
+			List<AutRoleVO> roleList = new ArrayList<AutRoleVO>();
+			AutRoleVO role1 = new AutRoleVO();
+			role1.setRoleCode("sadmin");
+			role1.setRoleName("超级管理员");
+			AutRoleVO role2 = new AutRoleVO();
+			role2.setRoleCode("admin");
+			role2.setRoleName("管理员");
+			roleList.add(role1);
+			roleList.add(role2);
+			user.setRoleList(roleList);
+		}
 		return user;
 	}
 

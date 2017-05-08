@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Resource
 	private CustomSuccessHandler customSuccessHandler;
 	@Resource
+	private CustomFailureHandler customFailureHandler;
+	@Resource
 	private CustomUserDetailsService customUserDetailsService;
 	@Resource
 	private CustomPasswordEncoder customPasswordEncoder;
@@ -36,8 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 允许访问的页面
 		String[] limitVisitHtml = { "/login.html", "/validateCode/codeImg.html", "/index.html" };
 		// 允许访问的资源
-		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
-				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
+		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot", "/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
 		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
 				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
@@ -47,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("loginUserName")// 登录表单账户的name
 				.passwordParameter("loginUserPwd")// 登录表单密码的name
 				.successHandler(customSuccessHandler)// 自定义登录成功处理
-				.failureUrl("/login.html")// 验证失败跳转
+				.failureHandler(customFailureHandler)// 自定义登录失败处理
+				//.failureUrl("/login.html")// 验证失败跳转
 				.and().logout()// (2)---------------.登出表单配置
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
