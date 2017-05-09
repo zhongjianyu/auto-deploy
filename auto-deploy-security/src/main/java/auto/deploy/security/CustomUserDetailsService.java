@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import auto.deploy.object.vo.AutRoleVO;
 import auto.deploy.object.vo.AutUserVO;
@@ -29,9 +30,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UserService userService;
 
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		if (StringUtils.isEmpty(userName)) {
+			throw new UsernameNotFoundException("账号不能为空");
+		}
 		AutUserVO user = userService.getUserByUserName(userName);
-		if (user == null) {
-			System.out.println("用户不存在");
+		if(user == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
 		org.springframework.security.core.userdetails.User userDetail = new org.springframework.security.core.userdetails.User(
