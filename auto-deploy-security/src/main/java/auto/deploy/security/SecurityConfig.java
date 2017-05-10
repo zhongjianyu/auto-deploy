@@ -1,7 +1,9 @@
 package auto.deploy.security;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,6 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.util.StringUtils;
 
 /**
  * 
@@ -32,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private CustomPasswordEncoder customPasswordEncoder;
 	@Resource
 	private CustomAuthenticationDetailsSource customAuthenticationDetailsSource;
+	@Resource
+	private DataSource dataSource;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,8 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 允许访问的页面
 		String[] limitVisitHtml = { "/login.html", "/validateCode/codeImg.html", "/index.html" };
 		// 允许访问的资源
-		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
-				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
+		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot", "/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
 		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
 				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
@@ -58,12 +65,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureHandler(customFailureHandler)// 自定义登录失败处理
 				.authenticationDetailsSource(customAuthenticationDetailsSource)// 自定义额外表单数据
 				// .failureUrl("/login.html")// 验证失败跳转
+				.and().rememberMe().rememberMeParameter("loginRememberMe")// 登录表单记住我name
+				.tokenRepository(null).tokenValiditySeconds(86400)
 				.and().logout()// (2)---------------.登出表单配置
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
 				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
-				.and().headers().defaultsDisabled().cacheControl();// 解决iframe加载问题（x-frame-options）
-		;
+				.and().headers().defaultsDisabled().cacheControl()// 解决iframe加载问题（x-frame-options）
+				;
 	}
 
 	/**
@@ -80,7 +89,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider() {
 			@Override
 			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-				System.out.println(authentication.getDetails());
+				// 增加对验证码的判断
+				CustomWebAuthenticationDetails form = (CustomWebAuthenticationDetails) authentication.getDetails();
+				if (StringUtils.isEmpty(form.getLoginValidateCode())) {
+					// 判断是否为空
+					throw new UsernameNotFoundException("验证码不能为空");
+				} else {
+					// 判断是否正确
+				}
+				System.out.println(form.getLoginValidateCode());
 				return super.authenticate(authentication);
 			}
 
@@ -110,6 +127,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("classpath:security_messages_zh_CN");
 		return messageSource;
+	}
+	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		tokenRepositoryImpl.setDataSource(dataSource);
+		return tokenRepositoryImpl;
 	}
 
 }

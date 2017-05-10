@@ -32,17 +32,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 			System.out.println("不能重定向...");
 			return;
 		}
-		Throwable ex = new Throwable();
-        StackTraceElement[] stackElements = ex.getStackTrace();
-        if (stackElements != null) {
-            for (int i = 0; i < stackElements.length; i++) {
-                System.out.print(stackElements[i].getClassName()+"/t");
-                System.out.print(stackElements[i].getFileName()+"/t");
-                System.out.print(stackElements[i].getLineNumber()+"/t");
-                System.out.println(stackElements[i].getMethodName());
-                System.out.println("-----------------------------------");
-            }
-        }
+		exception.printStackTrace();
 		String targetUrl = "/login.html";
 		System.out.println(exception.getMessage());
 		redirectStrategy.sendRedirect(request, response, targetUrl);

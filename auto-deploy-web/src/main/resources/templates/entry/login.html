@@ -5,6 +5,7 @@
 <title>自动化持续集成系统-登录</title>
 <meta name="author" content="DeathGhost" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+
 <style>
 body {
 	height: 100%;
@@ -37,6 +38,11 @@ canvas {
 					<input type="text" id="J_codetext" placeholder="验证码" maxlength="5" class="login_txtbx" name="loginValidateCode"> <img id="validateCode" src="validateCode/codeImg.html">
 				</div>
 				<input type="button" value="刷新验证码" class="ver_btn" onClick="createCode();">
+			</dd>
+			<dd>
+				<div style="margin-top: 12px; color: white;">
+					<input type="checkbox" id="loginRememberMe" name="loginRememberMe" style="width: 20px; height: 20px; vertical-align: middle; margin-bottom: 3px;"> 下次自动登录
+				</div>
 			</dd>
 			<dd>
 				<input type="submit" value="立即登陆" class="submit_btn" />

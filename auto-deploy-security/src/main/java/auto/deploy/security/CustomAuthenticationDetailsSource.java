@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 
- * @描述：自定义额外表单数据
+ * @描述：自定义额外表单数据(源)，登录表单配置额外字段
  *
  * @作者：zhongjy
  *

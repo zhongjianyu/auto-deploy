@@ -19,6 +19,9 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	 */
 	private static final long serialVersionUID = 7241654791403589332L;
 
+	/**
+	 * 登录验证码
+	 */
 	private final String loginValidateCode;
 
 	public CustomWebAuthenticationDetails(HttpServletRequest request) {
