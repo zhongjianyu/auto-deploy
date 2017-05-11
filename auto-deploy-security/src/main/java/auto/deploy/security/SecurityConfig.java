@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
 				.loginPage("/login.html")// 登录表单
-				.loginProcessingUrl("/j_spring_security_check111")// 登录请求url
+				.loginProcessingUrl("/login.do")// 登录请求url
 				.usernameParameter("loginUserName")// 登录表单账户的name
 				.passwordParameter("loginUserPwd")// 登录表单密码的name
 				.successHandler(customSuccessHandler)// 自定义登录成功处理

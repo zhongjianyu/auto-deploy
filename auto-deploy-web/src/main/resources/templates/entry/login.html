@@ -22,19 +22,16 @@ canvas {
 <script src="js/Particleground.js"></script>
 </head>
 <body>
-	<form action="/j_spring_security_check111" method="post">
+	<form action="/login.do" method="post">
 		<dl class="admin_login">
 			<dt>
 				<strong>自动化持续集成系统</strong> <em>continuous integration ms</em>
-				<em>
-				 ${Session.SPRING_SECURITY_LAST_EXCEPTION!""}
-				</em>
 			</dt>
 			<dd class="user_icon">
-				<input type="text" placeholder="账号" class="login_txtbx" name="loginUserName" />
+				<input type="text" placeholder="账号" class="login_txtbx" name="loginUserName" id="loginUserName" />
 			</dd>
 			<dd class="pwd_icon">
-				<input type="password" placeholder="密码" class="login_txtbx" name="loginUserPwd" /> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type="password" placeholder="密码" class="login_txtbx" name="loginUserPwd" id="loginUserPwd" /> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</dd>
 			<dd class="val_icon" style="background-color: #5cbdaa;">
 				<div class="checkcode" style="background-color: #5cbdaa;">
@@ -44,7 +41,12 @@ canvas {
 			</dd>
 			<dd>
 				<div style="margin-top: 12px; color: white;">
-					<input type="checkbox" id="loginRememberMe" name="loginRememberMe" style="width: 20px; height: 20px; vertical-align: middle; margin-bottom: 3px;"> 下次自动登录
+					<table style="width: 100%;">
+						<tr>
+							<td><input type="checkbox" id="loginRememberMe" name="loginRememberMe" style="width: 19px; height: 19px; vertical-align: middle;"> 下次自动登录</td>
+							<td style="text-align: right; color: red; font-weight: bold;" id="message">${Session.SPRING_SECURITY_LAST_EXCEPTION!""}</td>
+						</tr>
+					</table>
 				</div>
 			</dd>
 			<dd>
@@ -66,7 +68,22 @@ canvas {
 		});
 		//测试提交，对接程序删除即可
 		$(".submit_btn").click(function() {
-			location.href = "index.html";
+			var loginUserName = $("#loginUserName").val();
+			var loginUserPwd = $("#loginUserPwd").val();
+			var loginValidateCode = $("#J_codetext").val();
+			if ($.trim(loginUserName) == "") {
+				$("#message").text("账号不能为空");
+				return false;
+			}
+			if ($.trim(loginUserPwd) == "") {
+				$("#message").text("密码不能为空");
+				return false;
+			}
+			if ($.trim(loginValidateCode) == "") {
+				$("#message").text("验证码不能为空");
+				return false;
+			}
+			return true;
 		});
 	});
 	function createCode() {
