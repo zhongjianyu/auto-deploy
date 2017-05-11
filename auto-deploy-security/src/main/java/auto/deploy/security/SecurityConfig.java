@@ -3,7 +3,6 @@ package auto.deploy.security;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.util.StringUtils;
 
@@ -50,15 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// 允许访问的页面
-		String[] limitVisitHtml = { "/login.html", "/validateCode/codeImg.html", "/index.html" };
+		String[] limitVisitHtml = { "/login.html", "/validateCode/codeImg.html" };
 		// 允许访问的资源
-		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot", "/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
+		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
+				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
 		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
 				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
 				.loginPage("/login.html")// 登录表单
-				.loginProcessingUrl("/j_spring_security_check")// 登录请求url
+				.loginProcessingUrl("/j_spring_security_check111")// 登录请求url
 				.usernameParameter("loginUserName")// 登录表单账户的name
 				.passwordParameter("loginUserPwd")// 登录表单密码的name
 				.successHandler(customSuccessHandler)// 自定义登录成功处理
@@ -66,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticationDetailsSource(customAuthenticationDetailsSource)// 自定义额外表单数据
 				// .failureUrl("/login.html")// 验证失败跳转
 				.and().rememberMe().rememberMeParameter("loginRememberMe")// 登录表单记住我name
-				.tokenRepository(null).tokenValiditySeconds(86400)
+				.tokenRepository(persistentTokenRepository()).tokenValiditySeconds(86400)// 记住我持久化并设定时间
 				.and().logout()// (2)---------------.登出表单配置
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
 				.logoutUrl("/j_spring_security_logout")// 登出请求url
@@ -128,10 +127,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		messageSource.setBasename("classpath:security_messages_zh_CN");
 		return messageSource;
 	}
-	
-	@Bean
+
+	/**
+	 * 
+	 * @描述：自定义remember me持久化
+	 *
+	 * @返回：PersistentTokenRepository
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月10日 下午9:52:25
+	 */
 	public PersistentTokenRepository persistentTokenRepository() {
-		JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		CustomJdbcTokenRepositoryImpl tokenRepositoryImpl = new CustomJdbcTokenRepositoryImpl();
 		tokenRepositoryImpl.setDataSource(dataSource);
 		return tokenRepositoryImpl;
 	}

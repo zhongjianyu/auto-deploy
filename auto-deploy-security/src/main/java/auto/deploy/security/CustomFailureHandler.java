@@ -26,20 +26,13 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
-	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-		// 获取用户角色
-		if (response.isCommitted()) {
-			System.out.println("不能重定向...");
-			return;
-		}
-		exception.printStackTrace();
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) throws IOException, ServletException {
+		//exception.printStackTrace();
+		request.getSession().setAttribute("SPRING_SECURITY_LAST_EXCEPTION", exception.getMessage());
 		String targetUrl = "/login.html";
-		System.out.println(exception.getMessage());
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
-	
-	
-	
 
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;

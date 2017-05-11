@@ -22,10 +22,13 @@ canvas {
 <script src="js/Particleground.js"></script>
 </head>
 <body>
-	<form action="/j_spring_security_check" method="post">
+	<form action="/j_spring_security_check111" method="post">
 		<dl class="admin_login">
 			<dt>
 				<strong>自动化持续集成系统</strong> <em>continuous integration ms</em>
+				<em>
+				 ${Session.SPRING_SECURITY_LAST_EXCEPTION!""}
+				</em>
 			</dt>
 			<dd class="user_icon">
 				<input type="text" placeholder="账号" class="login_txtbx" name="loginUserName" />

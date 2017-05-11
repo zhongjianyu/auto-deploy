@@ -42,7 +42,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			System.out.println("不能重定向...");
 			return;
 		}
-		String targetUrl = "/admin/welcome";
+		String targetUrl = "/index.html";
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
