@@ -3,15 +3,19 @@ package auto.deploy.security;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.util.StringUtils;
 
@@ -52,7 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 允许访问的资源
 		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
 				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
-		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
+		// UsernamePasswordAuthenticationFilter前置过滤器
+		CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
+		filter.setAuthenticationManager(this.authenticationManager());
+		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
 				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
@@ -72,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
 				.and().headers().defaultsDisabled().cacheControl()// 解决iframe加载问题（x-frame-options）
 				;
+
 	}
 
 	/**
@@ -95,6 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					throw new UsernameNotFoundException("验证码不能为空");
 				} else {
 					// 判断是否正确
+					// USER_IDENTIFY_CODE
 				}
 				System.out.println(form.getLoginValidateCode());
 				return super.authenticate(authentication);
@@ -142,6 +151,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		CustomJdbcTokenRepositoryImpl tokenRepositoryImpl = new CustomJdbcTokenRepositoryImpl();
 		tokenRepositoryImpl.setDataSource(dataSource);
 		return tokenRepositoryImpl;
+	}
+
+	/**
+	 * remember-me必须指定UserDetailsService
+	 */
+	@Override
+	protected UserDetailsService userDetailsService() {
+		return customUserDetailsService;
 	}
 
 }
