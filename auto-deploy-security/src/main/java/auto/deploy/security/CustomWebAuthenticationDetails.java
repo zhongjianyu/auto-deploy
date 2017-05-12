@@ -22,11 +22,16 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	/**
 	 * 登录验证码
 	 */
-	private final String loginValidateCode;
+	private String loginValidateCode;
+	/**
+	 * session中的验证码
+	 */
+	private String loginSessionCode;
 
 	public CustomWebAuthenticationDetails(HttpServletRequest request) {
 		super(request);
 		loginValidateCode = request.getParameter("loginValidateCode");
+		loginSessionCode = (String) request.getSession().getAttribute("USER_LOGIN_SESSION_CODE");
 
 	}
 
@@ -34,10 +39,16 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 		return loginValidateCode;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString()).append("; loginValidateCode: ").append(this.getLoginValidateCode());
-		return sb.toString();
+	public void setLoginValidateCode(String loginValidateCode) {
+		this.loginValidateCode = loginValidateCode;
 	}
+
+	public String getLoginSessionCode() {
+		return loginSessionCode;
+	}
+
+	public void setLoginSessionCode(String loginSessionCode) {
+		this.loginSessionCode = loginSessionCode;
+	}
+
 }

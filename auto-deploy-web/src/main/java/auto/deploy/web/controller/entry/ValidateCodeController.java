@@ -55,7 +55,7 @@ public class ValidateCodeController {
 			gc.drawString(temp, x, y);
 		}
 		gc.dispose();
-		request.getSession().setAttribute("USER_IDENTIFY_CODE", rt);
+		request.getSession().setAttribute("USER_LOGIN_SESSION_CODE", rt);
 		OutputStream os = response.getOutputStream();
 		ImageIO.write(pic, "PNG", os);
 		os.flush();

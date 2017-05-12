@@ -3,10 +3,8 @@ package auto.deploy.security;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.util.StringUtils;
 
@@ -46,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(getAuthenticationProvider());
-		// auth.userDetailsService(customUserDetailsService).passwordEncoder(customPasswordEncoder);
 	}
 
 	@Override
@@ -56,10 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 允许访问的资源
 		String[] limitVisitResource = { "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.woff2", "/**/*.otf", "/**/*.eot",
 				"/**/*.svg", "/**/*.ttf", "/**/*.png", "/**/*.jpg", "/**/*.gif", "/**/*.json" };
-		// UsernamePasswordAuthenticationFilter前置过滤器
-		CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
-		filter.setAuthenticationManager(this.authenticationManager());
-		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
+		http.authorizeRequests().antMatchers(limitVisitHtml).permitAll()// 访问匹配的url无需认证
 				.antMatchers(limitVisitResource).permitAll()// 不拦截静态资源
 				.anyRequest().authenticated()// 所有资源都需要认证，登陆后访问
 				.and().formLogin()// (1)---------------.登录表单配置
@@ -103,9 +96,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					throw new UsernameNotFoundException("验证码不能为空");
 				} else {
 					// 判断是否正确
-					// USER_IDENTIFY_CODE
+					if (StringUtils.isEmpty(form.getLoginSessionCode())) {
+						throw new UsernameNotFoundException("服务器验证码异常");
+					} else {
+						if (!(form.getLoginSessionCode()).equals(form.getLoginValidateCode())) {
+							throw new UsernameNotFoundException("验证码错误");
+						}
+					}
 				}
-				System.out.println(form.getLoginValidateCode());
 				return super.authenticate(authentication);
 			}
 
