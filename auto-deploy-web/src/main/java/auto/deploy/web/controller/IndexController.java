@@ -1,8 +1,11 @@
 package auto.deploy.web.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,18 +26,10 @@ public class IndexController {
 	@Resource
 	private Environment environment;
 
-	@RequestMapping("index.html")
-	public String index() {
-		//AutUserVO user = new AutUserVO();
-		// user.setCreateTime(new Date());
-		// user.setName("赵敏");
-		// userService.myInsert(user);
-		//user.setId(856003755209052160L);
-		//user.setUserName("赵敏2");
-		//user.updateById();
-		// user.update(whereClause, args)
-		// System.out.println(environment.getProperty("spring.datasource.url"));
-		// System.out.println(user);
+	@RequestMapping("/")
+	public String index(HttpServletRequest request) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		request.setAttribute("CURRENT_USER_NAME", userDetails.getUsername());
 		return "index/index";
 	}
 }

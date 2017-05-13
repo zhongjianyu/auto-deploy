@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>后台管理模板</title>
+<title>AutoDeploy-CIMS</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -34,7 +34,7 @@
 					<li class="layui-nav-item"><a href="javascript:;">清除缓存</a></li>
 					<li class="layui-nav-item"><a href="javascript:;">浏览网站</a></li>
 					<li class="layui-nav-item" id="video1"><a href="javascript:;">视频</a></li>
-					<li class="layui-nav-item"><a href="javascript:;" class="admin-header-user"> <img src="images/0.jpg" /> <span>beginner</span>
+					<li class="layui-nav-item"><a href="javascript:;" class="admin-header-user"> <img src="images/0.jpg" /> <span>${CURRENT_USER_NAME}</span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -48,7 +48,7 @@
 								</a>
 							</dd>
 							<dd>
-								<a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+								<a href="javascript:void(0)" onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
 							</dd>
 						</dl></li>
 				</ul>
@@ -83,6 +83,9 @@
 			<i class="layui-icon">&#xe602;</i>
 		</div>
 		<div class="site-mobile-shade"></div>
+		<form action="/logout.do" method="post" class="logout-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
 
 		<!--锁屏模板 start-->
 		<script type="text/template" id="lock-temp">
@@ -96,27 +99,34 @@
 				</div>
 			</script>
 		<!--锁屏模板 end -->
-
-		<script type="text/javascript" src="plugins/layui/layui.js"></script>
-		<script type="text/javascript" src="datas/nav.js"></script>
-		<script src="js/index.js"></script>
-		<script>
-			layui.use('layer', function() {
-				var $ = layui.jquery, layer = layui.layer;
-
-				$('#video1').on('click', function() {
-					layer.open({
-						title : 'YouTube',
-						maxmin : true,
-						type : 2,
-						content : 'video.html',
-						area : [ '800px', '500px' ]
-					});
-				});
-
-			});
-		</script>
 	</div>
 </body>
+<script type="text/javascript" src="plugins/layui/layui.js"></script>
+<script type="text/javascript" src="datas/nav.js"></script>
+<script src="js/index.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+	layui.use('layer', function() {
+		var $ = layui.jquery, layer = layui.layer;
 
+		$('#video1').on('click', function() {
+			layer.open({
+				title : 'YouTube',
+				maxmin : true,
+				type : 2,
+				content : 'video.html',
+				area : [ '800px', '500px' ]
+			});
+		});
+
+	});
+	function logout() {
+		layer.confirm('确定注销 ?', {
+			icon : 3,
+			title : '提示'
+		}, function(index) {
+			$(".logout-form").submit();
+		});
+	}
+</script>
 </html>

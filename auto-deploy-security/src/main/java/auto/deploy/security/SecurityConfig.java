@@ -63,12 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(customSuccessHandler)// 自定义登录成功处理
 				.failureHandler(customFailureHandler)// 自定义登录失败处理
 				.authenticationDetailsSource(customAuthenticationDetailsSource)// 自定义额外表单数据
-				// .failureUrl("/login.html")// 验证失败跳转
 				.and().rememberMe().rememberMeParameter("loginRememberMe")// 登录表单记住我name
 				.tokenRepository(persistentTokenRepository()).tokenValiditySeconds(86400)// 记住我持久化并设定时间
 				.and().logout()// (2)---------------.登出表单配置
 				.logoutSuccessUrl("/login.html")// 退出成功跳转
-				.logoutUrl("/j_spring_security_logout")// 登出请求url
+				.logoutUrl("/logout.do")// 登出请求url
 				.and().csrf()// (3)---------------.启用跨站请求伪造(CSRF)保护,如果启用了CSRF，那么在登录或注销页面中必须包括_csrf.token
 				.and().headers().defaultsDisabled().cacheControl()// 解决iframe加载问题（x-frame-options）
 				;
