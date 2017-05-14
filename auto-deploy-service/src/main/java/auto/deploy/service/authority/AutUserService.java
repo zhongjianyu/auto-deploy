@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.service.IService;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 public interface AutUserService extends IService<AutUser> {
 	

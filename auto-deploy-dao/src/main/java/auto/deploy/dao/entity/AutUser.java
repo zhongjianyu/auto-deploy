@@ -8,7 +8,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 public class AutUser extends Entity<AutUser> {
 
@@ -19,7 +19,7 @@ public class AutUser extends Entity<AutUser> {
      */
 	private String userPwd;
     /**
-     * 用户名
+     * 账号(唯一)
      */
 	private String userName;
     /**
@@ -38,6 +38,10 @@ public class AutUser extends Entity<AutUser> {
      * 证书是否过期
      */
 	private Integer isCredentialsExpired;
+    /**
+     * 昵称(显示名称)
+     */
+	private String nickName;
 
 
 	public String getUserPwd() {
@@ -91,6 +95,15 @@ public class AutUser extends Entity<AutUser> {
 
 	public AutUser setIsCredentialsExpired(Integer isCredentialsExpired) {
 		this.isCredentialsExpired = isCredentialsExpired;
+		return this;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public AutUser setNickName(String nickName) {
+		this.nickName = nickName;
 		return this;
 	}
 

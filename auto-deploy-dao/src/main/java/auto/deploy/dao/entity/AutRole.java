@@ -8,20 +8,24 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 public class AutRole extends Entity<AutRole> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 角色名称
+     * 角色名称(唯一)
      */
 	private String roleName;
     /**
-     * 角色代码
+     * 角色代码(唯一)
      */
 	private String roleCode;
+    /**
+     * 是否激活
+     */
+	private Integer isActive;
 
 
 	public String getRoleName() {
@@ -39,6 +43,15 @@ public class AutRole extends Entity<AutRole> {
 
 	public AutRole setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+		return this;
+	}
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public AutRole setIsActive(Integer isActive) {
+		this.isActive = isActive;
 		return this;
 	}
 

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 public interface AutUserRoleMapper extends BaseMapper<AutUserRole> {
 

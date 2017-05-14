@@ -8,7 +8,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 public class AutUserRole extends Entity<AutUserRole> {
 
@@ -22,6 +22,22 @@ public class AutUserRole extends Entity<AutUserRole> {
      * 角色ID
      */
 	private Long roleId;
+    /**
+     * 角色代码(唯一)
+     */
+	private String roleCode;
+    /**
+     * 用户名(唯一)
+     */
+	private String userName;
+    /**
+     * 角色名称(唯一)
+     */
+	private String roleName;
+    /**
+     * 是否激活
+     */
+	private Integer isActive;
 
 
 	public Long getUserId() {
@@ -39,6 +55,42 @@ public class AutUserRole extends Entity<AutUserRole> {
 
 	public AutUserRole setRoleId(Long roleId) {
 		this.roleId = roleId;
+		return this;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public AutUserRole setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+		return this;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public AutUserRole setUserName(String userName) {
+		this.userName = userName;
+		return this;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public AutUserRole setRoleName(String roleName) {
+		this.roleName = roleName;
+		return this;
+	}
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public AutUserRole setIsActive(Integer isActive) {
+		this.isActive = isActive;
 		return this;
 	}
 

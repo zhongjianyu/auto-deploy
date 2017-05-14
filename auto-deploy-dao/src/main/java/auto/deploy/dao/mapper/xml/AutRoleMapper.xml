@@ -11,11 +11,12 @@
 		<result column="is_delete" property="isDelete" />
 		<result column="role_name" property="roleName" />
 		<result column="role_code" property="roleCode" />
+		<result column="is_active" property="isActive" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, update_time, version, is_delete, role_name, role_code
+        id, create_time, update_time, version, is_delete, role_name, role_code, is_active
     </sql>
 
 </mapper>

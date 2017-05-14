@@ -14,7 +14,7 @@ import auto.deploy.service.authority.AutRoleService;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-03
+ * @时间: 2017-05-14
  */
 @Service
 public class AutRoleServiceImpl extends ServiceImpl<AutRoleMapper, AutRole> implements AutRoleService {
