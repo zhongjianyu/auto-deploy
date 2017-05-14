@@ -41,7 +41,7 @@ public class UserService {
 	 */
 	public AutUserVO getUserByUserName(String userName) {
 		AutUserVO user = null;
-		AutUser autUser = autUserService.selectOne(new EntityWrapper<AutUser>().eq("user_name", userName));
+		AutUser autUser = autUserService.selectOne(new EntityWrapper<AutUser>().eq("user_name", userName).eq("is_delete", 0));
 		if (autUser != null) {
 			user = new AutUserVO();
 			BeanUtils.copyProperties(autUser, user);
