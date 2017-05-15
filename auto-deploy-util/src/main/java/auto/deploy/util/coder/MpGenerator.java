@@ -55,8 +55,8 @@ public class MpGenerator {
 		// strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		strategy.setDbColumnUnderline(true);
-		// strategy.setInclude(new String[] { "aut_user_role"}); // 需要生成的表
-		strategy.setExclude(new String[] { "aut_remember_me" }); // 排除生成的表
+		strategy.setInclude(new String[] { "aut_widget","aut_widget_role"}); // 需要生成的表
+		//strategy.setExclude(new String[] { "aut_remember_me" }); // 排除生成的表
 		// 自定义实体父类
 		strategy.setSuperEntityClass("auto.deploy.dao.entity.Entity");
 		// 自定义实体，公共字段
