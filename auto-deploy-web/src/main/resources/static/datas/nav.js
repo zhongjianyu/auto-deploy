@@ -5,7 +5,7 @@ var navs = [{
 	"children": [{
 		"title": "按钮",
 		"icon": "&#xe641;",
-		"href": "button.html"
+		"href": "demo/demo.html"
 	}, {
 		"title": "表单",
 		"icon": "&#xe63c;",
