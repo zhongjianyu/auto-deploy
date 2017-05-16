@@ -1,9 +1,18 @@
 package auto.deploy.web.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.baomidou.mybatisplus.plugins.Page;
+
+import auto.deploy.dao.entity.AutUser;
+import auto.deploy.object.PageBean;
+import auto.deploy.service.authority.AutUserService;
 
 /**
  * 
@@ -17,8 +26,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/demo")
 public class DemoController {
 
+	@Resource
+	private AutUserService autUserService;
+
 	@RequestMapping("/demo")
 	public String index(HttpServletRequest request) {
 		return "demo/demo";
+	}
+
+	@RequestMapping("/list")
+	@ResponseBody
+	public Page<AutUser> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean) {
+		Page<AutUser> page = null;
+		try {
+			autUserService.list(pageBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
 	}
 }

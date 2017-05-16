@@ -65,6 +65,7 @@ public class MybatisPlusConfig {
 	public PaginationInterceptor paginationInterceptor() {
 		PaginationInterceptor page = new PaginationInterceptor();
 		page.setDialectType("mysql");
+		page.setOverflowCurrent(true);
 		return page;
 	}
 
