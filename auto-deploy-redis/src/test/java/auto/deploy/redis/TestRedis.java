@@ -18,7 +18,7 @@ public class TestRedis {
 	
 	@Test
 	public void testString(){
-		template.opsForValue().set("aaa", "aaaaa");
+		//template.opsForValue().set("aaa", "aaaaadd");
 		System.out.println(template.opsForValue().get("aaa"));
 	}
 
