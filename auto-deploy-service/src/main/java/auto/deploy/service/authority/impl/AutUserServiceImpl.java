@@ -23,7 +23,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>imple
 
 	@Override
 	public Page<AutUser> list(PageBean pageBean) throws Exception {
-		Page<AutUser> page = selectPage(new Page<AutUser>());
+		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(),pageBean.getPageSize()));
 		return page;
 	}
 

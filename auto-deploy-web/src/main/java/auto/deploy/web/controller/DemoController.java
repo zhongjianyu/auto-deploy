@@ -39,10 +39,12 @@ public class DemoController {
 	public Page<AutUser> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean) {
 		Page<AutUser> page = null;
 		try {
-			autUserService.list(pageBean);
+			page = autUserService.list(pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println(page);
+		System.out.println(page.getRecords());
 		return page;
 	}
 }

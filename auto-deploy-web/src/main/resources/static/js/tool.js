@@ -5,21 +5,34 @@ var tool = {
 	loadpage : function(param) {
 		param._csrf = $("#_csrf").val();
 		param.pageNum = 1;
+		var initPageData;
 		tool.post(param.url, param, function(page) {
 			console.log(page);
+			initPageData = page;
 		}, false);
-		return;
 		layui.laypage({
-			cont : param.container,// 分页容器id
-			pages : 2,// 总页数
+			cont : param.container + "-footer",// 分页容器id
+			pages : initPageData.pages,// 总页数
 			pageSize : param.pageSize,// 每页记录数
 			skip : true,// 是否显示跳转页
 			url : param.url,// 数据请求接口
 			jump : function(obj, first) {
 				// 得到了当前页，用于向服务端请求对应数据
-				var curr = obj.curr;
-				console.log(obj);
-				console.log(first);
+				var pageData;
+				if (first) {
+					// 第一次
+					pageData = initPageData;
+				} else {
+					param.pageNum = obj.curr;
+					tool.post(param.url, param, function(page) {
+						pageData = page;
+					}, false);
+				}
+				document.getElementById(param.container + "-data").innerHTML = template(param.container + "-script", pageData);
+				// 重新加载元素样式
+				layui.use('form', function() {
+					layui.form().render();
+				});
 			}
 		});
 	},

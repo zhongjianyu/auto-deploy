@@ -26,66 +26,45 @@
 			<table class="layui-table admin-table">
 				<thead>
 					<tr>
-						<th style="width: 30px;"><input type="checkbox" lay-filter="allselector" lay-skin="primary"></th>
-						<th>姓名</th>
-						<th>年龄</th>
+						<th style="width: 30px;"><input type="checkbox" lay-skin="primary"></th>
+						<th>用户ID</th>
+						<th>用户账号</th>
 						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody id="content">
-					<tr>
-						<td><input type="checkbox" lay-skin="primary"></td>
-						<td>张三</td>
-						<td>12</td>
-						<td>2017-12-12</td>
-						<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a> <a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a> <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" lay-skin="primary"></td>
-						<td>张三</td>
-						<td>12</td>
-						<td>2017-12-12</td>
-						<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a> <a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a> <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" lay-skin="primary"></td>
-						<td>张三</td>
-						<td>12</td>
-						<td>2017-12-12</td>
-						<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a> <a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a> <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" lay-skin="primary"></td>
-						<td>张三</td>
-						<td>12</td>
-						<td>2017-12-12</td>
-						<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a> <a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a> <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" lay-skin="primary"></td>
-						<td>张三</td>
-						<td>12</td>
-						<td>2017-12-12</td>
-						<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a> <a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a> <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
-					</tr>
+				<tbody id="paging-data">
+					<form id="abc-form">
+						<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary"></td>
+							<td>{{value.id}}</td>
+							<td>{{value.userName}}</td>
+							<td>{{value.createTime}}</td>
+							<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a>  <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
+						</tr>
+					{{/each}}
+					</script>
+					</form>
 				</tbody>
 			</table>
 		</div>
 		<div class="admin-table-page" style="border-width: 0px;">
-			<div id="pager-div" class="page" style="background-color: white; text-align: center;"></div>
+			<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="../plugins/layui/lay/modules/laypage.js"></script>
 	<script type="text/javascript" src="../plugins/layui/lay/modules/form.js"></script>
+	<script type="text/javascript" src="../js/template-web.js"></script>
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<script type="text/javascript" src="../js/tool.js"></script>
 	<script>
 		var param = new Object();
-		param.container = "pager-div";
-		param.pageSize = 10;
-		param.url = "../demo/list.html";
+		param.container = "paging";
+		param.pageSize = 5;
+		param.url = "../demo/list";
 		tool.loadpage(param);
 	</script>
 </body>
