@@ -26,7 +26,7 @@
 			<table class="layui-table admin-table">
 				<thead>
 					<tr>
-						<th style="width: 30px;"><input type="checkbox" lay-skin="primary"></th>
+						<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
 						<th>用户ID</th>
 						<th>用户账号</th>
 						<th>创建时间</th>
@@ -34,8 +34,7 @@
 					</tr>
 				</thead>
 				<tbody id="paging-data">
-					<form id="abc-form">
-						<script id="paging-script" type="text/html">
+					<script id="paging-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary"></td>
@@ -46,7 +45,6 @@
 						</tr>
 					{{/each}}
 					</script>
-					</form>
 				</tbody>
 			</table>
 		</div>
@@ -63,7 +61,7 @@
 	<script>
 		var param = new Object();
 		param.container = "paging";
-		param.pageSize = 5;
+		param.pageSize = 2;
 		param.url = "../demo/list";
 		tool.loadpage(param);
 	</script>

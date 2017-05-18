@@ -7,7 +7,6 @@ var tool = {
 		param.pageNum = 1;
 		var initPageData;
 		tool.post(param.url, param, function(page) {
-			console.log(page);
 			initPageData = page;
 		}, false);
 		layui.laypage({
@@ -31,7 +30,16 @@ var tool = {
 				document.getElementById(param.container + "-data").innerHTML = template(param.container + "-script", pageData);
 				// 重新加载元素样式
 				layui.use('form', function() {
-					layui.form().render();
+					var form = layui.form();
+					form.on('checkbox(' + param.container + '_check-all)', function(data) {
+						var checkElement = $(data.elem);
+						var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+						child.each(function(index, item) {
+							item.checked = data.elem.checked;
+						});
+						form.render('checkbox');
+					});
+					form.render();
 				});
 			}
 		});
