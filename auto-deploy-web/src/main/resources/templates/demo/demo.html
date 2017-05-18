@@ -15,7 +15,7 @@
 	<div class="admin-main" style="margin: 10px;">
 
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
-			<a href="javascript:;" class="layui-btn layui-btn-small" id="add"> <i class="layui-icon">&#xe608;</i> 添加信息
+			<a href="javascript:;" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()"> <i class="layui-icon">&#xe608;</i> 添加信息
 			</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i class="layui-icon">&#xe608;</i> 导入信息
 			</a> <a href="#" class="layui-btn layui-btn-small"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> 导出信息
 			</a> <a href="#" class="layui-btn layui-btn-small" id="getSelected"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> 获取全选信息
@@ -37,7 +37,7 @@
 					<script id="paging-script" type="text/html">
 					{{each records value index}}
 						<tr>
-							<td><input type="checkbox" lay-skin="primary"></td>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.id}}</td>
 							<td>{{value.userName}}</td>
 							<td>{{value.createTime}}</td>
@@ -64,6 +64,12 @@
 		param.pageSize = 2;
 		param.url = "../demo/list";
 		tool.loadpage(param);
+
+		function getCheckItmes() {
+			$(".check-id:checked").each(function() {
+				console.log($(this).attr("id"));;
+			});
+		}
 	</script>
 </body>
 
