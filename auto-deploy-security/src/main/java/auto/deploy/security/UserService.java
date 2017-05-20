@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
-import auto.deploy.dao.entity.AutUser;
+import auto.deploy.dao.entity.aut.AutUser;
 import auto.deploy.object.vo.AutRoleVO;
 import auto.deploy.object.vo.AutUserVO;
-import auto.deploy.service.authority.AutUserService;
+import auto.deploy.service.aut.AutUserService;
 
 /**
  * 

@@ -1,6 +1,6 @@
 package auto.deploy.object.vo;
 
-import auto.deploy.dao.entity.AutRole;
+import auto.deploy.dao.entity.aut.AutRole;
 
 /**
  * 

@@ -14,7 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import auto.deploy.dao.entity.AutUser;
+import auto.deploy.dao.entity.aut.AutUser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -35,11 +35,11 @@ public class TestRedis {
 		// System.out.println(stringRedisTemplate.opsForValue().get("aaa"));
 
 		AutUser user1 = new AutUser();
-		user1.setUserName("ÖÐ¹úÈË");
+		user1.setUserName("ï¿½Ð¹ï¿½ï¿½ï¿½");
 		AutUser user2 = new AutUser();
-		user2.setUserName("ÃÀ¹úÈË");
+		user2.setUserName("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		AutUser user3 = new AutUser();
-		user3.setUserName("º«¹úÈË");
+		user3.setUserName("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		List<AutUser> userList = new ArrayList<AutUser>();
 		userList.add(user1);
 		userList.add(user2);

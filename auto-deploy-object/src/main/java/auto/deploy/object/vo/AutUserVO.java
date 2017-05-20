@@ -2,7 +2,7 @@ package auto.deploy.object.vo;
 
 import java.util.List;
 
-import auto.deploy.dao.entity.AutUser;
+import auto.deploy.dao.entity.aut.AutUser;
 
 /**
  * 
