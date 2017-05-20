@@ -20,7 +20,8 @@ import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.enums.DBType;
-import com.baomidou.mybatisplus.mapper.IMetaObjectHandler;
+import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
+import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
@@ -101,12 +102,21 @@ public class MybatisPlusConfig {
 		// 开启，该配置可以无。
 		globalConfig.setDbColumnUnderline(true);
 		// 自定义填充字段
-		IMetaObjectHandler metaObjectHandler = new MetaObjectHandlerImpl();
+		MetaObjectHandler metaObjectHandler = new MetaObjectHandlerImpl();
 		globalConfig.setMetaObjectHandler(metaObjectHandler);
+
+		// 逻辑删除配置
+		LogicSqlInjector logicSqlInjector = new LogicSqlInjector();
+		globalConfig.setSqlInjector(logicSqlInjector);
+		// 逻辑删除全局值
+		globalConfig.setLogicDeleteValue("1");
+		// 逻辑未删除全局值
+		globalConfig.setLogicNotDeleteValue("0");
+
 		mybatisPlus.setGlobalConfig(globalConfig);
 		MybatisConfiguration mc = new MybatisConfiguration();
 		// 对于完全自定义的mapper需要加此项配置，才能实现下划线转驼峰
-		// mc.setMapUnderscoreToCamelCase(true);
+		mc.setMapUnderscoreToCamelCase(true);
 		mc.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
 		mybatisPlus.setConfiguration(mc);
 		if (this.databaseIdProvider != null) {

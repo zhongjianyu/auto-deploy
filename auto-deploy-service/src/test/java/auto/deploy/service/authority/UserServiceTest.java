@@ -28,12 +28,31 @@ public class UserServiceTest {
 	@Test
 	public void testInsert() {
 		AutUser user = new AutUser();
-		user.setUserName("中间有");
-		user.setUserPwd("pp123");
-		//user.insert();
+		user.setUserPwd("fffff");
+		user.setUserName("fffff");
+		user.setIsActive(1);
+		user.setIsAccountExpired(0);
+		user.setIsAccountLocked(0);
+		user.setIsCredentialsExpired(0);
+		user.setNickName("fffff");
 		autUserService.insert(user);
 	}
+
+	@Test
+	public void testUpdate() {
+		AutUser user = new AutUser();
+		user.setId(865743020264394752L);
+		user = autUserService.selectById(865743020264394752L);
+		user.setUserName("abc_2");
+		user.setIsDelete(1);
+		autUserService.updateById(user);
+	}
 	
+	@Test
+	public void testDelete() {
+		autUserService.deleteById(859634951780552704L);
+	}
+
 	@Test
 	public void testSelect() {
 		AutUser user = new AutUser();

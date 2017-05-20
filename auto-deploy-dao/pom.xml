@@ -37,6 +37,7 @@
 			<artifactId>auto-deploy-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
 	</dependencies>
 
 </project>

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableLogic;
+import com.baomidou.mybatisplus.annotations.Version;
 import com.baomidou.mybatisplus.enums.FieldStrategy;
 
 /**
@@ -46,6 +48,7 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	 * 是否已被删除
 	 */
 	@TableField(validate = FieldStrategy.IGNORED, value = "is_delete")
+	@TableLogic
 	private Integer isDelete;
 
 	/**
@@ -98,8 +101,7 @@ public class Entity<T extends Model<T>> extends Model<T> {
 
 	@Override
 	public String toString() {
-		return "Entity [id=" + id + ", createTime=" + createTime + ", updateTime=" + updateTime + ", version=" + version
-				+ ", isDelete=" + isDelete + "]";
+		return "Entity [id=" + id + ", createTime=" + createTime + ", updateTime=" + updateTime + ", version=" + version + ", isDelete=" + isDelete + "]";
 	}
 
 }
