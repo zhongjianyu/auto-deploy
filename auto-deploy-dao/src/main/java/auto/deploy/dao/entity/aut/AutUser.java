@@ -1,5 +1,7 @@
 package auto.deploy.dao.entity.aut;
 
+import auto.deploy.dao.entity.Entity;
+
 /**
  * 
  * @描述：用户表(实体类)

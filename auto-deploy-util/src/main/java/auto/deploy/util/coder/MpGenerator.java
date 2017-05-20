@@ -20,6 +20,11 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 public class MpGenerator {
 
 	public static void main(String[] args) {
+		//模块名
+		String moduleName = "aut";
+		//表名
+		String[] tableName = new String[] { "aut_widget", "aut_widget_role" };
+
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
@@ -55,8 +60,8 @@ public class MpGenerator {
 		// strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		strategy.setDbColumnUnderline(true);
-		strategy.setInclude(new String[] { "aut_widget","aut_widget_role"}); // 需要生成的表
-		//strategy.setExclude(new String[] { "aut_remember_me" }); // 排除生成的表
+		strategy.setInclude(tableName); // 需要生成的表
+		// strategy.setExclude(new String[] { "aut_remember_me" }); // 排除生成的表
 		// 自定义实体父类
 		strategy.setSuperEntityClass("auto.deploy.dao.entity.Entity");
 		// 自定义实体，公共字段
@@ -78,8 +83,17 @@ public class MpGenerator {
 
 		// 包配置
 		PackageConfig pc = new PackageConfig();
-		pc.setParent("auto.deploy.dao");
-		// pc.setModuleName("");
+		pc.setParent("auto.deploy");
+
+		pc.setController("web.controller." + moduleName);
+		pc.setEntity("dao.entity." + moduleName);
+		pc.setMapper("dao.mapper." + moduleName);
+		pc.setXml("dao.mapper." + moduleName + ".xml");
+		// pc.setModuleName("aut");
+		pc.setService("service." + moduleName);
+		pc.setServiceImpl("service." + moduleName + ".impl");
+		
+
 		mpg.setPackageInfo(pc);
 
 		// 自定义模板配置(如果设置null则不生成该模块)
@@ -94,9 +108,6 @@ public class MpGenerator {
 
 		// 执行生成
 		mpg.execute();
-
-		// 打印注入设置【可无】
-		// System.err.println(mpg.getCfg().getMap().get("abc"));
 	}
 
 }

@@ -1,5 +1,7 @@
 package auto.deploy.dao.entity.aut;
 
+import auto.deploy.dao.entity.Entity;
+
 /**
  * 
  * @描述：菜单-角色表(实体类)
