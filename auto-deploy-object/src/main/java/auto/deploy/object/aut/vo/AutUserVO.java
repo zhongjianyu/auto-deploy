@@ -1,4 +1,4 @@
-package auto.deploy.object.vo;
+package auto.deploy.object.aut.vo;
 
 import java.util.List;
 

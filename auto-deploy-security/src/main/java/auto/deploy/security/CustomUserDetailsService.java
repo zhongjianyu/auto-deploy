@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import auto.deploy.object.vo.AutRoleVO;
-import auto.deploy.object.vo.AutUserVO;
+import auto.deploy.object.aut.vo.AutRoleVO;
+import auto.deploy.object.aut.vo.AutUserVO;
 
 /**
  * 
