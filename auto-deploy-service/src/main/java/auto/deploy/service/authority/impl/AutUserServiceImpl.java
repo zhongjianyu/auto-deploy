@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.AutUser;
 import auto.deploy.dao.mapper.AutUserMapper;
 import auto.deploy.object.PageBean;
@@ -23,7 +24,10 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>imple
 
 	@Override
 	public Page<AutUser> list(PageBean pageBean) throws Exception {
-		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(),pageBean.getPageSize()));
+		Where<AutUser> where = new Where<AutUser>();
+		where.orderBy("create_time", false);
+		where.eq("is_delete", 0);
+		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
 	}
 
