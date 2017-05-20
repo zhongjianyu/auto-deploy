@@ -23,9 +23,21 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 	 */
 	@Override
 	public void insertFill(MetaObject obj) {
+		/**
+		 * 创建时间
+		 */
 		Object createTime = obj.getValue("createTime");
+		/**
+		 * 修改时间
+		 */
 		Object updateTime = obj.getValue("updateTime");
+		/**
+		 * 版本号
+		 */
 		Object version = obj.getValue("version");
+		/**
+		 * 是否删除
+		 */
 		Object isDelete = obj.getValue("isDelete");
 
 		Date now = new Date();
@@ -52,6 +64,9 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 		Object originalObject = obj.getOriginalObject();
 		Entity entity = (Entity) originalObject;
 		Date now = new Date();
+		/**
+		 * 修改时重新回填修改时间和版本号
+		 */
 		obj.setValue("updateTime", now);
 		obj.setValue("createTime", entity.getCreateTime());
 		obj.setValue("isDelete", entity.getIsDelete());

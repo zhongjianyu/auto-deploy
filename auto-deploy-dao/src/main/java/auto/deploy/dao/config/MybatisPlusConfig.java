@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.enums.DBType;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
 import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
 /**
@@ -68,6 +69,26 @@ public class MybatisPlusConfig {
 		page.setDialectType("mysql");
 		page.setOverflowCurrent(true);
 		return page;
+	}
+
+	/**
+	 * 
+	 * @描述：性能分析插件(生产环境要去掉本插件，直接注释掉即可)
+	 *
+	 * 								@返回：PerformanceInterceptor
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年4月24日 下午12:26:37
+	 */
+	@Bean
+	public PerformanceInterceptor performanceInterceptor() {
+		PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+		// SQL 执行最大时长(毫秒)，超过自动停止运行
+		performanceInterceptor.setMaxTime(100);
+		// SQL是否格式化，默认false
+		performanceInterceptor.setFormat(true);
+		return performanceInterceptor;
 	}
 
 	/**
