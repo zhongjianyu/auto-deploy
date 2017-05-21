@@ -3,7 +3,11 @@ package auto.deploy.dao.config;
 import java.util.Date;
 
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 
 import auto.deploy.dao.entity.Entity;
@@ -23,6 +27,15 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 	 */
 	@Override
 	public void insertFill(MetaObject obj) {
+		/**
+		 * 获取当前用户及权限信息
+		 */
+		JSONObject jo = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			jo = (JSONObject) JSON.toJSON(authentication.getPrincipal());
+		}
+
 		/**
 		 * 创建时间
 		 */
@@ -70,16 +83,32 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 			obj.setValue("isDelete", 0);
 		}
 		if (lastUpdateUserId == null) {
-			obj.setValue("lastUpdateUserId", 1L);
+			if (jo != null) {
+				obj.setValue("lastUpdateUserId", Long.parseLong(jo.get("userId").toString()));
+			} else {
+				obj.setValue("lastUpdateUserId", -1L);
+			}
 		}
 		if (lastUpdateUserName == null) {
-			obj.setValue("lastUpdateUserName", "1");
+			if (jo != null) {
+				obj.setValue("lastUpdateUserName", jo.get("username").toString());
+			} else {
+				obj.setValue("lastUpdateUserName", "-1");
+			}
 		}
 		if (createUserId == null) {
-			obj.setValue("createUserId", 1L);
+			if (jo != null) {
+				obj.setValue("createUserId", Long.parseLong(jo.get("userId").toString()));
+			} else {
+				obj.setValue("createUserId", -1L);
+			}
 		}
 		if (createUserName == null) {
-			obj.setValue("createUserName", "1");
+			if (jo != null) {
+				obj.setValue("createUserName", jo.get("username").toString());
+			} else {
+				obj.setValue("createUserName", "-1");
+			}
 		}
 	}
 
@@ -89,16 +118,44 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void updateFill(MetaObject obj) {
+		/**
+		 * 获取原数据信息
+		 */
 		Object originalObject = obj.getOriginalObject();
 		Entity entity = (Entity) originalObject;
+		/**
+		 * 当前时间
+		 */
 		Date now = new Date();
+
+		/**
+		 * 获取当前用户及权限信息
+		 */
+		JSONObject jo = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			jo = (JSONObject) JSON.toJSON(authentication.getPrincipal());
+		}
 		/**
 		 * 修改时重新回填修改时间和版本号
 		 */
-		obj.setValue("updateTime", now);
+		obj.setValue("lastUpdateTime", now);
 		obj.setValue("createTime", entity.getCreateTime());
 		obj.setValue("isDelete", entity.getIsDelete());
 		obj.setValue("version", entity.getVersion() + 1);
+
+		if (jo != null) {
+			obj.setValue("lastUpdateUserId", Long.parseLong(jo.get("userId").toString()));
+		} else {
+			obj.setValue("lastUpdateUserId", -1L);
+		}
+		if (jo != null) {
+			obj.setValue("lastUpdateUserName", jo.get("username").toString());
+		} else {
+			obj.setValue("lastUpdateUserName", "-1");
+		}
+		obj.setValue("createUserId", entity.getCreateUserId());
+		obj.setValue("createUserName", entity.getCreateUserName());
 	}
 
 }

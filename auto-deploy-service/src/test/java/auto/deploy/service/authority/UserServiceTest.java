@@ -29,26 +29,23 @@ public class UserServiceTest {
 	@Test
 	public void testInsert() {
 		AutUser user = new AutUser();
-		user.setUserPwd("a");
-		user.setUserName("a");
+		user.setUserPwd("e");
+		user.setUserName("e");
 		user.setIsActive(1);
 		user.setIsAccountExpired(0);
 		user.setIsAccountLocked(0);
 		user.setIsCredentialsExpired(0);
-		user.setNickName("a用户");
+		user.setNickName("e用户");
 		autUserService.insert(user);
 	}
 
 	@Test
 	public void testUpdate() {
-		AutUser user = new AutUser();
-		user.setId(865743020264394752L);
-		user = autUserService.selectById(865743020264394752L);
-		user.setUserName("abc_2");
-		user.setIsDelete(1);
+		AutUser user = autUserService.selectById(866162534596730880L);
+		user.setUserName("d1");
 		autUserService.updateById(user);
 	}
-	
+
 	@Test
 	public void testDelete() {
 		autUserService.deleteById(859634951780552704L);

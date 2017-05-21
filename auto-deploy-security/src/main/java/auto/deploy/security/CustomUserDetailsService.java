@@ -34,12 +34,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("账号不能为空");
 		}
 		AutUserVO user = userService.getUserByUserName(userName);
-		if(user == null) {
+		if (user == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
-		org.springframework.security.core.userdetails.User userDetail = new org.springframework.security.core.userdetails.User(
-				user.getUserName(), user.getUserPwd(), user.getIsActive() == 1, user.getIsAccountExpired() == 0,
+		CustomUser userDetail = new CustomUser(user.getUserName(), user.getUserPwd(), user.getIsActive() == 1, user.getIsAccountExpired() == 0,
 				user.getIsCredentialsExpired() == 0, user.getIsAccountLocked() == 0, getGrantedAuthorities(user));
+		userDetail.setUserId(user.getId());
 		return userDetail;
 	}
 

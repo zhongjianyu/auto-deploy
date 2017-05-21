@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import auto.deploy.security.CustomUser;
 
 /**
  * 
@@ -28,7 +29,7 @@ public class IndexController {
 
 	@RequestMapping("/")
 	public String index(HttpServletRequest request) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUser userDetails = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		request.setAttribute("CURRENT_USER_NAME", userDetails.getUsername());
 		return "index/index";
 	}

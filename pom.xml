@@ -24,6 +24,8 @@
 		<org.apache.velocity.version>1.7</org.apache.velocity.version>
 		<org.gitlab.version>1.2.8</org.gitlab.version>
 		<springloaded.version>1.2.7.RELEASE</springloaded.version>
+		<org.springframework.security.core.version>4.2.2.RELEASE</org.springframework.security.core.version>
+		<com.alibaba.fastjson.version>1.2.31</com.alibaba.fastjson.version>
 	</properties>
 
 	<modules>
@@ -92,6 +94,18 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>springloaded</artifactId>
 				<version>${springloaded.version}</version>
+			</dependency>
+			<!-- spring-security-core -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${org.springframework.security.core.version}</version>
+			</dependency>
+			<!-- fastjson -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${com.alibaba.fastjson.version}</version>
 			</dependency>
 
 
