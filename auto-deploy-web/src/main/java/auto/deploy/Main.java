@@ -3,6 +3,7 @@ package auto.deploy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import auto.deploy.util.SpringContextUtil;
 import auto.deploy.web.event.EnvironmentPreparedEvent;
@@ -17,6 +18,7 @@ import auto.deploy.web.event.ReadyEvent;
  *
  * @时间：2017年4月21日 上午8:40:52
  */
+@EnableTransactionManagement
 @SpringBootApplication
 public class Main {
 	/**
