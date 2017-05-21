@@ -43,13 +43,6 @@ public class DemoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(page);
-		System.out.println(page.getRecords());
-		
-		//测试修改数据
-		AutUser user = autUserService.selectById(866162534596730880L);
-		user.setUserName("d1");
-		autUserService.updateById(user);
 		return page;
 	}
 }
