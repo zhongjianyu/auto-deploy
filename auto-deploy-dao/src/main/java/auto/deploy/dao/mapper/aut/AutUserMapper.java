@@ -1,8 +1,7 @@
 package auto.deploy.dao.mapper.aut;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-
 import auto.deploy.dao.entity.aut.AutUser;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * 
@@ -10,7 +9,7 @@ import auto.deploy.dao.entity.aut.AutUser;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-14
+ * @时间: 2017-05-21
  */
 public interface AutUserMapper extends BaseMapper<AutUser> {
 

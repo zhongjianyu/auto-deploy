@@ -36,8 +36,8 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	/**
 	 * 修改时间
 	 */
-	@TableField(validate = FieldStrategy.IGNORED, value = "update_time")
-	private Date updateTime;
+	@TableField(validate = FieldStrategy.IGNORED, value = "last_update_time")
+	private Date lastUpdateTime;
 	/**
 	 * 版本号
 	 */
@@ -49,6 +49,26 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	@TableField(validate = FieldStrategy.IGNORED, value = "is_delete")
 	@TableLogic
 	private Integer isDelete;
+	/**
+	 * 最后修改用户ID
+	 */
+	@TableField(validate = FieldStrategy.IGNORED, value = "last_update_user_id")
+	private Long lastUpdateUserId;
+	/**
+	 * 最后修改用户账号
+	 */
+	@TableField(validate = FieldStrategy.IGNORED, value = "last_update_user_name")
+	private String lastUpdateUserName;
+	/**
+	 * 创建用户ID
+	 */
+	@TableField(validate = FieldStrategy.IGNORED, value = "create_user_id")
+	private Long createUserId;
+	/**
+	 * 创建用户账号
+	 */
+	@TableField(validate = FieldStrategy.IGNORED, value = "create_user_name")
+	private String createUserName;
 
 	/**
 	 * 自动创建主键
@@ -74,12 +94,12 @@ public class Entity<T extends Model<T>> extends Model<T> {
 		this.createTime = createTime;
 	}
 
-	public Date getUpdateTime() {
-		return updateTime;
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
 	}
 
 	public Integer getVersion() {
@@ -98,9 +118,43 @@ public class Entity<T extends Model<T>> extends Model<T> {
 		this.isDelete = isDelete;
 	}
 
+	public String getLastUpdateUserName() {
+		return lastUpdateUserName;
+	}
+
+	public void setLastUpdateUserName(String lastUpdateUserName) {
+		this.lastUpdateUserName = lastUpdateUserName;
+	}
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public Long getLastUpdateUserId() {
+		return lastUpdateUserId;
+	}
+
+	public void setLastUpdateUserId(Long lastUpdateUserId) {
+		this.lastUpdateUserId = lastUpdateUserId;
+	}
+
+	public Long getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
+	}
+
 	@Override
 	public String toString() {
-		return "Entity [id=" + id + ", createTime=" + createTime + ", updateTime=" + updateTime + ", version=" + version + ", isDelete=" + isDelete + "]";
+		return "Entity [id=" + id + ", createTime=" + createTime + ", lastUpdateTime=" + lastUpdateTime + ", version=" + version + ", isDelete="
+				+ isDelete + ", lastUpdateUserId=" + lastUpdateUserId + ", lastUpdateUserName=" + lastUpdateUserName + ", createUserId="
+				+ createUserId + ", createUserName=" + createUserName + "]";
 	}
 
 }

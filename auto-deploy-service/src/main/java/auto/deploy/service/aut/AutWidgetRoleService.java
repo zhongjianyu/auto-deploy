@@ -1,8 +1,7 @@
 package auto.deploy.service.aut;
 
-import com.baomidou.mybatisplus.service.IService;
-
 import auto.deploy.dao.entity.aut.AutWidgetRole;
+import com.baomidou.mybatisplus.service.IService;
 
 /**
  * 
@@ -10,7 +9,7 @@ import auto.deploy.dao.entity.aut.AutWidgetRole;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-15
+ * @时间: 2017-05-21
  */
 public interface AutWidgetRoleService extends IService<AutWidgetRole> {
 	

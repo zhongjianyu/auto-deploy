@@ -8,7 +8,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-15
+ * @时间: 2017-05-21
  */
 public class AutWidgetRole extends Entity<AutWidgetRole> {
 

@@ -8,14 +8,14 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-14
+ * @时间: 2017-05-21
  */
 public class AutMenu extends Entity<AutMenu> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 菜单编码
+     * 菜单编码(唯一)
      */
 	private String menuCode;
     /**

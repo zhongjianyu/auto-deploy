@@ -1,12 +1,10 @@
 package auto.deploy.service.aut.impl;
 
-import org.springframework.stereotype.Service;
-
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-
 import auto.deploy.dao.entity.aut.AutWidgetRole;
 import auto.deploy.dao.mapper.aut.AutWidgetRoleMapper;
 import auto.deploy.service.aut.AutWidgetRoleService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -14,7 +12,7 @@ import auto.deploy.service.aut.AutWidgetRoleService;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-15
+ * @时间: 2017-05-21
  */
 @Service
 public class AutWidgetRoleServiceImpl extends ServiceImpl<AutWidgetRoleMapper, AutWidgetRole> implements AutWidgetRoleService {

@@ -17,7 +17,7 @@ import auto.deploy.service.aut.AutUserService;
  * 
  * 				@作者：zhongjy
  * 
- * @时间: 2017-05-14
+ * @时间: 2017-05-21
  */
 @Service
 public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>implements AutUserService {
@@ -30,5 +30,4 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>imple
 		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
 	}
-
 }

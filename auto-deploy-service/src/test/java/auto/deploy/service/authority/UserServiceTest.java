@@ -29,13 +29,13 @@ public class UserServiceTest {
 	@Test
 	public void testInsert() {
 		AutUser user = new AutUser();
-		user.setUserPwd("fffff");
-		user.setUserName("fffff");
+		user.setUserPwd("a");
+		user.setUserName("a");
 		user.setIsActive(1);
 		user.setIsAccountExpired(0);
 		user.setIsAccountLocked(0);
 		user.setIsCredentialsExpired(0);
-		user.setNickName("fffff");
+		user.setNickName("a用户");
 		autUserService.insert(user);
 	}
 

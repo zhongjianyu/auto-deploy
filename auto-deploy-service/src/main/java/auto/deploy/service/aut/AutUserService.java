@@ -12,7 +12,7 @@ import auto.deploy.object.PageBean;
  * 
  * 				@作者：zhongjy
  * 
- * @时间: 2017-05-14
+ * @时间: 2017-05-21
  */
 public interface AutUserService extends IService<AutUser> {
 

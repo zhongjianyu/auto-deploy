@@ -38,8 +38,8 @@ public class CustomPasswordEncoder extends BCryptPasswordEncoder {
 
 	public static void main(String[] args) {
 		CustomPasswordEncoder cpe = new CustomPasswordEncoder();
-		System.out.println(cpe.encode("123"));
-		System.out.println(cpe.encode("123").length());
+		System.out.println(cpe.encode("a"));
+		System.out.println(cpe.encode("a").length());
 	}
 
 }

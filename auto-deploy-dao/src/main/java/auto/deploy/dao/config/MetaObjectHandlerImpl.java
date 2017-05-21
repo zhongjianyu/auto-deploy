@@ -28,9 +28,9 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 		 */
 		Object createTime = obj.getValue("createTime");
 		/**
-		 * 修改时间
+		 * 最后修改时间
 		 */
-		Object updateTime = obj.getValue("updateTime");
+		Object lastUpdateTime = obj.getValue("lastUpdateTime");
 		/**
 		 * 版本号
 		 */
@@ -39,19 +39,47 @@ public class MetaObjectHandlerImpl extends MetaObjectHandler {
 		 * 是否删除
 		 */
 		Object isDelete = obj.getValue("isDelete");
+		/**
+		 * 最后修改数据的用户ID
+		 */
+		Object lastUpdateUserId = obj.getValue("lastUpdateUserId");
+		/**
+		 * 最后修改数据的用户账号
+		 */
+		Object lastUpdateUserName = obj.getValue("lastUpdateUserName");
+		/**
+		 * 创建数据的用户ID
+		 */
+		Object createUserId = obj.getValue("createUserId");
+		/**
+		 * 创建数据的用户账号
+		 */
+		Object createUserName = obj.getValue("createUserName");
 
 		Date now = new Date();
 		if (createTime == null) {
 			obj.setValue("createTime", now);
 		}
-		if (updateTime == null) {
-			obj.setValue("updateTime", now);
+		if (lastUpdateTime == null) {
+			obj.setValue("lastUpdateTime", now);
 		}
 		if (version == null) {
 			obj.setValue("version", 0);
 		}
 		if (isDelete == null) {
 			obj.setValue("isDelete", 0);
+		}
+		if (lastUpdateUserId == null) {
+			obj.setValue("lastUpdateUserId", 1L);
+		}
+		if (lastUpdateUserName == null) {
+			obj.setValue("lastUpdateUserName", "1");
+		}
+		if (createUserId == null) {
+			obj.setValue("createUserId", 1L);
+		}
+		if (createUserName == null) {
+			obj.setValue("createUserName", "1");
 		}
 	}
 

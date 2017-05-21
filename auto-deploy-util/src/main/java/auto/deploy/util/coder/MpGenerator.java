@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -20,11 +19,11 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 public class MpGenerator {
 
 	public static void main(String[] args) {
-		//模块名
+		// 模块名
 		String moduleName = "aut";
-		//表名
-		String[] tableName = new String[] { "aut_widget", "aut_widget_role" };
-
+		// 表名
+		String[] tableName = new String[] { "aut_menu", "aut_menu_role", "aut_role", "aut_user", "aut_user_role", "aut_widget", "aut_widget_role" };
+		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
@@ -55,8 +54,9 @@ public class MpGenerator {
 		dsc.setUrl("jdbc:mysql://127.0.0.1:3306/auto-deploy?characterEncoding=utf8");
 		mpg.setDataSource(dsc);
 
-		// 策略配置
-		StrategyConfig strategy = new StrategyConfig();
+		// 策略配置(自定义，源代码有缺陷，重写里面的一个方法)
+		// StrategyConfig strategy = new StrategyConfig();
+		CustomStrategyConfig strategy = new CustomStrategyConfig();
 		// strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		strategy.setDbColumnUnderline(true);
@@ -65,7 +65,8 @@ public class MpGenerator {
 		// 自定义实体父类
 		strategy.setSuperEntityClass("auto.deploy.dao.entity.Entity");
 		// 自定义实体，公共字段
-		strategy.setSuperEntityColumns(new String[] { "id", "create_time", "update_time", "version", "is_delete" });
+		strategy.setSuperEntityColumns(new String[] { "id", "create_time", "last_update_time", "version", "is_delete", "last_update_user_id",
+				"last_update_user_name", "create_user_id", "create_user_name" });
 		// 自定义 mapper 父类
 		// strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
 		// 自定义 service 父类
@@ -92,7 +93,6 @@ public class MpGenerator {
 		// pc.setModuleName("aut");
 		pc.setService("service." + moduleName);
 		pc.setServiceImpl("service." + moduleName + ".impl");
-		
 
 		mpg.setPackageInfo(pc);
 

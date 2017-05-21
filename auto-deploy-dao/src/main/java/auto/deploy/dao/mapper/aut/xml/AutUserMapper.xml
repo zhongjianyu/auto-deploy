@@ -6,9 +6,13 @@
 	<resultMap id="BaseResultMap" type="auto.deploy.dao.entity.aut.AutUser">
 		<id column="id" property="id" />
 		<result column="create_time" property="createTime" />
-		<result column="update_time" property="updateTime" />
+		<result column="last_update_time" property="lastUpdateTime" />
 		<result column="version" property="version" />
 		<result column="is_delete" property="isDelete" />
+		<result column="last_update_user_id" property="lastUpdateUserId" />
+		<result column="last_update_user_name" property="lastUpdateUserName" />
+		<result column="create_user_id" property="createUserId" />
+		<result column="create_user_name" property="createUserName" />
 		<result column="user_pwd" property="userPwd" />
 		<result column="user_name" property="userName" />
 		<result column="is_active" property="isActive" />
@@ -20,7 +24,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, update_time, version, is_delete, user_pwd, user_name, is_active, is_account_expired, is_account_locked, is_credentials_expired, nick_name
+        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, user_pwd, user_name, is_active, is_account_expired, is_account_locked, is_credentials_expired, nick_name
     </sql>
 
 </mapper>
