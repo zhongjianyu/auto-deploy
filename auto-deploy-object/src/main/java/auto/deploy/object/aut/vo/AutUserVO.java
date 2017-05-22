@@ -15,11 +15,17 @@ import auto.deploy.dao.entity.aut.AutUser;
 public final class AutUserVO extends AutUser {
 
 	/**
-	 * @描述：TODO
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * 角色列表
+	 */
 	private List<AutRoleVO> roleList;
+	/**
+	 * 菜单列表
+	 */
+	private List<AutMenuVO> menuList;
 
 	public List<AutRoleVO> getRoleList() {
 		return roleList;
@@ -27,6 +33,14 @@ public final class AutUserVO extends AutUser {
 
 	public void setRoleList(List<AutRoleVO> roleList) {
 		this.roleList = roleList;
+	}
+
+	public List<AutMenuVO> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<AutMenuVO> menuList) {
+		this.menuList = menuList;
 	}
 
 }

@@ -34,7 +34,7 @@
 					<!-- <li class="layui-nav-item"><a href="javascript:;">清除缓存</a></li>
 					<li class="layui-nav-item"><a href="javascript:;">浏览网站</a></li>
 					<li class="layui-nav-item" id="video1"><a href="javascript:;">视频</a></li> -->
-					<li class="layui-nav-item"><a href="javascript:;" class="admin-header-user"> <img src="images/0.jpg" /> <span>${CURRENT_USER_NAME}</span>
+					<li class="layui-nav-item"><a href="javascript:;" class="admin-header-user"> <img src="images/0.jpg" /> <span>${CURRENT_NICK_NAME}</span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -82,7 +82,7 @@
 		</div>
 		<div class="site-mobile-shade"></div>
 		<form action="/logout.do" method="post" class="logout-form">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 
 		<!--锁屏模板 start-->
@@ -100,9 +100,9 @@
 	</div>
 </body>
 <script type="text/javascript" src="plugins/layui/layui.js"></script>
-<script type="text/javascript" src="datas/nav.js"></script>
-<script src="js/index.js"></script>
-<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/tool.js"></script>
 <script>
 	layui.use('layer', function() {
 		var $ = layui.jquery, layer = layui.layer;

@@ -10,9 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
+import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.aut.AutMenu;
+import auto.deploy.dao.entity.aut.AutMenuRole;
 import auto.deploy.dao.entity.aut.AutUser;
+import auto.deploy.dao.entity.aut.AutUserRole;
+import auto.deploy.object.aut.vo.AutMenuVO;
 import auto.deploy.object.aut.vo.AutRoleVO;
 import auto.deploy.object.aut.vo.AutUserVO;
+import auto.deploy.service.aut.AutMenuRoleService;
+import auto.deploy.service.aut.AutMenuService;
+import auto.deploy.service.aut.AutUserRoleService;
 import auto.deploy.service.aut.AutUserService;
 
 /**
@@ -28,6 +36,12 @@ public class UserService {
 
 	@Resource
 	private AutUserService autUserService;
+	@Resource
+	private AutUserRoleService autUserRoleService;
+	@Resource
+	private AutMenuRoleService autMenuRoleService;
+	@Resource
+	private AutMenuService autMenuService;
 
 	/**
 	 * 
@@ -46,15 +60,61 @@ public class UserService {
 			user = new AutUserVO();
 			BeanUtils.copyProperties(autUser, user);
 			List<AutRoleVO> roleList = new ArrayList<AutRoleVO>();
-			AutRoleVO role1 = new AutRoleVO();
-			role1.setRoleCode("sadmin");
-			role1.setRoleName("超级管理员");
-			AutRoleVO role2 = new AutRoleVO();
-			role2.setRoleCode("admin");
-			role2.setRoleName("管理员");
-			roleList.add(role1);
-			roleList.add(role2);
+			Where<AutUserRole> where = new Where<AutUserRole>();
+			where.eq("is_active", 1);
+			where.eq("user_id", autUser.getId());
+			List<AutUserRole> autUserRoleList = autUserRoleService.selectList(where);
+			List<String> roleCodeList = new ArrayList<String>();
+			for (AutUserRole autUserRole : autUserRoleList) {
+				// 获取角色列表
+				AutRoleVO autRoleVO = new AutRoleVO();
+				autRoleVO.setRoleCode(autUserRole.getRoleCode());
+				autRoleVO.setRoleName(autUserRole.getRoleName());
+				roleList.add(autRoleVO);
+				roleCodeList.add(autUserRole.getRoleCode());
+			}
 			user.setRoleList(roleList);
+			// 根据角色列表获取菜单数据:角色->菜单ID->菜单
+			Where<AutMenuRole> where2 = new Where<AutMenuRole>();
+			where2.eq("is_active", 1);
+			where2.in("role_code", roleCodeList);
+			List<AutMenuRole> autMenuRoleList = autMenuRoleService.selectList(where2);
+			List<Long> menuIdList = new ArrayList<Long>();
+			for (AutMenuRole autMenuRole : autMenuRoleList) {
+				menuIdList.add(autMenuRole.getMenuId());
+			}
+			Where<AutMenu> where3 = new Where<AutMenu>();
+			where3.eq("is_active", 1);
+			where3.in("id", menuIdList);
+			where3.orderBy("menu_rank", true);
+			List<AutMenu> autMenuList = autMenuService.selectList(where3);
+			List<AutMenu> autMenuChildList = new ArrayList<AutMenu>();
+			List<AutMenuVO> autMenuVOList = new ArrayList<AutMenuVO>();
+			for (AutMenu autMenu : autMenuList) {
+				if (autMenu.getMenuLevel().intValue() == 1) {
+					// 一级菜单
+					AutMenuVO autMenuVO = new AutMenuVO();
+					BeanUtils.copyProperties(autMenu, autMenuVO);
+					autMenuVOList.add(autMenuVO);
+				} else {
+					// 二级菜单
+					autMenuChildList.add(autMenu);
+				}
+			}
+			// 把二级菜单放到以及菜单中
+			for (AutMenuVO autMenuVO : autMenuVOList) {
+				List<AutMenuVO> children = new ArrayList<AutMenuVO>();
+				for (AutMenu autMenu : autMenuChildList) {
+					if (autMenuVO.getMenuCode().equals(autMenu.getParentCode())) {
+						AutMenuVO child = new AutMenuVO();
+						BeanUtils.copyProperties(autMenu, child);
+						children.add(child);
+					}
+				}
+				autMenuVO.setChildren(children);
+			}
+
+			user.setMenuList(autMenuVOList);
 		}
 		return user;
 	}

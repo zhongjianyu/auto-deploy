@@ -1,9 +1,12 @@
 package auto.deploy.security;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+
+import auto.deploy.object.aut.vo.AutMenuVO;
 
 /**
  * 
@@ -16,6 +19,8 @@ import org.springframework.security.core.userdetails.User;
 public class CustomUser extends User {
 
 	private Long userId;
+	private String nickName;
+	private List<AutMenuVO> menuList;
 
 	/**
 	 * 
@@ -25,7 +30,6 @@ public class CustomUser extends User {
 	public CustomUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
 			boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		setUserId(null);
 	}
 
 	public Long getUserId() {
@@ -34,6 +38,22 @@ public class CustomUser extends User {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public List<AutMenuVO> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<AutMenuVO> menuList) {
+		this.menuList = menuList;
 	}
 
 }

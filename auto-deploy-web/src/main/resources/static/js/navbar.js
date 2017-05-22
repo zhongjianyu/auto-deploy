@@ -198,7 +198,7 @@ layui.define(['element', 'common'], function(exports) {
 			}
 			if(data[i].children !== undefined && data[i].children.length > 0) {
 				ulHtml += '<a href="javascript:;">';
-				if(data[i].icon !== undefined && data[i].icon !== '') {
+				if(data[i].icon !== undefined && data[i].icon !== '' && data[i].icon !== null) {
 					if(data[i].icon.indexOf('fa-') !== -1) {
 						ulHtml += '<i class="fa ' + data[i].icon + '" aria-hidden="true" data-icon="' + data[i].icon + '"></i>';
 					} else {
@@ -211,7 +211,7 @@ layui.define(['element', 'common'], function(exports) {
 				for(var j = 0; j < data[i].children.length; j++) {
 					ulHtml += '<dd title="'+data[i].children[j].title+'">';
 					ulHtml += '<a href="javascript:;" data-url="' + data[i].children[j].href + '">';
-					if(data[i].children[j].icon !== undefined && data[i].children[j].icon !== '') {
+					if(data[i].children[j].icon !== undefined && data[i].children[j].icon !== '' && data[i].children[j].icon !== null) {
 						if(data[i].children[j].icon.indexOf('fa-') !== -1) {
 							ulHtml += '<i class="fa ' + data[i].children[j].icon + '" data-icon="' + data[i].children[j].icon + '" aria-hidden="true"></i>';
 						} else {
@@ -226,7 +226,7 @@ layui.define(['element', 'common'], function(exports) {
 			} else {
 				var dataUrl = (data[i].href !== undefined && data[i].href !== '') ? 'data-url="' + data[i].href + '"' : '';
 				ulHtml += '<a href="javascript:;" ' + dataUrl + '>';
-				if(data[i].icon !== undefined && data[i].icon !== '') {
+				if(data[i].icon !== undefined && data[i].icon !== '' && data[i].icon !== null) {
 					if(data[i].icon.indexOf('fa-') !== -1) {
 						ulHtml += '<i class="fa ' + data[i].icon + '" aria-hidden="true" data-icon="' + data[i].icon + '"></i>';
 					} else {

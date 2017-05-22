@@ -40,16 +40,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 		CustomUser userDetail = new CustomUser(user.getUserName(), user.getUserPwd(), user.getIsActive() == 1, user.getIsAccountExpired() == 0,
 				user.getIsCredentialsExpired() == 0, user.getIsAccountLocked() == 0, getGrantedAuthorities(user));
 		userDetail.setUserId(user.getId());
+		userDetail.setNickName(user.getNickName());
+		userDetail.setMenuList(user.getMenuList());
 		return userDetail;
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities(AutUserVO user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		for (AutRoleVO role : user.getRoleList()) {
-			System.out.println("Role : " + role);
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleCode()));
 		}
-		System.out.print("authorities :" + authorities);
 		return authorities;
 	}
 }
