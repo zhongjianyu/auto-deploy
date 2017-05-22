@@ -87,8 +87,6 @@ public class A implements TemplateDirectiveModel {
 					out.write(button.toString());
 				}
 			}
-
-			// System.out.println(userDetails);
 		}
 
 	}
