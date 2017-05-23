@@ -13,14 +13,19 @@
 <body>
 	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="admin-main" style="margin: 10px;">
-
-		<blockquote class="layui-elem-quote" style="padding: 5px; text-align: right;">
-			<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe608;" text="自定义"/> <@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" text="自定义"/> <a href="javascript:void(0)" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()"> <i class="layui-icon">&#xe608;</i> 添加信息
-			</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i class="layui-icon">&#xe608;</i> 导入信息
-			</a> <a href="#" class="layui-btn layui-btn-small"> <i class="fa fa-shopping-cart"></i> 导出信息
-			</a> <a href="#" class="layui-btn layui-btn-small" id="getSelected"> <i class="fa fa-shopping-cart"></i> 获取全选信息
-			</a> <a href="javascript:;" class="layui-btn layui-btn-small" id="search"> <i class="layui-icon">&#xe615;</i> 搜索
+		<blockquote class="layui-elem-quote" style="padding: 5px;">
+			<div class="layui-input-inline">
+				<input type="text" name="username" placeholder="输入查询关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
+			</div>
+			<a href="javascript:;" class="layui-btn layui-btn-small" id="search"> <i class="layui-icon">&#xe615;</i> 搜索
 			</a>
+			<div style="float: right;">
+				<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe608;" text="自定义"/> <@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" text="自定义"/> <a href="javascript:void(0)" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()"> <i class="layui-icon">&#xe608;</i> 添加信息
+				</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i class="layui-icon">&#xe608;</i> 导入信息
+				</a> <a href="#" class="layui-btn layui-btn-small"> <i class="fa fa-shopping-cart"></i> 导出信息
+				</a> <a href="#" class="layui-btn layui-btn-small" id="getSelected"> <i class="fa fa-shopping-cart"></i> 获取全选信息
+				</a>
+			</div>
 		</blockquote>
 		<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
 			<table class="layui-table admin-table">
