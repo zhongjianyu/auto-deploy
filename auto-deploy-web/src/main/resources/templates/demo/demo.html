@@ -14,23 +14,12 @@
 	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="admin-main" style="margin: 10px;">
 
-		<blockquote class="layui-elem-quote" style="padding: 5px;text-align: right;">
-			<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe608;" text="自定义"/>
-			<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" text="自定义"/>
-			<a href="javascript:void(0)" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()">
-				<i class="layui-icon">&#xe608;</i> 添加信息
-			</a>
-			<a href="#" class="layui-btn layui-btn-small" id="import">
-				<i class="layui-icon">&#xe608;</i> 导入信息
-			</a>
-			<a href="#" class="layui-btn layui-btn-small">
-				<i class="fa fa-shopping-cart"></i> 导出信息
-			</a>
-			<a href="#" class="layui-btn layui-btn-small" id="getSelected">
-				<i class="fa fa-shopping-cart"></i> 获取全选信息
-			</a>
-			<a href="javascript:;" class="layui-btn layui-btn-small" id="search">
-				<i class="layui-icon">&#xe615;</i> 搜索
+		<blockquote class="layui-elem-quote" style="padding: 5px; text-align: right;">
+			<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe608;" text="自定义"/> <@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" text="自定义"/> <a href="javascript:void(0)" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()"> <i class="layui-icon">&#xe608;</i> 添加信息
+			</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i class="layui-icon">&#xe608;</i> 导入信息
+			</a> <a href="#" class="layui-btn layui-btn-small"> <i class="fa fa-shopping-cart"></i> 导出信息
+			</a> <a href="#" class="layui-btn layui-btn-small" id="getSelected"> <i class="fa fa-shopping-cart"></i> 获取全选信息
+			</a> <a href="javascript:;" class="layui-btn layui-btn-small" id="search"> <i class="layui-icon">&#xe615;</i> 搜索
 			</a>
 		</blockquote>
 		<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
@@ -52,7 +41,11 @@
 							<td>{{value.id}}</td>
 							<td>{{value.userName}}</td>
 							<td>{{value.createTime}}</td>
-							<td><a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a>  <a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a></td>
+							<td>
+								<a href="/detail-1" target="_blank" class="layui-btn layui-btn-mini">编辑</a>
+								<a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">预览</a>
+								<a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
+							</td>
 						</tr>
 					{{/each}}
 					</script>
