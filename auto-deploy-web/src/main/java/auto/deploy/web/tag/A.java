@@ -23,9 +23,9 @@ import freemarker.template.TemplateModel;
 
 /**
  * 
- * @描述：自定义freemarker的button标签(加入权限控制)
+ * @描述：自定义freemarker的button标签(加入权限控制).
  *
- * 									@作者：zhongjy
+ * @作者：zhongjy
  *
  * @时间：2017年5月21日 下午8:53:33
  */
