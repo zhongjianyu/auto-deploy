@@ -6,9 +6,9 @@ import auto.deploy.dao.entity.aut.AutMenu;
 
 /**
  * 
- * @描述：菜单对象(tree)
+ * @描述：菜单对象(tree).
  *
- * 				@作者：zhongjy
+ * @作者：zhongjy
  *
  * @时间：2017年5月3日 下午5:09:27
  */

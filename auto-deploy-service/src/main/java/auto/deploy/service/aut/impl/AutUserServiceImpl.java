@@ -13,9 +13,9 @@ import auto.deploy.service.aut.AutUserService;
 
 /**
  * 
- * @描述：用户表(服务实现类)
+ * @描述：用户表(服务实现类).
  * 
- * 				@作者：zhongjy
+ * @作者：zhongjy
  * 
  * @时间: 2017-05-21
  */

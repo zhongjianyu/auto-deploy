@@ -8,9 +8,9 @@ import auto.deploy.object.PageBean;
 
 /**
  * 
- * @描述：用户表(服务类)
+ * @描述：用户表(服务类).
  * 
- * 				@作者：zhongjy
+ * @作者：zhongjy
  * 
  * @时间: 2017-05-21
  */

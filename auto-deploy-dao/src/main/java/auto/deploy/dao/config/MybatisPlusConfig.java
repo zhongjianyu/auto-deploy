@@ -73,9 +73,9 @@ public class MybatisPlusConfig {
 
 	/**
 	 * 
-	 * @描述：性能分析插件(生产环境要去掉本插件，直接注释掉即可)
+	 * @描述：性能分析插件(生产环境要去掉本插件，直接注释掉即可).
 	 *
-	 * 								@返回：PerformanceInterceptor
+	 * @返回：PerformanceInterceptor
 	 *
 	 * @作者：zhongjy
 	 *

@@ -103,9 +103,9 @@ public class EncryptUtil {
 
 	/**
 	 * 
-	 * @描述：MD5加密（信息摘要算法），返回加密后的十六进制串(长度32)
+	 * @描述：MD5加密（信息摘要算法），返回加密后的十六进制串(长度32).
 	 *
-	 * 									@返回：String
+	 * @返回：String
 	 *
 	 * @作者：zhongjy
 	 *
@@ -135,9 +135,9 @@ public class EncryptUtil {
 
 	/**
 	 * 
-	 * @描述：SHA加密（安全散列算法），返回加密后的十六进制串(长度40)
+	 * @描述：SHA加密（安全散列算法），返回加密后的十六进制串(长度40).
 	 *
-	 * 									@返回：String
+	 * @返回：String
 	 *
 	 * @作者：zhongjy
 	 *
@@ -167,9 +167,9 @@ public class EncryptUtil {
 
 	/**
 	 * 
-	 * @描述：DES加密（数据加密算法）
+	 * @描述：DES加密（数据加密算法）.
 	 *
-	 * 					@返回：String
+	 * @返回：String
 	 *
 	 * @作者：zhongjy
 	 *
@@ -208,9 +208,9 @@ public class EncryptUtil {
 
 	/**
 	 * 
-	 * @描述：DES解密（数据加密算法）
+	 * @描述：DES解密（数据加密算法）.
 	 *
-	 * 					@返回：String
+	 * @返回：String
 	 *
 	 * @作者：zhongjy
 	 *
@@ -303,10 +303,8 @@ public class EncryptUtil {
 	public static void main(String[] args) {
 		System.out.println(encrypt("123"));
 		System.out.println(encrypt("123"));
-		System.out.println(
-				match("123", "8758d202579ef2872f1e3992c52777a960f32d9f160e66e3f8d0737f5640d534abe7cb3380bed976"));
-		System.out.println(
-				match("123", "919721bbf712ec410c5a5fd3db990bbe6ca3cc855128bd7890a33821eac910f6188e0e1fed82f3a4"));
+		System.out.println(match("123", "8758d202579ef2872f1e3992c52777a960f32d9f160e66e3f8d0737f5640d534abe7cb3380bed976"));
+		System.out.println(match("123", "919721bbf712ec410c5a5fd3db990bbe6ca3cc855128bd7890a33821eac910f6188e0e1fed82f3a4"));
 		/*
 		 * 8758d202579ef2872f1e3992c52777a960f32d9f160e66e3f8d0737f5640d534abe7cb3380bed976
 		 * 919721bbf712ec410c5a5fd3db990bbe6ca3cc855128bd7890a33821eac910f6188e0e1fed82f3a4
@@ -316,10 +314,10 @@ public class EncryptUtil {
 
 		System.out.println(encryptMD5("adfdfdf"));
 		System.out.println(encryptSHA("adfdfdf222222222222"));
-		
+
 		System.out.println(encryptDES("fdfdfdfdfdfdfdf889", "seven"));
 		System.out.println(decryptDES("663531534d6c50676d5a347a516730564d4d64752f5a736651494a726d434254", "seven"));
-		
+
 		System.out.println(str2hex("ffdd123中国"));
 		System.out.println(hex2str("66666464313233e4b8ade59bbd"));
 	}
