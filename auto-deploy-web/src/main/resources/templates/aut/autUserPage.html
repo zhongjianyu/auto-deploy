@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Table</title>
+<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="../css/global.css" media="all">
+<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/table.css" />
+</head>
+
+<body>
+	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div class="admin-main" style="margin: 10px;">
+		<blockquote class="layui-elem-quote" style="padding: 5px;">
+			<form class="layui-form" action="">
+				<div class="layui-input-inline">
+					<input type="text" name="username" placeholder="输入查询关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
+				</div>
+				<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe615;"
+				text="搜索"/>
+				<div style="float: right;"><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()"
+					iclass="layui-icon" icon="&#xe608;" text="新增用户"/></div>
+			</form>
+		</blockquote>
+		<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+			<table class="layui-table admin-table">
+				<thead>
+					<tr>
+						<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+						<th>用户ID</th>
+						<th>用户账号</th>
+						<th>创建时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="paging-data">
+					<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.id}}</td>
+							<td>{{value.userName}}</td>
+							<td>{{value.createTime}}</td>
+							<td>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit()" text="编辑"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView()" text="预览"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete()" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+				</tbody>
+			</table>
+		</div>
+		<div class="admin-table-page" style="border-width: 0px;">
+			<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../plugins/layui/lay/modules/laypage.js"></script>
+	<script type="text/javascript" src="../plugins/layui/lay/modules/form.js"></script>
+	<script type="text/javascript" src="../js/template-web.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/tool.js"></script>
+	<script>
+		var param = new Object();
+		param.container = "paging";
+		param.pageSize = 2;
+		param.url = "../demo/list";
+		tool.loadpage(param);
+
+		function getCheckItmes() {
+			$(".check-id:checked").each(function() {
+				console.log($(this).attr("id"));
+				;
+			});
+		}
+		//添加事件
+		layui.use('form', function() {
+			var form = layui.form();
+			form.on('select(isActive)', function(data) {
+				alert(data.value);
+				//form.render('checkbox');
+			});
+			//form.render();
+		});
+	</script>
+</body>
+
+</html>
