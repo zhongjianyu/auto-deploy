@@ -5,7 +5,7 @@ import ${superMapperClassPackage};
 
 /**
  * 
- * @描述：${table.comment}(Mapper接口)
+ * @描述：${table.comment}(Mapper接口).
  * 
  * @作者：${author}
  * 

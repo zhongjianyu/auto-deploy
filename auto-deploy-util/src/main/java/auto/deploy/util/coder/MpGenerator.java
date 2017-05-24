@@ -20,9 +20,9 @@ public class MpGenerator {
 
 	public static void main(String[] args) {
 		// 模块名
-		String moduleName = "aut";
+		String moduleName = "sys";
 		// 表名
-		String[] tableName = new String[] { "aut_menu", "aut_menu_role", "aut_role", "aut_user", "aut_user_role", "aut_widget", "aut_widget_role" };
+		String[] tableName = new String[] { "sys_data_dict", "sys_operate_log" };
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
