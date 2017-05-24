@@ -2,9 +2,12 @@ package auto.deploy.web.tag;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Map;
 
-import auto.deploy.service.aut.AutWidgetRoleService;
+import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.sys.SysDataDict;
+import auto.deploy.service.sys.SysDataDictService;
 import freemarker.core.Environment;
 import freemarker.template.SimpleScalar;
 import freemarker.template.TemplateDirectiveBody;
@@ -22,10 +25,10 @@ import freemarker.template.TemplateModel;
  */
 public class Select implements TemplateDirectiveModel {
 
-	private AutWidgetRoleService autWidgetRoleService;
+	private SysDataDictService sysDataDictService;
 
-	public Select(AutWidgetRoleService autWidgetRoleService) {
-		this.autWidgetRoleService = autWidgetRoleService;
+	public Select(SysDataDictService sysDataDictService) {
+		this.sysDataDictService = sysDataDictService;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -33,27 +36,44 @@ public class Select implements TemplateDirectiveModel {
 	public void execute(Environment environment, Map map, TemplateModel[] model, TemplateDirectiveBody body) throws TemplateException, IOException {
 		Writer out = environment.getOut();
 		// 获取标签属性
-		Object codeObj = map.get("code");
+		Object dictObj = map.get("dict");
 		Object idObj = map.get("id");
 		Object nameObj = map.get("name");
 		Object defObj = map.get("def");
 
-		String code = codeObj == null ? null : ((SimpleScalar) codeObj).getAsString();
+		String dict = dictObj == null ? null : ((SimpleScalar) dictObj).getAsString();
 		String id = idObj == null ? null : ((SimpleScalar) idObj).getAsString();
 		String name = nameObj == null ? null : ((SimpleScalar) nameObj).getAsString();
 		String def = defObj == null ? null : ((SimpleScalar) defObj).getAsString();
 
 		// 构造页面需要显示的元素
 		StringBuffer select = new StringBuffer();
-		select.append("<div class=\"layui-input-inline\">");
-		select.append(" <select name=\"" + name + "\" id=\"" + id + "\">");
-		select.append("	 <option value=\"\">请选择</option>");
-		select.append("	 <option value=\"西湖区\">西湖区</option>");
-		select.append("	 <option value=\"余杭区\">余杭区</option>");
-		select.append("	 <option value=\"拱墅区\">临安市</option>");
-		select.append(" </select>");
-		select.append("</div>");
-
+		select.append("	<div class=\"layui-input-inline\">");
+		select.append("<select ");
+		if (name != null) {
+			select.append("name=\"" + name + "\" ");
+		}
+		if (name != null) {
+			select.append("id=\"" + id + "\" lay-filter=\"" + id + "\" ");
+		}
+		select.append(">");
+		select.append("	 		<option value=\" \">请选择</option>");
+		// 根据dictCode获取数据
+		Where<SysDataDict> where = new Where<SysDataDict>();
+		where.eq("is_active", 1);
+		where.eq("dict_code", dict);
+		List<SysDataDict> dictList = sysDataDictService.selectList(where);
+		for (SysDataDict sysDataDict : dictList) {
+			if (sysDataDict.getDictKey().equals(def)) {
+				select.append("	 		<option value=\"" + sysDataDict.getDictKey() + "\" selected=\"selected\">" + sysDataDict.getDictValue()
+						+ "</option>");
+			} else {
+				select.append("	 		<option value=\"" + sysDataDict.getDictKey() + "\">" + sysDataDict.getDictValue() + "</option>");
+			}
+		}
+		select.append(" 	</select>");
+		select.append("	</div>");
+		out.write(select.toString());
 	}
 
 }

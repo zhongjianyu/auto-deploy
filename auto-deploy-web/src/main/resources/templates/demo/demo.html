@@ -14,11 +14,14 @@
 	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="admin-main" style="margin: 10px;">
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
-			<div class="layui-input-inline">
-				<input type="text" name="username" placeholder="输入查询关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
-			</div>
-			<a href="javascript:;" class="layui-btn layui-btn-small" id="search"> <i class="layui-icon">&#xe615;</i> 搜索
-			</a>
+			<form class="layui-form" action="">
+				<div class="layui-input-inline">
+					<input type="text" name="username" placeholder="输入查询关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
+				</div>
+				<a href="javascript:;" class="layui-btn layui-btn-small" id="search"> <i class="layui-icon">&#xe615;</i> 搜索
+				</a> 是否激活 <@select dict="IS_ACTIVE" id="isActive" name="isActive" def=""/>
+
+			</form>
 			<div style="float: right;">
 				<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" iclass="layui-icon" icon="&#xe608;" text="自定义"/> <@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="getCheckItmes()" text="自定义"/> <a href="javascript:void(0)" class="layui-btn layui-btn-small" id="add" onclick="getCheckItmes()"> <i class="layui-icon">&#xe608;</i> 添加信息
 				</a> <a href="#" class="layui-btn layui-btn-small" id="import"> <i class="layui-icon">&#xe608;</i> 导入信息
@@ -80,6 +83,15 @@
 				;
 			});
 		}
+		//添加事件
+		layui.use('form', function() {
+			var form = layui.form();
+			form.on('select(isActive)', function(data) {
+				alert(data.value);
+				//form.render('checkbox');
+			});
+			//form.render();
+		});
 	</script>
 </body>
 
