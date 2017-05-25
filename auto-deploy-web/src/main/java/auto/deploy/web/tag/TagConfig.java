@@ -34,7 +34,9 @@ public class TagConfig {
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 按钮标签
 		map.put("a", new A(autWidgetRoleService));
-		//下拉标签
+		// 按钮标签
+		map.put("button", new Button(autWidgetRoleService));
+		// 下拉标签
 		map.put("select", new Select(sysDataDictService));
 		freeMarkerConfigurer.setFreemarkerVariables(map);
 		freeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates");

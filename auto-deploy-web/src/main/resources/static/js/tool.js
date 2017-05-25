@@ -78,5 +78,27 @@ var tool = {
 				}
 			}
 		});
+	},
+	/**
+	 * 成功提示
+	 */
+	success : function(message) {
+		layer.alert(message, {
+			title : "操作提示",
+			icon : 1
+		}, function(index) {
+			layer.close(index);
+		});
+	},
+	/**
+	 * 失败提示
+	 */
+	error : function(message) {
+		layer.alert(message, {
+			title : "操作提示",
+			icon : 2
+		}, function(index) {
+			layer.close(index);
+		});
 	}
 };
