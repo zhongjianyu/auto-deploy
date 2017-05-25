@@ -43,7 +43,6 @@
 			form.verify();
 			//监听提交
 			form.on('submit(form-submit)', function(data) {
-				console.log(123);
 				tool.post("../index/saveUserInfo", $("#change-userinfo-form").serialize(), postCallBack, false);
 				return false;
 			});

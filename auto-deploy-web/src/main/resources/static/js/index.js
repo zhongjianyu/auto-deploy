@@ -19,11 +19,11 @@ layui.config({
 		// },
 		contextMenu : true,
 		onSwitch : function(data) {
-			console.log(data.id); // 当前Tab的Id
-			console.log(data.index); // 得到当前Tab的所在下标
-			console.log(data.elem); // 得到当前的Tab大容器
+			//console.log(data.id); // 当前Tab的Id
+			//console.log(data.index); // 得到当前Tab的所在下标
+			//console.log(data.elem); // 得到当前的Tab大容器
 
-			console.log(tab.getCurrentTabId())
+			//console.log(tab.getCurrentTabId())
 		}
 	});
 	// iframe自适应
@@ -35,11 +35,11 @@ layui.config({
 		});
 	}).resize();
 	var navs = null;
-	console.log($("#_csrf").val());
+	//console.log($("#_csrf").val());
 	tool.post("index/menuList", "_csrf=" + $("#_csrf").val(), function(navList) {
 		navs = navList;
 	}, false);
-	console.log(navs);
+	//console.log(navs);
 	// 设置navbar
 	navbar.set({
 		spreadOne : true,
