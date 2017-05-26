@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import auto.deploy.dao.entity.aut.AutUser;
 import auto.deploy.object.PageBean;
+import auto.deploy.object.RetMsg;
 import auto.deploy.service.aut.AutUserService;
 
 /**
@@ -43,5 +44,13 @@ public class AutUserController {
 			e.printStackTrace();
 		}
 		return page;
+	}
+	
+	@RequestMapping("/addUser")
+	@ResponseBody
+	public RetMsg addUser(HttpServletRequest request, HttpServletResponse response, AutUser autUser) {
+		RetMsg retMsg = new RetMsg();
+		autUserService.insert(autUser);
+		return retMsg;
 	}
 }

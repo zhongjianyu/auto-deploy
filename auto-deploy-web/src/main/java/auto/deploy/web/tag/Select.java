@@ -40,15 +40,19 @@ public class Select implements TemplateDirectiveModel {
 		Object idObj = map.get("id");
 		Object nameObj = map.get("name");
 		Object defObj = map.get("def");
+		Object sclassObj = map.get("class");
+		Object layVerifyObject = map.get("layVerify");
 
 		String dict = dictObj == null ? null : ((SimpleScalar) dictObj).getAsString();
 		String id = idObj == null ? null : ((SimpleScalar) idObj).getAsString();
 		String name = nameObj == null ? null : ((SimpleScalar) nameObj).getAsString();
 		String def = defObj == null ? null : ((SimpleScalar) defObj).getAsString();
+		String sclass = sclassObj == null ? null : ((SimpleScalar) sclassObj).getAsString();
+		String layVerify = layVerifyObject == null ? null : ((SimpleScalar) layVerifyObject).getAsString();
 
 		// 构造页面需要显示的元素
 		StringBuffer select = new StringBuffer();
-		select.append("	<div class=\"layui-input-inline\">");
+		select.append("	<div class=\""+sclass+"\">");
 		select.append("<select ");
 		if (name != null) {
 			select.append("name=\"" + name + "\" ");
@@ -56,8 +60,11 @@ public class Select implements TemplateDirectiveModel {
 		if (name != null) {
 			select.append("id=\"" + id + "\" lay-filter=\"" + id + "\" ");
 		}
+		if(layVerify != null){
+			select.append("lay-verify=\""+layVerify+"\" ");
+		}
 		select.append(">");
-		select.append("	 		<option value=\" \">请选择</option>");
+		select.append("	 		<option value=\" \"></option>");
 		// 根据dictCode获取数据
 		Where<SysDataDict> where = new Where<SysDataDict>();
 		where.eq("is_active", 1);
