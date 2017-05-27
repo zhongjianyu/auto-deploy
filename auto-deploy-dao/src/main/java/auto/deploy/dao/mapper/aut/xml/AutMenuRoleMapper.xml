@@ -18,11 +18,12 @@
 		<result column="is_active" property="isActive" />
 		<result column="role_name" property="roleName" />
 		<result column="role_code" property="roleCode" />
+		<result column="role_id" property="roleId" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, menu_code, menu_id, is_active, role_name, role_code
+        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, menu_code, menu_id, is_active, role_name, role_code, role_id
     </sql>
 
 </mapper>

@@ -20,9 +20,9 @@ public class MpGenerator {
 
 	public static void main(String[] args) {
 		// 模块名
-		String moduleName = "sys";
+		String moduleName = "aut";
 		// 表名
-		String[] tableName = new String[] { "sys_data_dict"};
+		String[] tableName = new String[] { "aut_menu", "aut_menu_role", "aut_role", "aut_user_role", "aut_widget", "aut_widget_role" };
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
@@ -90,7 +90,7 @@ public class MpGenerator {
 		pc.setEntity("dao.entity." + moduleName);
 		pc.setMapper("dao.mapper." + moduleName);
 		pc.setXml("dao.mapper." + moduleName + ".xml");
-		//pc.setModuleName(moduleName);
+		// pc.setModuleName(moduleName);
 		pc.setService("service." + moduleName);
 		pc.setServiceImpl("service." + moduleName + ".impl");
 
@@ -104,6 +104,7 @@ public class MpGenerator {
 		tc.setXml("code_template/mapper.xml.vm");
 		tc.setService("code_template/service.java.vm");
 		tc.setServiceImpl("code_template/serviceImpl.java.vm");
+		
 		mpg.setTemplate(tc);
 
 		// 执行生成

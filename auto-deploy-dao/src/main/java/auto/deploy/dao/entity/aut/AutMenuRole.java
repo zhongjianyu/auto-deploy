@@ -4,11 +4,11 @@ import auto.deploy.dao.entity.Entity;
 
 /**
  * 
- * @描述：菜单-角色表(实体类)
+ * @描述：菜单-角色表(实体类).
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-21
+ * @时间: 2017-05-27
  */
 public class AutMenuRole extends Entity<AutMenuRole> {
 
@@ -34,6 +34,10 @@ public class AutMenuRole extends Entity<AutMenuRole> {
      * 角色代码(唯一)
      */
 	private String roleCode;
+    /**
+     * 角色ID
+     */
+	private Long roleId;
 
 
 	public String getMenuCode() {
@@ -78,6 +82,15 @@ public class AutMenuRole extends Entity<AutMenuRole> {
 
 	public AutMenuRole setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
+		return this;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public AutMenuRole setRoleId(Long roleId) {
+		this.roleId = roleId;
 		return this;
 	}
 

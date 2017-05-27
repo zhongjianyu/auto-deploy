@@ -4,11 +4,11 @@ import auto.deploy.dao.entity.Entity;
 
 /**
  * 
- * @描述：菜单表(实体类)
+ * @描述：菜单表(实体类).
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-21
+ * @时间: 2017-05-27
  */
 public class AutMenu extends Entity<AutMenu> {
 
