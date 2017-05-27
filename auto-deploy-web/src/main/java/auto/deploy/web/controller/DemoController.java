@@ -39,7 +39,7 @@ public class DemoController {
 	public Page<AutUser> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean) {
 		Page<AutUser> page = null;
 		try {
-			page = autUserService.list(pageBean);
+			page = autUserService.list(pageBean,null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

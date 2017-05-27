@@ -23,10 +23,9 @@ import auto.deploy.service.aut.AutUserService;
 public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>implements AutUserService {
 
 	@Override
-	public Page<AutUser> list(PageBean pageBean) throws Exception {
+	public Page<AutUser> list(PageBean pageBean, AutUser obj) throws Exception {
 		Where<AutUser> where = new Where<AutUser>();
 		where.orderBy("create_time", false);
-		where.eq("is_delete", 0);
 		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
 	}

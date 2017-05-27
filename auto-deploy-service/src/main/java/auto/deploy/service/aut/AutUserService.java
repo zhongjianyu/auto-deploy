@@ -16,5 +16,15 @@ import auto.deploy.object.PageBean;
  */
 public interface AutUserService extends IService<AutUser> {
 
-	public Page<AutUser> list(PageBean pageBean) throws Exception;
+	/**
+	 * 
+	 * @描述：用户表(分页列表).
+	 *
+	 * @返回：Page<AutUser>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月27日 下午4:52:01
+	 */
+	public Page<AutUser> list(PageBean pageBean, AutUser obj) throws Exception;
 }

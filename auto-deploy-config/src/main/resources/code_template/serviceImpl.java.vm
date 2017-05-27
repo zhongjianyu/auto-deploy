@@ -5,6 +5,9 @@ import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.plugins.Page;
+import auto.deploy.dao.config.Where;
+import auto.deploy.object.PageBean;
 
 /**
  * 
@@ -16,5 +19,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
-	
+
+	@Override
+	public Page<${entity}> list(PageBean pageBean, ${entity} obj) throws Exception {
+		Where<${entity}> where = new Where<${entity}>();
+		where.orderBy("create_time", false);
+		Page<${entity}> page = selectPage(new Page<${entity}>(pageBean.getPageNum(), pageBean.getPageSize()), where);
+		return page;
+	}	
 }

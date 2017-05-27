@@ -22,7 +22,7 @@ public class MpGenerator {
 		// 模块名
 		String moduleName = "sys";
 		// 表名
-		String[] tableName = new String[] { "sys_data_dict", "sys_operate_log" };
+		String[] tableName = new String[] { "sys_data_dict"};
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
@@ -74,7 +74,7 @@ public class MpGenerator {
 		// 自定义 service 实现类父类
 		// strategy.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
 		// 自定义 controller 父类
-		// strategy.setSuperControllerClass("com.baomidou.demo.TestController");
+		strategy.setSuperControllerClass("auto.deploy.web.controller.BaseController");
 		// 【实体】是否生成字段常量（默认 false）
 		// strategy.setEntityColumnConstant(true);
 		// 【实体】是否为构建者模型（默认 false）
@@ -90,7 +90,7 @@ public class MpGenerator {
 		pc.setEntity("dao.entity." + moduleName);
 		pc.setMapper("dao.mapper." + moduleName);
 		pc.setXml("dao.mapper." + moduleName + ".xml");
-		// pc.setModuleName("aut");
+		//pc.setModuleName(moduleName);
 		pc.setService("service." + moduleName);
 		pc.setServiceImpl("service." + moduleName + ".impl");
 
