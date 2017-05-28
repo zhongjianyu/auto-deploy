@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutUser;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
+import auto.deploy.security.CustomPasswordEncoder;
 import auto.deploy.service.aut.AutUserService;
 
 /**
@@ -24,10 +26,12 @@ import auto.deploy.service.aut.AutUserService;
  * @时间: 2017-05-21
  */
 @Controller
-@RequestMapping("/autUser")
+@RequestMapping("/sys/autUser")
 public class AutUserController {
 	@Resource
 	private AutUserService autUserService;
+	@Resource
+	private CustomPasswordEncoder customPasswordEncoder;
 
 	/**
 	 * 
@@ -81,11 +85,19 @@ public class AutUserController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 
-		// obj.set...
+		// 检查用户名是否存在
+		Where<AutUser> where = new Where<AutUser>();
+		where.eq("user_name", obj.getUserName());
+		if (autUserService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("账号已被注册");
+		} else {
+			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
+			autUserService.insert(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 
-		autUserService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
 

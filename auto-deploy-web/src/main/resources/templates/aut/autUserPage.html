@@ -4,10 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Table</title>
-<link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
-<link rel="stylesheet" href="../css/global.css" media="all">
-<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="../css/table.css" />
+<link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="../../css/global.css" media="all">
+<link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/table.css" />
 </head>
 
 <body>
@@ -16,9 +16,9 @@
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
 			<form class="layui-form" action="">
 				<div class="layui-input-inline">
-					<input type="text" name="username" placeholder="输入查询关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
+					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
 				</div>
-				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="getCheckItmes()" iclass="layui-icon"
+				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
 					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="openAddUser()" iclass="layui-icon"
@@ -74,7 +74,7 @@
 	</div>
 	<!-- 新增用户窗口 -->
 	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-add-user">
-		<form class="layui-form" id="change-pwd-form">
+		<form class="layui-form" id="add-user-form">
 			<div class="layui-form-item">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<label class="layui-form-label">账号</label>
@@ -91,12 +91,16 @@
 				</div>
 				<label class="layui-form-label">密码确认</label>
 				<div class="layui-input-block">
-					<input type="password" name="userPwd2" id="userPwd2" lay-verify="userPwd2" autocomplete="off" placeholder="新密码确认" class="layui-input">
+					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd" autocomplete="off" placeholder="新密码确认" class="layui-input">
 				</div>
-				<label class="layui-form-label">是否激活</label> <@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive"
-				class="layui-input-block" def=""/> <label class="layui-form-label">是否过期</label> <@select dict="IS_EXPIRED" layVerify="required"
-				id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/> <label class="layui-form-label">是否锁定</label> <@select
-				dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
+				<label class="layui-form-label">是否激活</label>
+				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
+				<label class="layui-form-label">账号状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
+				<label class="layui-form-label">是否锁定</label>
+				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
+				<label class="layui-form-label">证书状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 				<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
 					<button class="layui-btn layui-btn-small" lay-submit="" lay-filter="form-add-submit">保存</button>
 					<button type="reset" class="layui-btn layui-btn-small layui-btn-primary">重置</button>
@@ -104,35 +108,22 @@
 			</div>
 		</form>
 	</div>
-	<script type="text/javascript" src="../plugins/layui/layui.js"></script>
-	<script type="text/javascript" src="../plugins/layui/lay/modules/laypage.js"></script>
-	<script type="text/javascript" src="../plugins/layui/lay/modules/form.js"></script>
-	<script type="text/javascript" src="../js/template-web.js"></script>
-	<script type="text/javascript" src="../js/jquery.js"></script>
-	<script type="text/javascript" src="../js/tool.js"></script>
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/layui/lay/modules/laypage.js"></script>
+	<script type="text/javascript" src="../../js/template-web.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/tool.js"></script>
 	<script>
-		var param = new Object();
-		param.container = "paging";
-		param.pageSize = 2;
-		param.url = "../autUser/list";
-		tool.loadpage(param);
-
-		function getCheckItmes() {
-			$(".check-id:checked").each(function() {
-				//console.log($(this).attr("id"));
-				;
-			});
-		}
 		//添加事件
 		layui.use('form', function() {
 			var form = layui.form();
 			form.on('select(isActive)', function(data) {
-				alert(data.value);
+				//alert(data.value);
 				//form.render('checkbox');
 			});
-			//表单
+			//自定义表单校验
 			form.verify({
-				userPwd2 : function(value) {
+				checkRepwd : function(value) {
 					if (value != $("#userPwd").val()) {
 						return "两次输入的密码不一致";
 					}
@@ -140,18 +131,46 @@
 			});
 			//监听提交
 			form.on('submit(form-add-submit)', function(data) {
-				tool.post("index/doChangePwd", $("#change-pwd-form").serialize(), postCallBack, false);
+				tool.post("../autUser/add", $("#add-user-form").serialize(), postCallBack, false);
 				return false;
 			});
+			//初始化出发数据加载
+			loadData();
 		});
+		//加载数据
+		function loadData() {
+			var param = new Object();
+			param.container = "paging";
+			param.pageSize = 5;
+			param.url = "../autUser/list";
+			param.userName = $("#searchKey").val();
+			tool.loadpage(param);
+		}
+		//获取勾选数据id
+		function getCheckItmes() {
+			$(".check-id:checked").each(function() {
+				//console.log($(this).attr("id"));
+				;
+			});
+		}
+		//打开新增用户窗口
 		function openAddUser() {
 			var index = layer.open({
-				title : '修改密码',
+				title : '新增用户',
 				maxmin : false,
 				type : 1,
 				content : $('#win-add-user')
 			});
 			layer.full(index);
+		}
+		//新增用户回调
+		function postCallBack(retMsg) {
+			if (retMsg.code == 0) {
+				tool.success(retMsg.message);
+				loadData();
+			} else {
+				tool.error(retMsg.message);
+			}
 		}
 	</script>
 </body>

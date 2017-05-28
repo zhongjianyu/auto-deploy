@@ -3,45 +3,53 @@ var tool = {
 	 * 分页加载数据
 	 */
 	loadpage : function(param) {
+		var initLoadIndex = layer.load(2);
 		param._csrf = $("#_csrf").val();
 		param.pageNum = 1;
 		var initPageData;
-		tool.post(param.url, param, function(page) {
-			initPageData = page;
-		}, false);
-		layui.laypage({
-			cont : param.container + "-footer",// 分页容器id
-			pages : initPageData.pages,// 总页数
-			pageSize : param.pageSize,// 每页记录数
-			skip : true,// 是否显示跳转页
-			url : param.url,// 数据请求接口
-			jump : function(obj, first) {
-				// 得到了当前页，用于向服务端请求对应数据
-				var pageData;
-				if (first) {
-					// 第一次
-					pageData = initPageData;
-				} else {
-					param.pageNum = obj.curr;
-					tool.post(param.url, param, function(page) {
-						pageData = page;
-					}, false);
+		tool.post(param.url, param, function(initPageData) {
+			layui.laypage({
+				cont : param.container + "-footer",// 分页容器id
+				pages : initPageData.pages,// 总页数
+				pageSize : param.pageSize,// 每页记录数
+				skip : true,// 是否显示跳转页
+				url : param.url,// 数据请求接口
+				jump : function(obj, first) {
+					// 得到了当前页，用于向服务端请求对应数据
+					if (first) {
+						// 关闭初次loading
+						layer.close(initLoadIndex);
+						tool.render(param, initPageData)
+					} else {
+						param.pageNum = obj.curr;
+						var pageLoadIndex = layer.load(2);
+						tool.post(param.url, param, function(pageData) {
+							layer.close(pageLoadIndex);
+							tool.render(param, pageData)
+						}, true);
+					}
+
 				}
-				document.getElementById(param.container + "-data").innerHTML = template(param.container + "-script", pageData);
-				// 重新加载元素样式
-				layui.use('form', function() {
-					var form = layui.form();
-					form.on('checkbox(' + param.container + '_check-all)', function(data) {
-						var checkElement = $(data.elem);
-						var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-						child.each(function(index, item) {
-							item.checked = data.elem.checked;
-						});
-						form.render('checkbox');
-					});
-					form.render();
+			});
+		}, true);
+	},
+	/**
+	 * 渲染表格
+	 */
+	render : function(param, pageData) {
+		document.getElementById(param.container + "-data").innerHTML = template(param.container + "-script", pageData);
+		// 重新加载元素样式
+		layui.use('form', function() {
+			var form = layui.form();
+			form.on('checkbox(' + param.container + '_check-all)', function(data) {
+				var checkElement = $(data.elem);
+				var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+				child.each(function(index, item) {
+					item.checked = data.elem.checked;
 				});
-			}
+				form.render('checkbox');
+			});
+			form.render();
 		});
 	},
 	/**
