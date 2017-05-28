@@ -1,6 +1,8 @@
 package auto.deploy.dao.entity.aut;
 
 import auto.deploy.dao.entity.Entity;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * 
@@ -8,7 +10,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-27
+ * @时间: 2017-05-28
  */
 public class AutWidget extends Entity<AutWidget> {
 
@@ -25,6 +27,7 @@ public class AutWidget extends Entity<AutWidget> {
     /**
      * 控件归属菜单ID
      */
+	@JsonSerialize(using = ToStringSerializer.class)
 	private Long menuId;
     /**
      * 控件归属菜单编码

@@ -3,6 +3,16 @@ package ${package.Entity};
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
+#set($longPropCount=0)
+#foreach($field in ${table.fields})
+#if(${field.propertyType.equals("Long")})
+#set($longPropCount=$longPropCount + 1)
+#end
+#end
+#if($longPropCount != 0)
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+#end
 
 /**
  * 
@@ -42,6 +52,9 @@ public class ${entity} implements Serializable {
 #end
 #elseif(${field.convert})
 	@TableField("${field.name}")
+#end
+#if(${field.propertyType.equals("Long")})
+	@JsonSerialize(using = ToStringSerializer.class)
 #end
 	private ${field.propertyType} ${field.propertyName};
 #end

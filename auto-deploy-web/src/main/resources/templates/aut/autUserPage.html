@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <title>Table</title>
@@ -16,7 +15,8 @@
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
 			<form class="layui-form" action="">
 				<div class="layui-input-inline">
-					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input" style="height: 30px; line-height: 30px;">
+					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input"
+						style="height: 30px; line-height: 30px;">
 				</div>
 				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
@@ -37,6 +37,7 @@
 						<th>是否激活</th>
 						<th>是否过期</th>
 						<th>是否被锁</th>
+						<th>证书状态</th>
 						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
@@ -52,15 +53,16 @@
 							<td>{{if value.isActive == 1}}激活{{/if}}{{if value.isActive == 0}}冻结{{/if}}</td>
 							<td>{{if value.isAccountExpired == 1}}过期{{/if}}{{if value.isAccountExpired == 0}}正常{{/if}}</td>
 							<td>{{if value.isAccountLocked == 1}}锁定{{/if}}{{if value.isAccountLocked == 0}}正常{{/if}}</td>
+							<td>{{if value.isCredentialsExpired == 1}}过期{{/if}}{{if value.isCredentialsExpired == 0}}正常{{/if}}</td>
 							<td>{{value.createTime}}</td>
 							<td>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit()" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView()" text="预览"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="预览"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete()" text="删除"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}
@@ -74,37 +76,103 @@
 	</div>
 	<!-- 新增用户窗口 -->
 	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-add-user">
-		<form class="layui-form" id="add-user-form">
+		<form class="layui-form layui-form-pane" id="add-object-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<label class="layui-form-label">账号</label>
 				<div class="layui-input-block">
 					<input type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">昵称</label>
 				<div class="layui-input-block">
 					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">密码</label>
 				<div class="layui-input-block">
 					<input type="password" name="userPwd" id="userPwd" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">密码确认</label>
 				<div class="layui-input-block">
 					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd" autocomplete="off" placeholder="新密码确认" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
 				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">账号状态</label>
 				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">是否锁定</label>
 				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">证书状态</label>
 				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
-				<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
-					<button class="layui-btn layui-btn-small" lay-submit="" lay-filter="form-add-submit">保存</button>
-					<button type="reset" class="layui-btn layui-btn-small layui-btn-primary">重置</button>
+			</div>
+			<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
+				<button class="layui-btn" lay-submit="" lay-filter="form-add-submit">保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+
+		</form>
+	</div>
+	<!-- 编辑用户窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-update-user">
+		<form class="layui-form layui-form-pane" id="update-object-form">
+			<input type="hidden" name="id" id="id">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号</label>
+				<div class="layui-input-block">
+					<input disabled type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">昵称</label>
+				<div class="layui-input-block">
+					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="userPwd" id="userPwd" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码确认</label>
+				<div class="layui-input-block">
+					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd2" autocomplete="off" placeholder="密码确认" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否激活</label>
+				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否锁定</label>
+				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">证书状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
+				<button class="layui-btn" lay-submit="" lay-filter="form-update-submit">保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</form>
 	</div>
@@ -114,24 +182,35 @@
 	<script type="text/javascript" src="../../js/jquery.js"></script>
 	<script type="text/javascript" src="../../js/tool.js"></script>
 	<script>
+		var pform;
 		//添加事件
 		layui.use('form', function() {
-			var form = layui.form();
-			form.on('select(isActive)', function(data) {
+			pform = layui.form();
+			pform.on('select(isActive)', function(data) {
 				//alert(data.value);
 				//form.render('checkbox');
 			});
 			//自定义表单校验
-			form.verify({
+			pform.verify({
 				checkRepwd : function(value) {
-					if (value != $("#userPwd").val()) {
+					if (value != $("#add-object-form").find("#userPwd").val()) {
+						return "两次输入的密码不一致";
+					}
+				},
+				checkRepwd2 : function(value) {
+					if (value != $("#update-object-form").find("#userPwd").val()) {
 						return "两次输入的密码不一致";
 					}
 				}
 			});
-			//监听提交
-			form.on('submit(form-add-submit)', function(data) {
-				tool.post("../autUser/add", $("#add-user-form").serialize(), postCallBack, false);
+			//监听新增提交
+			pform.on('submit(form-add-submit)', function(data) {
+				tool.post("../autUser/add", $("#add-object-form").serialize(), postCallBack, false);
+				return false;
+			});
+			//监听新增提交
+			pform.on('submit(form-update-submit)', function(data) {
+				tool.post("../autUser/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
 			});
 			//初始化出发数据加载
@@ -171,6 +250,22 @@
 			} else {
 				tool.error(retMsg.message);
 			}
+		}
+		//编辑用户
+		function showEdit(id) {
+			var object = tool.getById("../autUser/getById", id);
+			for ( var key in object) {
+				$("#update-object-form").find("#" + key).val(object[key]);
+			}
+			$("#update-object-form").find("#userPwd2").val(object.userPwd);
+			var index = layer.open({
+				title : '编辑用户',
+				maxmin : false,
+				type : 1,
+				content : $('#win-update-user')
+			});
+			pform.render();
+			layer.full(index);
 		}
 	</script>
 </body>

@@ -16,6 +16,7 @@ import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.security.CustomPasswordEncoder;
 import auto.deploy.service.aut.AutUserService;
+import auto.deploy.util.EncryptUtil;
 
 /**
  * 
@@ -139,7 +140,15 @@ public class AutUserController {
 		RetMsg retMsg = new RetMsg();
 
 		AutUser orgnlObj = autUserService.selectById(obj.getId());
-		// orgnlObj.set...
+		orgnlObj.setNickName(obj.getNickName());
+		// 如果MD5值相等，则没有修改密码,否则修改了
+		if (!obj.getUserPwd().equals(EncryptUtil.encryptMD5(orgnlObj.getUserPwd()))) {
+			orgnlObj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
+		}
+		orgnlObj.setIsActive(obj.getIsActive());
+		orgnlObj.setIsAccountExpired(obj.getIsAccountExpired());
+		orgnlObj.setIsAccountLocked(obj.getIsAccountLocked());
+		orgnlObj.setIsCredentialsExpired(obj.getIsCredentialsExpired());
 
 		autUserService.updateById(orgnlObj);
 		retMsg.setCode(0);
@@ -160,6 +169,9 @@ public class AutUserController {
 	@RequestMapping("/getById")
 	@ResponseBody
 	public AutUser getById(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
-		return autUserService.selectById(obj.getId());
+		AutUser autUser = autUserService.selectById(obj.getId());
+		// 密码MD5后传递到前台
+		autUser.setUserPwd(EncryptUtil.encryptMD5(autUser.getUserPwd()));
+		return autUser;
 	}
 }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.enums.FieldStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * 
@@ -26,6 +28,7 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	/**
 	 * 主键
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@TableField(validate = FieldStrategy.IGNORED, value = "id")
 	private Long id;
 	/**
@@ -52,6 +55,7 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	/**
 	 * 最后修改用户ID
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@TableField(validate = FieldStrategy.IGNORED, value = "last_update_user_id")
 	private Long lastUpdateUserId;
 	/**
@@ -62,6 +66,7 @@ public class Entity<T extends Model<T>> extends Model<T> {
 	/**
 	 * 创建用户ID
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@TableField(validate = FieldStrategy.IGNORED, value = "create_user_id")
 	private Long createUserId;
 	/**

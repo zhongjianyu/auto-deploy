@@ -1,6 +1,8 @@
 package auto.deploy.dao.entity.aut;
 
 import auto.deploy.dao.entity.Entity;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * 
@@ -8,7 +10,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-27
+ * @时间: 2017-05-28
  */
 public class AutUserRole extends Entity<AutUserRole> {
 
@@ -17,10 +19,12 @@ public class AutUserRole extends Entity<AutUserRole> {
     /**
      * 用户ID
      */
+	@JsonSerialize(using = ToStringSerializer.class)
 	private Long userId;
     /**
      * 角色ID
      */
+	@JsonSerialize(using = ToStringSerializer.class)
 	private Long roleId;
     /**
      * 角色代码(唯一)

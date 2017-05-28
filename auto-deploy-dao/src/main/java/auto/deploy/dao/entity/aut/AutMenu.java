@@ -8,7 +8,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-27
+ * @时间: 2017-05-28
  */
 public class AutMenu extends Entity<AutMenu> {
 

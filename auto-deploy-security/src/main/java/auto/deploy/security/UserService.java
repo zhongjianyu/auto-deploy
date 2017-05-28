@@ -74,46 +74,49 @@ public class UserService {
 				roleCodeList.add(autUserRole.getRoleCode());
 			}
 			user.setRoleList(roleList);
-			// 根据角色列表获取菜单数据:角色->菜单ID->菜单
-			Where<AutMenuRole> where2 = new Where<AutMenuRole>();
-			where2.eq("is_active", 1);
-			where2.in("role_code", roleCodeList);
-			List<AutMenuRole> autMenuRoleList = autMenuRoleService.selectList(where2);
-			List<Long> menuIdList = new ArrayList<Long>();
-			for (AutMenuRole autMenuRole : autMenuRoleList) {
-				menuIdList.add(autMenuRole.getMenuId());
-			}
-			Where<AutMenu> where3 = new Where<AutMenu>();
-			where3.eq("is_active", 1);
-			where3.in("id", menuIdList);
-			where3.orderBy("menu_rank", true);
-			List<AutMenu> autMenuList = autMenuService.selectList(where3);
-			List<AutMenu> autMenuChildList = new ArrayList<AutMenu>();
+			// 菜单列表
 			List<AutMenuVO> autMenuVOList = new ArrayList<AutMenuVO>();
-			for (AutMenu autMenu : autMenuList) {
-				if (autMenu.getMenuLevel().intValue() == 1) {
-					// 一级菜单
-					AutMenuVO autMenuVO = new AutMenuVO();
-					BeanUtils.copyProperties(autMenu, autMenuVO);
-					autMenuVOList.add(autMenuVO);
-				} else {
-					// 二级菜单
-					autMenuChildList.add(autMenu);
+			if (roleCodeList.size() > 0) {
+				// 根据角色列表获取菜单数据:角色->菜单ID->菜单
+				Where<AutMenuRole> where2 = new Where<AutMenuRole>();
+				where2.eq("is_active", 1);
+				where2.in("role_code", roleCodeList);
+				List<AutMenuRole> autMenuRoleList = autMenuRoleService.selectList(where2);
+				List<Long> menuIdList = new ArrayList<Long>();
+				for (AutMenuRole autMenuRole : autMenuRoleList) {
+					menuIdList.add(autMenuRole.getMenuId());
 				}
-			}
-			// 把二级菜单放到以及菜单中
-			for (AutMenuVO autMenuVO : autMenuVOList) {
-				List<AutMenuVO> children = new ArrayList<AutMenuVO>();
-				for (AutMenu autMenu : autMenuChildList) {
-					if (autMenuVO.getMenuCode().equals(autMenu.getParentCode())) {
-						AutMenuVO child = new AutMenuVO();
-						BeanUtils.copyProperties(autMenu, child);
-						children.add(child);
+				Where<AutMenu> where3 = new Where<AutMenu>();
+				where3.eq("is_active", 1);
+				where3.in("id", menuIdList);
+				where3.orderBy("menu_rank", true);
+				List<AutMenu> autMenuList = autMenuService.selectList(where3);
+				List<AutMenu> autMenuChildList = new ArrayList<AutMenu>();
+
+				for (AutMenu autMenu : autMenuList) {
+					if (autMenu.getMenuLevel().intValue() == 1) {
+						// 一级菜单
+						AutMenuVO autMenuVO = new AutMenuVO();
+						BeanUtils.copyProperties(autMenu, autMenuVO);
+						autMenuVOList.add(autMenuVO);
+					} else {
+						// 二级菜单
+						autMenuChildList.add(autMenu);
 					}
 				}
-				autMenuVO.setChildren(children);
+				// 把二级菜单放到以及菜单中
+				for (AutMenuVO autMenuVO : autMenuVOList) {
+					List<AutMenuVO> children = new ArrayList<AutMenuVO>();
+					for (AutMenu autMenu : autMenuChildList) {
+						if (autMenuVO.getMenuCode().equals(autMenu.getParentCode())) {
+							AutMenuVO child = new AutMenuVO();
+							BeanUtils.copyProperties(autMenu, child);
+							children.add(child);
+						}
+					}
+					autMenuVO.setChildren(children);
+				}
 			}
-
 			user.setMenuList(autMenuVOList);
 		}
 		return user;

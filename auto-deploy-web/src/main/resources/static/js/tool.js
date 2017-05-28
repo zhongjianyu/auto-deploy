@@ -108,5 +108,15 @@ var tool = {
 		}, function(index) {
 			layer.close(index);
 		});
+	},
+	getById : function(url, id) {
+		var obj;
+		var param = new Object();
+		param._csrf = $("#_csrf").val();
+		param.id = id;
+		tool.post(url, param, function(o) {
+			obj = o;
+		}, false);
+		return obj;
 	}
 };
