@@ -56,7 +56,7 @@
 							<td>{{value.createTime}}</td>
 							<td style="width:130px;">
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="预览"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
@@ -189,7 +189,7 @@
 			</div>
 		</form>
 	</div>
-	<!-- 预览对象窗口 -->
+	<!-- 详情对象窗口 -->
 	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-view-object">
 		<form class="layui-form layui-form-pane" id="view-object-form">
 			<input type="hidden" name="id" id="id">
@@ -349,7 +349,7 @@
 			pform.render();
 			layer.full(index);
 		}
-		//预览对象
+		//详情对象
 		function showView(id) {
 			var object = tool.getById("../autUser/getById", id);
 			for ( var key in object) {
@@ -357,7 +357,7 @@
 			}
 			$('#view-object-form :input').attr("disabled", "disabled");
 			var index = layer.open({
-				title : '预览',
+				title : '详情',
 				maxmin : false,
 				type : 1,
 				content : $('#win-view-object')
