@@ -74,8 +74,8 @@
 			<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 		</div>
 	</div>
-	<!-- 新增用户窗口 -->
-	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-add-user">
+	<!-- 新增对象窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-add-object">
 		<form class="layui-form layui-form-pane" id="add-object-form">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
@@ -132,8 +132,8 @@
 
 		</form>
 	</div>
-	<!-- 编辑用户窗口 -->
-	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-update-user">
+	<!-- 编辑对象窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-update-object">
 		<form class="layui-form layui-form-pane" id="update-object-form">
 			<input type="hidden" name="id" id="id">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -187,6 +187,74 @@
 						<li class="fa fa-eraser"></li> 重置
 					</button>
 				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 预览对象窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-view-object">
+		<form class="layui-form layui-form-pane" id="view-object-form">
+			<input type="hidden" name="id" id="id">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号</label>
+				<div class="layui-input-block">
+					<input type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">昵称</label>
+				<div class="layui-input-block">
+					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否激活</label>
+				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否锁定</label>
+				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">证书状态</label>
+				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">版本号</label>
+				<div class="layui-input-block">
+					<input type="text" name="version" id="version" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">创建时间</label>
+				<div class="layui-input-block">
+					<input type="text" name="createTime" id="createTime" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">创建者</label>
+				<div class="layui-input-block">
+					<input type="text" name="createUserName" id="createUserName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">修改时间</label>
+				<div class="layui-input-block">
+					<input type="text" name="lastUpdateTime" id="lastUpdateTime" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">修改者</label>
+				<div class="layui-input-block">
+					<input type="text" name="lastUpdateUserName" id="lastUpdateUserName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
 			</div>
 		</form>
 	</div>
@@ -249,10 +317,10 @@
 		//打开新增对象窗口
 		function openAddUser() {
 			var index = layer.open({
-				title : '新增用户',
+				title : '新增',
 				maxmin : false,
 				type : 1,
-				content : $('#win-add-user')
+				content : $('#win-add-object')
 			});
 			layer.full(index);
 		}
@@ -273,10 +341,26 @@
 			}
 			$("#update-object-form").find("#userPwd2").val(object.userPwd);
 			var index = layer.open({
-				title : '编辑用户',
+				title : '编辑',
 				maxmin : false,
 				type : 1,
-				content : $('#win-update-user')
+				content : $('#win-update-object')
+			});
+			pform.render();
+			layer.full(index);
+		}
+		//预览对象
+		function showView(id) {
+			var object = tool.getById("../autUser/getById", id);
+			for ( var key in object) {
+				$("#view-object-form").find("#" + key).val(object[key]);
+			}
+			$('#view-object-form :input').attr("disabled","disabled");
+			var index = layer.open({
+				title : '预览',
+				maxmin : false,
+				type : 1,
+				content : $('#win-view-object')
 			});
 			pform.render();
 			layer.full(index);
