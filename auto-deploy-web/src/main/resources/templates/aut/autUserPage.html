@@ -55,7 +55,7 @@
 							<td>{{if value.isAccountLocked == 1}}锁定{{/if}}{{if value.isAccountLocked == 0}}正常{{/if}}</td>
 							<td>{{if value.isCredentialsExpired == 1}}过期{{/if}}{{if value.isCredentialsExpired == 0}}正常{{/if}}</td>
 							<td>{{value.createTime}}</td>
-							<td>
+							<td style="width:130px;">
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="预览"/>
 								<!--
@@ -119,10 +119,14 @@
 				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
 			<div class="layui-input-block" style="margin-top: 15px;">
-				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index);"><i class="fa fa-backward"></i> 返回</a>
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
 				<div style="float: right;">
-					<button class="layui-btn" lay-submit="" lay-filter="form-add-submit"><i class="fa fa-save"></i> 保存</button>
-					<button type="reset" class="layui-btn layui-btn-primary"><li class="fa fa-eraser"></li> 重置</button>
+					<button class="layui-btn" lay-submit="" lay-filter="form-add-submit">
+						<i class="fa fa-save"></i> 保存
+					</button>
+					<button type="reset" class="layui-btn layui-btn-primary">
+						<li class="fa fa-eraser"></li> 重置
+					</button>
 				</div>
 			</div>
 
@@ -174,10 +178,14 @@
 				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
 			<div class="layui-input-block" style="margin-top: 15px;">
-				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index);"><i class="fa fa-backward"></i> 返回</a>
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
 				<div style="float: right;">
-					<button class="layui-btn" lay-submit="" lay-filter="form-update-submit"><i class="fa fa-save"></i> 保存</button>
-					<button type="reset" class="layui-btn layui-btn-primary"><li class="fa fa-eraser"></li> 重置</button>
+					<button class="layui-btn" lay-submit="" lay-filter="form-update-submit">
+						<i class="fa fa-save"></i> 保存
+					</button>
+					<button type="reset" class="layui-btn layui-btn-primary">
+						<li class="fa fa-eraser"></li> 重置
+					</button>
 				</div>
 			</div>
 		</form>
@@ -238,7 +246,7 @@
 				;
 			});
 		}
-		//打开新增用户窗口
+		//打开新增对象窗口
 		function openAddUser() {
 			var index = layer.open({
 				title : '新增用户',
@@ -248,7 +256,7 @@
 			});
 			layer.full(index);
 		}
-		//新增用户回调
+		//新增对象回调
 		function postCallBack(retMsg) {
 			if (retMsg.code == 0) {
 				tool.success(retMsg.message);
@@ -257,7 +265,7 @@
 				tool.error(retMsg.message);
 			}
 		}
-		//编辑用户
+		//编辑对象
 		function showEdit(id) {
 			var object = tool.getById("../autUser/getById", id);
 			for ( var key in object) {
@@ -272,6 +280,21 @@
 			});
 			pform.render();
 			layer.full(index);
+		}
+		//删除对象
+		function showDelete(id) {
+			layer.confirm('确定删除 ?', {
+				icon : 3,
+				title : '提示'
+			}, function(index) {
+				var retMsg = tool.deleteById("../autUser/delete", id)
+				if (retMsg.code == 0) {
+					tool.success(retMsg.message);
+					loadData();
+				} else {
+					tool.error(retMsg.message);
+				}
+			});
 		}
 	</script>
 </body>

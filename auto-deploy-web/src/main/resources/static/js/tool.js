@@ -109,7 +109,23 @@ var tool = {
 			layer.close(index);
 		});
 	},
+	/**
+	 * 根据ID获取对象
+	 */
 	getById : function(url, id) {
+		var obj;
+		var param = new Object();
+		param._csrf = $("#_csrf").val();
+		param.id = id;
+		tool.post(url, param, function(o) {
+			obj = o;
+		}, false);
+		return obj;
+	},
+	/**
+	 * 根据ID删除对象
+	 */
+	deleteById : function(url, id) {
 		var obj;
 		var param = new Object();
 		param._csrf = $("#_csrf").val();
