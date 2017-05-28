@@ -136,3 +136,14 @@ var tool = {
 		return obj;
 	}
 };
+$(function() {
+	/**
+	 * 禁用input标签回车
+	 */
+	$("input").on('keypress', function(e) {
+		var key = window.event ? e.keyCode : e.which;
+		if (key.toString() == "13") {
+			return false;
+		}
+	});
+});

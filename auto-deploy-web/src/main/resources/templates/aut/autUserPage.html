@@ -21,8 +21,8 @@
 				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="zdy123" onclick="openAddUser()" iclass="layui-icon"
-						icon="&#xe608;" text="新增用户"/></span>
+					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
+						icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
 		</blockquote>
@@ -250,7 +250,8 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">修改者</label>
 				<div class="layui-input-block">
-					<input type="text" name="lastUpdateUserName" id="lastUpdateUserName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+					<input type="text" name="lastUpdateUserName" id="lastUpdateUserName" lay-verify="required" autocomplete="off" placeholder="昵称"
+						class="layui-input">
 				</div>
 			</div>
 			<div class="layui-input-block" style="margin-top: 15px;">
@@ -315,7 +316,7 @@
 			});
 		}
 		//打开新增对象窗口
-		function openAddUser() {
+		function openAddWin() {
 			var index = layer.open({
 				title : '新增',
 				maxmin : false,
@@ -355,7 +356,7 @@
 			for ( var key in object) {
 				$("#view-object-form").find("#" + key).val(object[key]);
 			}
-			$('#view-object-form :input').attr("disabled","disabled");
+			$('#view-object-form :input').attr("disabled", "disabled");
 			var index = layer.open({
 				title : '预览',
 				maxmin : false,
