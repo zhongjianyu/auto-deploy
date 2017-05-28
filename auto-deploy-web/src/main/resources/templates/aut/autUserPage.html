@@ -70,12 +70,12 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="admin-table-page" style="border-width: 0px;">
+		<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
 			<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 		</div>
 	</div>
 	<!-- 新增用户窗口 -->
-	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-add-user">
+	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-add-user">
 		<form class="layui-form layui-form-pane" id="add-object-form">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
@@ -118,9 +118,12 @@
 				<label class="layui-form-label">证书状态</label>
 				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
-			<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
-				<button class="layui-btn" lay-submit="" lay-filter="form-add-submit">保存</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index);"><i class="fa fa-backward"></i> 返回</a>
+				<div style="float: right;">
+					<button class="layui-btn" lay-submit="" lay-filter="form-add-submit"><i class="fa fa-save"></i> 保存</button>
+					<button type="reset" class="layui-btn layui-btn-primary"><li class="fa fa-eraser"></li> 重置</button>
+				</div>
 			</div>
 
 		</form>
@@ -170,9 +173,12 @@
 				<label class="layui-form-label">证书状态</label>
 				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
-			<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
-				<button class="layui-btn" lay-submit="" lay-filter="form-update-submit">保存</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index);"><i class="fa fa-backward"></i> 返回</a>
+				<div style="float: right;">
+					<button class="layui-btn" lay-submit="" lay-filter="form-update-submit"><i class="fa fa-save"></i> 保存</button>
+					<button type="reset" class="layui-btn layui-btn-primary"><li class="fa fa-eraser"></li> 重置</button>
+				</div>
 			</div>
 		</form>
 	</div>
