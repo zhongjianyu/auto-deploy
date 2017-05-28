@@ -2,27 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Table</title>
+<title></title>
 <link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="../../css/global.css" media="all">
 <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../css/table.css" />
 </head>
-
 <body>
 	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="admin-main" style="margin: 10px;">
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
 			<form class="layui-form" action="">
 				<div class="layui-input-inline">
-					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input"
-						style="height: 30px; line-height: 30px;">
+					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input">
 				</div>
-				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="do-search" onclick="loadData()" iclass="layui-icon"
-					icon="&#xe615;" text="搜索"/></span>
+				<span><@a code="" href="javascript:void(0)" class="layui-btn" id="" onclick="loadData()" iclass="layui-icon" icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
-						icon="&#xe608;" text="新增"/></span>
+					<span><@a code="" href="javascript:void(0)" class="layui-btn" id="" onclick="openAddWin()" iclass="layui-icon" icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
 		</blockquote>
