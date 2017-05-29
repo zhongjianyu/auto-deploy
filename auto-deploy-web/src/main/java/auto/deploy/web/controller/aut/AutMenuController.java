@@ -63,7 +63,6 @@ public class AutMenuController extends BaseController {
 	public Page<AutMenu> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutMenu obj) {
 		Page<AutMenu> page = null;
 		try {
-			Thread.sleep(3000);
 			page = autMenuService.list(pageBean, obj);
 		} catch (Exception e) {
 			e.printStackTrace();
