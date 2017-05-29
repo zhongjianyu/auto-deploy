@@ -26,4 +26,16 @@ public interface AutMenuService extends IService<AutMenu> {
 	 * @时间：2017-05-27
 	 */
 	public Page<AutMenu> list(PageBean pageBean, AutMenu obj) throws Exception;
-	}
+
+	/**
+	 * 
+	 * @描述：根据菜单级别和父级菜ID码获取下一个菜单编码
+	 *
+	 * @返回：String
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月29日 上午11:07:40
+	 */
+	public String getNextMenuCode(int menuLevel, String parentCode) throws Exception;
+}

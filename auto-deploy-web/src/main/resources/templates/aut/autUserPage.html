@@ -49,10 +49,10 @@
 							<td style="display: none;">{{value.id}}</td>
 							<td>{{value.userName}}</td>
 							<td>{{value.nickName}}</td>
-							<td>{{if value.isActive == 1}}激活{{/if}}{{if value.isActive == 0}}冻结{{/if}}</td>
-							<td>{{if value.isAccountExpired == 1}}过期{{/if}}{{if value.isAccountExpired == 0}}正常{{/if}}</td>
-							<td>{{if value.isAccountLocked == 1}}锁定{{/if}}{{if value.isAccountLocked == 0}}正常{{/if}}</td>
-							<td>{{if value.isCredentialsExpired == 1}}过期{{/if}}{{if value.isCredentialsExpired == 0}}正常{{/if}}</td>
+							<td>{{if value.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
+							<td>{{if value.isAccountExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isAccountExpired == 0}}<font color="green">正常</font>{{/if}}</td>
+							<td>{{if value.isAccountLocked == 1}}<font color="red">锁定</font>{{/if}}{{if value.isAccountLocked == 0}}<font color="green">正常</font>{{/if}}</td>
+							<td>{{if value.isCredentialsExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isCredentialsExpired == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{value.createTime}}</td>
 							<td style="width:130px;">
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>

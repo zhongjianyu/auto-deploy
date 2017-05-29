@@ -27,7 +27,7 @@ import auto.deploy.util.EncryptUtil;
  * @时间: 2017-05-21
  */
 @Controller
-@RequestMapping("/sys/autUser")
+@RequestMapping("/aut/autUser")
 public class AutUserController {
 	@Resource
 	private AutUserService autUserService;
