@@ -3,7 +3,9 @@ var tool = {
 	 * 分页加载数据
 	 */
 	loadpage : function(param) {
-		var initLoadIndex = layer.load(2);
+		var initLoadIndex = layer.load(2, {
+			time : 1 * 1000
+		});
 		param._csrf = $("#_csrf").val();
 		param.pageNum = 1;
 		var initPageData;
@@ -22,7 +24,9 @@ var tool = {
 						tool.render(param, initPageData)
 					} else {
 						param.pageNum = obj.curr;
-						var pageLoadIndex = layer.load(2);
+						var pageLoadIndex = layer.load(2, {
+							time : 1 * 1000
+						});
 						tool.post(param.url, param, function(pageData) {
 							layer.close(pageLoadIndex);
 							tool.render(param, pageData)
