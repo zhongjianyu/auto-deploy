@@ -1,5 +1,7 @@
 package auto.deploy.web.controller.sys;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.sys.SysDataDict;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -80,14 +83,29 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public RetMsg add(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
+	public RetMsg add(HttpServletRequest request, HttpServletResponse response, SysDataDict obj, String[] dictKey1, String[] dictValue1,
+			String[] isActive1) {
 		RetMsg retMsg = new RetMsg();
 
-		// obj.set...
-
-		sysDataDictService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		// 判断字典编码是否已经存在
+		Where<SysDataDict> where = new Where<SysDataDict>();
+		where.eq("dict_code", obj.getDictCode());
+		if (sysDataDictService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("字典编码已被占用");
+		} else {
+			for (int i = 0; i < dictKey1.length; i++) {
+				SysDataDict dataDict = new SysDataDict();
+				dataDict.setDictCode(obj.getDictCode());
+				dataDict.setDictName(obj.getDictName());
+				dataDict.setDictKey(dictKey1[i]);
+				dataDict.setDictValue(dictValue1[i]);
+				dataDict.setIsActive(Integer.parseInt(isActive1[i]));
+				sysDataDictService.insert(dataDict);
+			}
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
 
@@ -115,6 +133,30 @@ public class SysDataDictController extends BaseController {
 
 	/**
 	 * 
+	 * @描述：数据字典表(根据dictCode删除对象).
+	 *
+	 * @返回：RetMsg
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-05-27
+	 */
+	@RequestMapping("/deleteByCode")
+	@ResponseBody
+	public RetMsg deleteByCode(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
+		RetMsg retMsg = new RetMsg();
+
+		Where<SysDataDict> where = new Where<SysDataDict>();
+		where.eq("dict_code", obj.getDictCode());
+		sysDataDictService.delete(where);
+
+		retMsg.setCode(0);
+		retMsg.setMessage("操作成功");
+		return retMsg;
+	}
+
+	/**
+	 * 
 	 * @描述：数据字典表(根据ID修改对象).
 	 *
 	 * @返回：RetMsg
@@ -125,15 +167,17 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
-	public RetMsg update(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
+	public RetMsg update(HttpServletRequest request, HttpServletResponse response, SysDataDict obj, String[] dictKey1, String[] dictValue1,
+			String[] isActive1, String[] id1) {
 		RetMsg retMsg = new RetMsg();
-
-		SysDataDict orgnlObj = sysDataDictService.selectById(obj.getId());
-		// orgnlObj.set...
-
-		sysDataDictService.updateById(orgnlObj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			sysDataDictService.update(obj, dictKey1, dictValue1, isActive1, id1);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 
@@ -151,6 +195,25 @@ public class SysDataDictController extends BaseController {
 	@ResponseBody
 	public SysDataDict getById(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
 		return sysDataDictService.selectById(obj.getId());
+	}
+
+	/**
+	 * 
+	 * @描述：数据字典表(根据dictCode获取对象列表).
+	 *
+	 * @返回：AutUser
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-05-27
+	 */
+	@RequestMapping("/getListByCode")
+	@ResponseBody
+	public List<SysDataDict> getListByCode(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
+		Where<SysDataDict> where = new Where<SysDataDict>();
+		where.eq("dict_code", obj.getDictCode());
+		List<SysDataDict> list = sysDataDictService.selectList(where);
+		return list;
 	}
 
 }
