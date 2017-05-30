@@ -94,7 +94,13 @@
 					</div>
 					<div class="layui-form-item layui-input-inline">
 						<label class="layui-form-label">是否激活</label>
-						<@select dict="IS_ACTIVE" layVerify="required" id="isActive1" name="isActive1" class="layui-input-block" def=""/>
+						<div class="layui-input-block">
+							<select name="isActive1" id="isActive1">
+								<option value="">请选择</option>
+								<option value="1">激活</option>
+								<option value="0">冻结</option>
+							</select>
+						</div>
 					</div>
 					<div class="layui-form-item layui-input-inline">
 						<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate(1,this)" text="删除"/></span> <span><@a
@@ -135,7 +141,13 @@
 		</div>
 		<div class="layui-form-item layui-input-inline">
 			<label class="layui-form-label">是否激活</label>
-			<@select dict="IS_ACTIVE" layVerify="required" id="isActive1" name="isActive1" class="layui-input-block" def=""/>
+			<div class="layui-input-block">
+				<select name="isActive1" id="isActive1">
+					<option value="">请选择</option>
+					<option value="1">激活</option>
+					<option value="0">冻结</option>
+				</select>
+			</div>
 		</div>
 		<div class="layui-form-item layui-input-inline">
 			<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate2(1,this)" text="删除"/></span> <span><@a
