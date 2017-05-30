@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutRole;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -29,7 +30,7 @@ import auto.deploy.web.controller.BaseController;
 public class AutRoleController extends BaseController {
 	@Resource
 	private AutRoleService autRoleService;
-	
+
 	/**
 	 * 
 	 * @描述：角色表(页面).
@@ -41,11 +42,11 @@ public class AutRoleController extends BaseController {
 	 * @时间：2017-05-27
 	 */
 	@RequestMapping("/autRolePage")
-	public String autRolePage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String autRolePage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "aut/autRolePage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：角色表(分页列表).
@@ -67,7 +68,6 @@ public class AutRoleController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -83,15 +83,21 @@ public class AutRoleController extends BaseController {
 	@ResponseBody
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
-
-		// obj.set...
-
-		autRoleService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		// 检查角色名称和角色代码是否已经存在
+		Where<AutRole> where = new Where<AutRole>();
+		where.eq("role_name", obj.getRoleName());
+		where.or("role_code = {0}", obj.getRoleCode());
+		if (autRoleService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("角色名称或代码已存在");
+		} else {
+			autRoleService.insert(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：角色表(根据ID删除对象).
@@ -113,7 +119,7 @@ public class AutRoleController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：角色表(根据ID修改对象).
@@ -129,15 +135,26 @@ public class AutRoleController extends BaseController {
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
 
-		AutRole orgnlObj = autRoleService.selectById(obj.getId());
-		// orgnlObj.set...
-
-		autRoleService.updateById(orgnlObj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		// 查询是否有其他相同的角色名称和代码
+		Where<AutRole> where = new Where<AutRole>();
+		where.eq("role_name", obj.getRoleName());
+		where.or("role_code = {0}", obj.getRoleCode());
+		where.and().ne("id", obj.getId());
+		if (autRoleService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("角色名称或代码已存在");
+		} else {
+			AutRole orgnlObj = autRoleService.selectById(obj.getId());
+			orgnlObj.setRoleName(obj.getRoleName());
+			orgnlObj.setRoleCode(obj.getRoleCode());
+			orgnlObj.setIsActive(obj.getIsActive());
+			autRoleService.updateById(orgnlObj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：角色表(根据ID获取对象).

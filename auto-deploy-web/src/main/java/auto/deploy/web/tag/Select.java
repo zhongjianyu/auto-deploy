@@ -69,6 +69,7 @@ public class Select implements TemplateDirectiveModel {
 		Where<SysDataDict> where = new Where<SysDataDict>();
 		where.eq("is_active", 1);
 		where.eq("dict_code", dict);
+		where.setSqlSelect("dict_key,dict_value");
 		List<SysDataDict> dictList = sysDataDictService.selectList(where);
 		for (SysDataDict sysDataDict : dictList) {
 			if (sysDataDict.getDictKey().equals(def)) {
