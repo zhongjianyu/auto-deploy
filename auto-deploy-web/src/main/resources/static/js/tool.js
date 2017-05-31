@@ -4,7 +4,7 @@ var tool = {
 	 */
 	loadpage : function(param) {
 		var initLoadIndex = layer.load(2, {
-			time : 1 * 1000
+			time : 1 * 500
 		});
 		param._csrf = $("#_csrf").val();
 		param.pageNum = 1;
@@ -25,7 +25,7 @@ var tool = {
 					} else {
 						param.pageNum = obj.curr;
 						var pageLoadIndex = layer.load(2, {
-							time : 1 * 1000
+							time : 1 * 500
 						});
 						tool.post(param.url, param, function(pageData) {
 							layer.close(pageLoadIndex);

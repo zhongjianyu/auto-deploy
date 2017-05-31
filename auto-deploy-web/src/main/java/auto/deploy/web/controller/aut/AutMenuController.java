@@ -1,5 +1,7 @@
 package auto.deploy.web.controller.aut;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import auto.deploy.dao.entity.aut.AutMenu;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.object.aut.dto.AutMenuDO;
+import auto.deploy.object.aut.vo.AutMenuVO;
 import auto.deploy.service.aut.AutMenuService;
 import auto.deploy.web.controller.BaseController;
 
@@ -175,6 +178,23 @@ public class AutMenuController extends BaseController {
 			autMenuDO.setParentMenu(autMenuService.selectOne(where));
 		}
 		return autMenuDO;
+	}
+
+	/**
+	 * 
+	 * @描述：获取菜单以及其归属的控件
+	 *
+	 * @返回：List<AutMenuVO>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月31日 下午7:32:51
+	 */
+	@RequestMapping("/getAllMenuAndWidget")
+	@ResponseBody
+	public List<AutMenuVO> getAllMenuAndWidget() {
+		
+		return null;
 	}
 
 }

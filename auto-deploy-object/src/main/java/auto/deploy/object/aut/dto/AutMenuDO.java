@@ -1,6 +1,9 @@
 package auto.deploy.object.aut.dto;
 
+import java.util.List;
+
 import auto.deploy.dao.entity.aut.AutMenu;
+import auto.deploy.dao.entity.aut.AutWidget;
 
 /**
  * 
@@ -14,6 +17,7 @@ public class AutMenuDO {
 
 	private AutMenu autMenu;
 	private AutMenu parentMenu;
+	private List<AutWidget> widgetList;
 
 	public AutMenu getAutMenu() {
 		return autMenu;
@@ -29,6 +33,14 @@ public class AutMenuDO {
 
 	public void setParentMenu(AutMenu parentMenu) {
 		this.parentMenu = parentMenu;
+	}
+
+	public List<AutWidget> getWidgetList() {
+		return widgetList;
+	}
+
+	public void setWidgetList(List<AutWidget> widgetList) {
+		this.widgetList = widgetList;
 	}
 
 }

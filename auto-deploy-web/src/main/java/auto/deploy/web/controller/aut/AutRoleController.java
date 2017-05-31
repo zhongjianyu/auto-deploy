@@ -1,5 +1,8 @@
 package auto.deploy.web.controller.aut;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,10 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.aut.AutMenu;
 import auto.deploy.dao.entity.aut.AutRole;
+import auto.deploy.dao.entity.aut.AutWidget;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
+import auto.deploy.object.aut.dto.AutMenuDO;
+import auto.deploy.service.aut.AutMenuService;
 import auto.deploy.service.aut.AutRoleService;
+import auto.deploy.service.aut.AutWidgetService;
 import auto.deploy.web.controller.BaseController;
 
 /**
@@ -30,6 +38,10 @@ import auto.deploy.web.controller.BaseController;
 public class AutRoleController extends BaseController {
 	@Resource
 	private AutRoleService autRoleService;
+	@Resource
+	private AutMenuService autMenuService;
+	@Resource
+	private AutWidgetService autWidgetService;
 
 	/**
 	 * 
@@ -169,6 +181,45 @@ public class AutRoleController extends BaseController {
 	@ResponseBody
 	public AutRole getById(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		return autRoleService.selectById(obj.getId());
+	}
+
+	/**
+	 * 
+	 * @描述：菜单表,含菜单下的控件(分页列表).
+	 *
+	 * @返回：Page<AutMenu>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-05-27
+	 */
+	@RequestMapping("/menuWidgetList")
+	@ResponseBody
+	public Page<AutMenuDO> menuWidgetList(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutMenu obj) {
+		Page<AutMenuDO> page = new Page<AutMenuDO>();
+		try {
+			Page<AutMenu> menuPage = autMenuService.list(pageBean, obj);
+			List<AutMenu> menuList = menuPage.getRecords();
+
+			page.setCurrent(menuPage.getCurrent());
+			page.setSize(menuPage.getSize());
+			page.setTotal(menuPage.getTotal());
+			List<AutMenuDO> voList = new ArrayList<AutMenuDO>();
+			for (AutMenu autMenu : menuList) {
+				AutMenuDO menuDO = new AutMenuDO();
+				menuDO.setAutMenu(autMenu);
+				// 根据菜单查询其控件
+				Where<AutWidget> where = new Where<AutWidget>();
+				where.eq("menu_id", autMenu.getId());
+				List<AutWidget> widgetList = autWidgetService.selectList(where);
+				menuDO.setWidgetList(widgetList);
+				voList.add(menuDO);
+			}
+			page.setRecords(voList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
 	}
 
 }
