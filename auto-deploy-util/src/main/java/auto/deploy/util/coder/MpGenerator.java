@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  * @时间：2017年4月24日 下午12:31:13
  */
 public class MpGenerator {
+	public static final String PATH = "E:/developer/coder";
+
 	public static void makeCode() {
 		// 模块名
 		String moduleName = "aut";
@@ -29,7 +31,7 @@ public class MpGenerator {
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
-		final String codePath = "E:/developer/coder";
+		final String codePath = PATH;
 		gc.setOutputDir(codePath);// 代码生成路径
 		gc.setFileOverride(true);
 		gc.setActiveRecord(true);
@@ -112,43 +114,40 @@ public class MpGenerator {
 		mpg.execute();
 	}
 
-	public static void main(String[] args) {
-		// makeCode();
-		File file = new File("E:/developer/coder");
+	public static void main(String[] args) throws Exception {
+		makeCode();
+		// Thread.sleep(3000);
+		deleteFile();
+		File file = new File(PATH);
 		copyFile(file);
 
 	}
 
-	public static void copyFile(File file) {
-		File controller = new File("E:/developer/coder/controller");
-		File entity = new File("E:/developer/coder/entity");
-		File mapper = new File("E:/developer/coder/mapper");
-		File xml = new File("E:/developer/coder/mapper/xml");
-		File service = new File("E:/developer/coder/service");
-		File impl = new File("E:/developer/coder/service/impl");
+	public static void deleteFile() {
+		File controller = new File(PATH + "/controller");
+		File entity = new File(PATH + "/entity");
+		File mapper = new File(PATH + "/mapper");
+		File service = new File(PATH + "/service");
 		deleteDir(controller);
 		deleteDir(entity);
 		deleteDir(mapper);
 		deleteDir(service);
+	}
 
-		if (!controller.exists()) {
-			controller.mkdirs();
-		}
-		if (!entity.exists()) {
-			entity.mkdirs();
-		}
-		if (!mapper.exists()) {
-			mapper.mkdirs();
-		}
-		if (!service.exists()) {
-			service.mkdirs();
-		}
-		if (!xml.exists()) {
-			xml.mkdirs();
-		}
-		if (!impl.exists()) {
-			impl.mkdirs();
-		}
+	public static void copyFile(File file) {
+		File controller = new File(PATH + "/controller");
+		File entity = new File(PATH + "/entity");
+		File mapper = new File(PATH + "/mapper");
+		File xml = new File(PATH + "/mapper/xml");
+		File service = new File(PATH + "/service");
+		File impl = new File(PATH + "/service/impl");
+
+		controller.mkdirs();
+		entity.mkdirs();
+		mapper.mkdirs();
+		service.mkdirs();
+		xml.mkdirs();
+		impl.mkdirs();
 		File[] files = file.listFiles();
 		for (File a : files) {
 			if (a.isDirectory()) {
@@ -171,7 +170,7 @@ public class MpGenerator {
 					type = "entity";
 				}
 
-				File tagFile = new File("E:/developer/coder/" + type + "/" + a.getName());
+				File tagFile = new File(PATH + "/" + type + "/" + a.getName());
 				try {
 					Files.copy(a.toPath(), tagFile.toPath());
 				} catch (Exception e) {
