@@ -1,5 +1,8 @@
 package auto.deploy.util.coder;
 
+import java.io.File;
+import java.nio.file.Files;
+
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
@@ -17,12 +20,11 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  * @时间：2017年4月24日 下午12:31:13
  */
 public class MpGenerator {
-
-	public static void main(String[] args) {
+	public static void makeCode() {
 		// 模块名
 		String moduleName = "aut";
 		// 表名
-		String[] tableName = new String[] { "aut_menu", "aut_menu_role", "aut_role","aut_user", "aut_user_role", "aut_widget", "aut_widget_role" };
+		String[] tableName = new String[] { "aut_menu", "aut_menu_role", "aut_role", "aut_user", "aut_user_role", "aut_widget", "aut_widget_role" };
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置
@@ -65,8 +67,7 @@ public class MpGenerator {
 		// 自定义实体父类
 		strategy.setSuperEntityClass("auto.deploy.dao.entity.Entity");
 		// 自定义实体，公共字段
-		strategy.setSuperEntityColumns(new String[] { "id", "create_time", "last_update_time", "version", "is_delete", "last_update_user_id",
-				"last_update_user_name", "create_user_id", "create_user_name" });
+		strategy.setSuperEntityColumns(new String[] { "id", "create_time", "last_update_time", "version", "is_delete", "last_update_user_id", "last_update_user_name", "create_user_id", "create_user_name" });
 		// 自定义 mapper 父类
 		// strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
 		// 自定义 service 父类
@@ -104,11 +105,93 @@ public class MpGenerator {
 		tc.setXml("code_template/mapper.xml.vm");
 		tc.setService("code_template/service.java.vm");
 		tc.setServiceImpl("code_template/serviceImpl.java.vm");
-		
+
 		mpg.setTemplate(tc);
 
 		// 执行生成
 		mpg.execute();
+	}
+
+	public static void main(String[] args) {
+		// makeCode();
+		File file = new File("E:/developer/coder");
+		copyFile(file);
+
+	}
+
+	public static void copyFile(File file) {
+		File controller = new File("E:/developer/coder/controller");
+		File entity = new File("E:/developer/coder/entity");
+		File mapper = new File("E:/developer/coder/mapper");
+		File xml = new File("E:/developer/coder/mapper/xml");
+		File service = new File("E:/developer/coder/service");
+		File impl = new File("E:/developer/coder/service/impl");
+		deleteDir(controller);
+		deleteDir(entity);
+		deleteDir(mapper);
+		deleteDir(service);
+
+		if (!controller.exists()) {
+			controller.mkdirs();
+		}
+		if (!entity.exists()) {
+			entity.mkdirs();
+		}
+		if (!mapper.exists()) {
+			mapper.mkdirs();
+		}
+		if (!service.exists()) {
+			service.mkdirs();
+		}
+		if (!xml.exists()) {
+			xml.mkdirs();
+		}
+		if (!impl.exists()) {
+			impl.mkdirs();
+		}
+		File[] files = file.listFiles();
+		for (File a : files) {
+			if (a.isDirectory()) {
+				copyFile(a);
+			} else {
+				System.out.println(a.getAbsolutePath());
+				System.out.println(a.getName());
+				String type = "";
+				if (a.getName().endsWith("Mapper.java")) {
+					type = "mapper";
+				} else if (a.getName().endsWith("Mapper.xml")) {
+					type = "mapper/xml";
+				} else if (a.getName().endsWith("Service.java")) {
+					type = "service";
+				} else if (a.getName().endsWith("ServiceImpl.java")) {
+					type = "service/impl";
+				} else if (a.getName().endsWith("Controller.java")) {
+					type = "controller";
+				} else {
+					type = "entity";
+				}
+
+				File tagFile = new File("E:/developer/coder/" + type + "/" + a.getName());
+				try {
+					Files.copy(a.toPath(), tagFile.toPath());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public static boolean deleteDir(File dir) {
+		if (dir.isDirectory()) {
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				boolean success = deleteDir(new File(dir, children[i]));
+				if (!success) {
+					return false;
+				}
+			}
+		}
+		return dir.delete();
 	}
 
 }
