@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import auto.deploy.dao.entity.aut.AutWidget;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
+import auto.deploy.object.aut.dto.AutWidgetDO;
 import auto.deploy.service.aut.AutWidgetService;
 import auto.deploy.web.controller.BaseController;
 
@@ -29,7 +30,7 @@ import auto.deploy.web.controller.BaseController;
 public class AutWidgetController extends BaseController {
 	@Resource
 	private AutWidgetService autWidgetService;
-	
+
 	/**
 	 * 
 	 * @描述：控件表(页面).
@@ -41,11 +42,11 @@ public class AutWidgetController extends BaseController {
 	 * @时间：2017-05-27
 	 */
 	@RequestMapping("/autWidgetPage")
-	public String autWidgetPage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String autWidgetPage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "aut/autWidgetPage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：控件表(分页列表).
@@ -58,8 +59,8 @@ public class AutWidgetController extends BaseController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
-	public Page<AutWidget> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutWidget obj) {
-		Page<AutWidget> page = null;
+	public Page<AutWidgetDO> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutWidgetDO obj) {
+		Page<AutWidgetDO> page = null;
 		try {
 			page = autWidgetService.list(pageBean, obj);
 		} catch (Exception e) {
@@ -67,7 +68,6 @@ public class AutWidgetController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -91,7 +91,7 @@ public class AutWidgetController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：控件表(根据ID删除对象).
@@ -113,7 +113,7 @@ public class AutWidgetController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：控件表(根据ID修改对象).
@@ -137,7 +137,7 @@ public class AutWidgetController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：控件表(根据ID获取对象).

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-28
+ * @时间: 2017-06-01
  */
 public class AutWidget extends Entity<AutWidget> {
 
@@ -37,6 +37,15 @@ public class AutWidget extends Entity<AutWidget> {
      * 是否激活
      */
 	private Integer isActive;
+    /**
+     * 控件归属父级菜单ID
+     */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long parentMenuId;
+    /**
+     * 控件归属父级菜单编码
+     */
+	private String parentMenuCode;
 
 
 	public String getWidgetCode() {
@@ -81,6 +90,24 @@ public class AutWidget extends Entity<AutWidget> {
 
 	public AutWidget setIsActive(Integer isActive) {
 		this.isActive = isActive;
+		return this;
+	}
+
+	public Long getParentMenuId() {
+		return parentMenuId;
+	}
+
+	public AutWidget setParentMenuId(Long parentMenuId) {
+		this.parentMenuId = parentMenuId;
+		return this;
+	}
+
+	public String getParentMenuCode() {
+		return parentMenuCode;
+	}
+
+	public AutWidget setParentMenuCode(String parentMenuCode) {
+		this.parentMenuCode = parentMenuCode;
 		return this;
 	}
 

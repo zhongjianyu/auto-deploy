@@ -31,6 +31,12 @@ public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>imple
 		if (StringUtils.isNotEmpty(obj.getMenuName())) {
 			where.like("menu_name", obj.getMenuName());
 		}
+		if (obj.getMenuLevel() != null) {
+			where.eq("menu_level", obj.getMenuLevel());
+		}
+		if (obj.getParentCode() != null) {
+			where.eq("parent_code", obj.getParentCode());
+		}
 		where.orderBy("menu_code", true);
 		Page<AutMenu> page = selectPage(new Page<AutMenu>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
@@ -81,7 +87,7 @@ public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>imple
 				codeNum++;
 				if (codeNum > 99) {
 					throw new Exception("菜单数已经超过99");
-				}else{
+				} else {
 					if (codeNum > 9) {
 						codeStr = parentCode.substring(0, 2) + codeNum + "00";
 					} else {

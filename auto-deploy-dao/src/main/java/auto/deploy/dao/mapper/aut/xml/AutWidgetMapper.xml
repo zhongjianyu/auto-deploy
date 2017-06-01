@@ -18,11 +18,13 @@
 		<result column="menu_id" property="menuId" />
 		<result column="menu_code" property="menuCode" />
 		<result column="is_active" property="isActive" />
+		<result column="parent_menu_id" property="parentMenuId" />
+		<result column="parent_menu_code" property="parentMenuCode" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, widget_code, widget_name, menu_id, menu_code, is_active
+        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, widget_code, widget_name, menu_id, menu_code, is_active, parent_menu_id, parent_menu_code
     </sql>
 
 </mapper>
