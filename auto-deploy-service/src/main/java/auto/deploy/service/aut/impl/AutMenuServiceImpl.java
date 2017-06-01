@@ -31,12 +31,6 @@ public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>imple
 		if (StringUtils.isNotEmpty(obj.getMenuName())) {
 			where.like("menu_name", obj.getMenuName());
 		}
-		if (obj.getMenuLevel() != null) {
-			where.eq("menu_level", obj.getMenuLevel());
-		}
-		if (obj.getParentCode() != null) {
-			where.eq("parent_code", obj.getParentCode());
-		}
 		where.orderBy("menu_code", true);
 		Page<AutMenu> page = selectPage(new Page<AutMenu>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
@@ -100,5 +94,19 @@ public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>imple
 			}
 		}
 		return nextMenuCode;
+	}
+
+	@Override
+	public List<AutMenu> list(AutMenu obj) throws Exception {
+		Where<AutMenu> where = new Where<AutMenu>();
+		if (obj.getMenuLevel() != null) {
+			where.eq("menu_level", obj.getMenuLevel());
+		}
+		if (obj.getParentCode() != null) {
+			where.eq("parent_code", obj.getParentCode());
+		}
+		where.orderBy("menu_code", true);
+		List<AutMenu> list = selectList(where);
+		return list;
 	}
 }

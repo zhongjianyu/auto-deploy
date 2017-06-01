@@ -17,7 +17,6 @@ import auto.deploy.dao.entity.aut.AutMenu;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.object.aut.dto.AutMenuDO;
-import auto.deploy.object.aut.vo.AutMenuVO;
 import auto.deploy.service.aut.AutMenuService;
 import auto.deploy.web.controller.BaseController;
 
@@ -190,11 +189,16 @@ public class AutMenuController extends BaseController {
 	 *
 	 * @时间：2017年5月31日 下午7:32:51
 	 */
-	@RequestMapping("/getAllMenuAndWidget")
+	@RequestMapping("/getMenuList")
 	@ResponseBody
-	public List<AutMenuVO> getAllMenuAndWidget() {
-		
-		return null;
+	public List<AutMenu> getMenuList(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
+		List<AutMenu> list = null;
+		try {
+			list = autMenuService.list(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

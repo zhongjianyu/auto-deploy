@@ -80,20 +80,16 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">一级菜单</label>
 				<div class="layui-input-block">
-					<select name="isActive1" id="isActive1">
+					<select name="parentMenuCode" id="parentMenuCode" lay-filter="parentMenuCode" lay-verify="required">
 						<option value="">请选择</option>
-						<option value="1">激活</option>
-						<option value="0">冻结</option>
 					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">二级菜单</label>
 				<div class="layui-input-block">
-					<select name="isActive1" id="isActive1">
+					<select name="menuCode" id="menuCode" lay-filter="menuCode">
 						<option value="">请选择</option>
-						<option value="1">激活</option>
-						<option value="0">冻结</option>
 					</select>
 				</div>
 			</div>
@@ -101,7 +97,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">控件名称</label>
 				<div class="layui-input-block">
-					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="控件名称" class="layui-input">
+					<input type="text" name="widgetName" id="widgetName" lay-verify="required" autocomplete="off" placeholder="控件名称" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -276,6 +272,10 @@
 					}
 				}
 			});
+			//现在一级菜单联动二级菜单
+			pform.on('select(parentMenuCode)', function(data) {
+				setMenuList("menuLevel=2&parentCode=" + data.value, "menuCode", 2);
+			});
 			//监听新增提交
 			pform.on('submit(form-add-submit)', function(data) {
 				tool.post("../autWidget/add", $("#add-object-form").serialize(), postCallBack, false);
@@ -305,8 +305,31 @@
 				;
 			});
 		}
+		function setMenuList(param, pid, level) {
+			param = param + "&_csrf=" + $("#_csrf").val()
+			tool.post("../autMenu/getMenuList", param, function(retList) {
+				var optionStr = "<option value=\"\">请选择</option>";
+				for (var i = 0; i < retList.length; i++) {
+					optionStr += "<option value=\""+retList[i].menuCode+"\">" + retList[i].menuName + "</option>";
+				}
+				$("#" + pid).empty();
+				$(optionStr).appendTo("#" + pid);
+				//如果二级菜单有数据，则必选，如果没有则不必选  
+				if (level == 2) {
+					if (retList.length > 0) {
+						$("#" + pid).attr("lay-verify", "required");
+					} else {
+						$("#" + pid).removeAttr("lay-verify");
+						$("#" + pid).removeClass("layui-form-danger");
+					}
+				}
+				pform.render();
+			}, false);
+		}
 		//打开新增对象窗口
 		function openAddWin() {
+			//设置一级菜单
+			setMenuList("menuLevel=1", "parentMenuCode", 1);
 			var index = layer.open({
 				title : '新增',
 				maxmin : false,
@@ -314,6 +337,7 @@
 				content : $('#win-add-object')
 			});
 			layer.full(index);
+			pform.render();
 		}
 		//新增对象回调
 		function postCallBack(retMsg) {

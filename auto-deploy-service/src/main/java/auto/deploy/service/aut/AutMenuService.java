@@ -1,5 +1,7 @@
 package auto.deploy.service.aut;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.plugins.Page;
 import auto.deploy.object.PageBean;
 import auto.deploy.dao.entity.aut.AutMenu;
@@ -38,4 +40,16 @@ public interface AutMenuService extends IService<AutMenu> {
 	 * @时间：2017年5月29日 上午11:07:40
 	 */
 	public String getNextMenuCode(int menuLevel, String parentCode) throws Exception;
+
+	/**
+	 * 
+	 * @描述：获取一二级菜单列表
+	 *
+	 * @返回：List<AutMenu>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月1日 下午8:52:53
+	 */
+	List<AutMenu> list(AutMenu obj) throws Exception;
 }
