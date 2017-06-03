@@ -96,8 +96,7 @@ public class Button implements TemplateDirectiveModel {
 				where.eq("is_active", 1);
 				where.eq("widget_code", code);
 				where.in("role_code", roleCodeList);
-				List<AutWidgetRole> autWidgetRoleList = autWidgetRoleService.selectList(where);
-				if (autWidgetRoleList.size() > 0) {
+				if (autWidgetRoleService.selectCount(where) > 0) {
 					out.write(button.toString());
 				}
 			}

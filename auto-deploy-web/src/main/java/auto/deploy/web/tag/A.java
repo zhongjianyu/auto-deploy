@@ -75,15 +75,14 @@ public class A implements TemplateDirectiveModel {
 			CustomUser userDetails = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Collection<GrantedAuthority> roleList = userDetails.getAuthorities();
 			for (GrantedAuthority grantedAuthority : roleList) {
-				roleCodeList.add(grantedAuthority.getAuthority());
+				roleCodeList.add(grantedAuthority.getAuthority().substring(5));
 			}
 			if (roleCodeList.size() > 0) {
 				Where<AutWidgetRole> where = new Where<AutWidgetRole>();
 				where.eq("is_active", 1);
 				where.eq("widget_code", code);
 				where.in("role_code", roleCodeList);
-				List<AutWidgetRole> autWidgetRoleList = autWidgetRoleService.selectList(where);
-				if (autWidgetRoleList.size() > 0) {
+				if (autWidgetRoleService.selectCount(where) > 0) {
 					out.write(button.toString());
 				}
 			}
