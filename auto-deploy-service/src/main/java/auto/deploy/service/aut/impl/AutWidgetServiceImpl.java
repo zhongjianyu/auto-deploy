@@ -50,7 +50,7 @@ public class AutWidgetServiceImpl extends ServiceImpl<AutWidgetMapper, AutWidget
 			// 根据关键字查询菜单
 			Where<AutMenu> menuWhere = new Where<AutMenu>();
 			menuWhere.like("menu_name", obj.getFullMenuName());
-			menuWhere.or("menu_code IN {0}", "%" + obj.getFullMenuName() + "%");
+			menuWhere.or("menu_code LIKE {0}", "%" + obj.getFullMenuName() + "%");
 			menuWhere.setSqlSelect("id");
 			List<AutMenu> menuList = autMenuService.selectList(menuWhere);
 			String idInStr = "";
@@ -68,7 +68,7 @@ public class AutWidgetServiceImpl extends ServiceImpl<AutWidgetMapper, AutWidget
 				where.or("parent_menu_id IN({0})", idInStr);
 			}
 		}
-		where.orderBy("menu_code", true);
+		where.orderBy("widget_code", true);
 		Page<AutWidget> page = selectPage(new Page<AutWidget>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		List<AutWidget> widgetList = page.getRecords();
 
@@ -90,6 +90,7 @@ public class AutWidgetServiceImpl extends ServiceImpl<AutWidgetMapper, AutWidget
 				fullMenuName += menu.getMenuName();
 			}
 			widgetDO.setFullMenuName(fullMenuName);
+			doList.add(widgetDO);
 		}
 		doPage.setRecords(doList);
 		return doPage;

@@ -31,15 +31,16 @@ public interface AutMenuService extends IService<AutMenu> {
 
 	/**
 	 * 
-	 * @描述：根据菜单级别和父级菜ID码获取下一个菜单编码
+	 * @描述：根据菜单级别和父级菜ID码获取下一个菜单编码或者控件编码,如果isWidget=true, 表示生产一菜单或者二级菜单(
+	 *                                                   根据menuLevel参数)的控件编码
 	 *
-	 * @返回：String
+	 * @返回 ： String
 	 *
 	 * @作者：zhongjy
 	 *
-	 * @时间：2017年5月29日 上午11:07:40
+	 * @时间：2017年6月3日 上午8:23:48
 	 */
-	public String getNextMenuCode(int menuLevel, String parentCode) throws Exception;
+	public String getNextCode(int menuLevel, String parentCode, boolean isWidget) throws Exception;
 
 	/**
 	 * 

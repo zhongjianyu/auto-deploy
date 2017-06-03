@@ -20,7 +20,7 @@ public class AutMenuServiceImplTest {
 	@Test
 	public void test() throws Exception {
 		try {
-			System.out.println(autMenuService.getNextMenuCode(2, "010000"));
+			System.out.println(autMenuService.getNextCode(2, "000100", true));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

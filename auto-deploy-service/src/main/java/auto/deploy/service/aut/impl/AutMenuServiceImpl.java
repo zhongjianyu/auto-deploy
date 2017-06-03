@@ -2,6 +2,8 @@ package auto.deploy.service.aut.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -10,9 +12,11 @@ import com.baomidou.mybatisplus.toolkit.StringUtils;
 
 import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutMenu;
+import auto.deploy.dao.entity.aut.AutWidget;
 import auto.deploy.dao.mapper.aut.AutMenuMapper;
 import auto.deploy.object.PageBean;
 import auto.deploy.service.aut.AutMenuService;
+import auto.deploy.service.aut.AutWidgetService;
 
 /**
  * 
@@ -24,6 +28,9 @@ import auto.deploy.service.aut.AutMenuService;
  */
 @Service
 public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>implements AutMenuService {
+
+	@Resource
+	private AutWidgetService autWidgetService;
 
 	@Override
 	public Page<AutMenu> list(PageBean pageBean, AutMenu obj) throws Exception {
@@ -37,63 +44,94 @@ public class AutMenuServiceImpl extends ServiceImpl<AutMenuMapper, AutMenu>imple
 	}
 
 	@Override
-	public String getNextMenuCode(int menuLevel, String parentCode) throws Exception {
-		String nextMenuCode = "";
-		if (menuLevel == 1) {
-			Where<AutMenu> where = new Where<AutMenu>();
-			where.eq("menu_level", 1);
-			where.orderBy("menu_code", false);
-			where.setSqlSelect("menu_code");
+	public String getNextCode(int menuLevel, String parentCode, boolean isWidget) throws Exception {
+		String nextCode = "";
+		if (isWidget) {
+			// 生成控件编码
+			Where<AutWidget> where = new Where<AutWidget>();
+			if (menuLevel == 1) {
+				where.eq("parent_menu_code", parentCode);
+			} else if (menuLevel == 2) {
+				where.eq("menu_code", parentCode);
+			}
+			where.orderBy("widget_code", false);
+			where.setSqlSelect("widget_code");
 			where.last("LIMIT 0,1");
-			List<AutMenu> autMenuList = selectList(where);
-			if (autMenuList.size() > 0) {
-				AutMenu autMenu = autMenuList.get(0);
-				nextMenuCode = autMenu.getMenuCode();
-				String codeStr = nextMenuCode.substring(0, 2);
-				Integer codeNum = Integer.parseInt(codeStr);
+			AutWidget autWidget = autWidgetService.selectOne(where);
+			String preCode = parentCode.substring(0, 4);
+			if (autWidget != null) {
+				Integer codeNum = Integer.parseInt(autWidget.getWidgetCode().substring(4, 6));
 				codeNum++;
 				if (codeNum > 99) {
-					throw new Exception("菜单数已经超过99");
+					throw new Exception("控件数已经超过99");
 				} else {
 					if (codeNum > 9) {
-						codeStr = codeNum + "0000";
+						nextCode = preCode + codeNum;
 					} else {
-						codeStr = "0" + codeNum + "0000";
+						nextCode = preCode + "0" + codeNum;
 					}
-					nextMenuCode = codeStr;
 				}
 			} else {
-				nextMenuCode = "000000";
+				nextCode = preCode + "01";
 			}
 		} else {
-			Where<AutMenu> where = new Where<AutMenu>();
-			where.eq("parent_code", parentCode);
-			where.orderBy("menu_code", false);
-			where.last("LIMIT 0,1");
-			where.setSqlSelect("menu_code");
-			List<AutMenu> autMenuList = selectList(where);
-			if (autMenuList.size() > 0) {
-				AutMenu autMenu = autMenuList.get(0);
-				nextMenuCode = autMenu.getMenuCode();
-
-				String codeStr = nextMenuCode.substring(2, 4);
-				Integer codeNum = Integer.parseInt(codeStr);
-				codeNum++;
-				if (codeNum > 99) {
-					throw new Exception("菜单数已经超过99");
-				} else {
-					if (codeNum > 9) {
-						codeStr = parentCode.substring(0, 2) + codeNum + "00";
+			// 生成菜单编码
+			if (menuLevel == 1) {
+				// 一级菜单
+				Where<AutMenu> where = new Where<AutMenu>();
+				where.eq("menu_level", 1);
+				where.orderBy("menu_code", false);
+				where.setSqlSelect("menu_code");
+				where.last("LIMIT 0,1");
+				AutMenu autMenu = selectOne(where);
+				if (autMenu != null) {
+					nextCode = autMenu.getMenuCode();
+					String codeStr = nextCode.substring(0, 2);
+					Integer codeNum = Integer.parseInt(codeStr);
+					codeNum++;
+					if (codeNum > 99) {
+						throw new Exception("菜单数已经超过99");
 					} else {
-						codeStr = parentCode.substring(0, 2) + "0" + codeNum + "00";
+						if (codeNum > 9) {
+							codeStr = codeNum + "0000";
+						} else {
+							codeStr = "0" + codeNum + "0000";
+						}
+						nextCode = codeStr;
 					}
-					nextMenuCode = codeStr;
+				} else {
+					nextCode = "000000";
 				}
-			} else {
-				nextMenuCode = parentCode.substring(0, 2) + "0100";
+			} else if (menuLevel == 2) {
+				// 二级菜单
+				Where<AutMenu> where = new Where<AutMenu>();
+				where.eq("parent_code", parentCode);
+				where.orderBy("menu_code", false);
+				where.last("LIMIT 0,1");
+				where.setSqlSelect("menu_code");
+				AutMenu autMenu = selectOne(where);
+				if (autMenu != null) {
+					nextCode = autMenu.getMenuCode();
+
+					String codeStr = nextCode.substring(2, 4);
+					Integer codeNum = Integer.parseInt(codeStr);
+					codeNum++;
+					if (codeNum > 99) {
+						throw new Exception("菜单数已经超过99");
+					} else {
+						if (codeNum > 9) {
+							codeStr = parentCode.substring(0, 2) + codeNum + "00";
+						} else {
+							codeStr = parentCode.substring(0, 2) + "0" + codeNum + "00";
+						}
+						nextCode = codeStr;
+					}
+				} else {
+					nextCode = parentCode.substring(0, 2) + "0100";
+				}
 			}
 		}
-		return nextMenuCode;
+		return nextCode;
 	}
 
 	@Override

@@ -30,13 +30,10 @@
 				<thead>
 					<tr>
 						<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
-						<th style="display: none;">用户ID</th>
-						<th>用户账号</th>
-						<th>昵称</th>
+						<th>归属菜单</th>
+						<th>控件名称</th>
+						<th>控件编码</th>
 						<th>是否激活</th>
-						<th>是否过期</th>
-						<th>是否被锁</th>
-						<th>证书状态</th>
 						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
@@ -46,22 +43,19 @@
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
-							<td style="display: none;">{{value.id}}</td>
-							<td>{{value.userName}}</td>
-							<td>{{value.nickName}}</td>
-							<td>{{if value.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
-							<td>{{if value.isAccountExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isAccountExpired == 0}}<font color="green">正常</font>{{/if}}</td>
-							<td>{{if value.isAccountLocked == 1}}<font color="red">锁定</font>{{/if}}{{if value.isAccountLocked == 0}}<font color="green">正常</font>{{/if}}</td>
-							<td>{{if value.isCredentialsExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isCredentialsExpired == 0}}<font color="green">正常</font>{{/if}}</td>
-							<td>{{value.createTime}}</td>
+							<td>{{value.fullMenuName}}</td>
+							<td>{{value.autWidget.widgetName}}</td>
+							<td>{{value.autWidget.widgetCode}}</td>
+							<td>{{if value.autWidget.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.autWidget.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
+							<td>{{value.autWidget.createTime}}</td>
 							<td style="width:130px;">
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.autWidget.id}}','{{value.autWidget.parentMenuCode}}','{{value.autWidget.menuCode}}')" text="编辑"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.autWidget.id}}','{{value.autWidget.parentMenuCode}}','{{value.autWidget.menuCode}}')" text="详情"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.autWidget.id}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}
@@ -124,44 +118,31 @@
 			<input type="hidden" name="id" id="id">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
-				<label class="layui-form-label">账号</label>
+				<label class="layui-form-label">一级菜单</label>
 				<div class="layui-input-block">
-					<input disabled type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+					<select disabled="disabled" name="parentMenuCode" id="parentMenuCode" lay-filter="parentMenuCode4Edit" lay-verify="required">
+						<option value="">请选择</option>
+					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">昵称</label>
+				<label class="layui-form-label">二级菜单</label>
 				<div class="layui-input-block">
-					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+					<select disabled="disabled" name="menuCode" id="menuCode" lay-filter="menuCode">
+						<option value="">请选择</option>
+					</select>
 				</div>
 			</div>
+
 			<div class="layui-form-item">
-				<label class="layui-form-label">密码</label>
+				<label class="layui-form-label">控件名称</label>
 				<div class="layui-input-block">
-					<input type="password" name="userPwd" id="userPwd" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">密码确认</label>
-				<div class="layui-input-block">
-					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd2" autocomplete="off" placeholder="密码确认" class="layui-input">
+					<input type="text" name="widgetName" id="widgetName" lay-verify="required" autocomplete="off" placeholder="控件名称" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
 				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">账号状态</label>
-				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">是否锁定</label>
-				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">证书状态</label>
-				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
 			<div class="layui-input-block" style="margin-top: 15px;">
 				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
@@ -182,32 +163,31 @@
 			<input type="hidden" name="id" id="id">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
-				<label class="layui-form-label">账号</label>
+				<label class="layui-form-label">一级菜单</label>
 				<div class="layui-input-block">
-					<input type="text" name="userName" id="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+					<select disabled="disabled" name="parentMenuCode" id="parentMenuCode" lay-filter="parentMenuCode4Edit" lay-verify="required">
+						<option value="">请选择</option>
+					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">昵称</label>
+				<label class="layui-form-label">二级菜单</label>
 				<div class="layui-input-block">
-					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+					<select disabled="disabled" name="menuCode" id="menuCode" lay-filter="menuCode">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">控件名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="widgetName" id="widgetName" lay-verify="required" autocomplete="off" placeholder="控件名称" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
 				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">账号状态</label>
-				<@select dict="IS_EXPIRED" layVerify="required" id="isAccountExpired" name="isAccountExpired" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">是否锁定</label>
-				<@select dict="IS_LOCKED" layVerify="required" id="isAccountLocked" name="isAccountLocked" class="layui-input-block" def=""/>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">证书状态</label>
-				<@select dict="IS_EXPIRED" layVerify="required" id="isCredentialsExpired" name="isCredentialsExpired" class="layui-input-block" def=""/>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">版本号</label>
@@ -260,21 +240,13 @@
 				//form.render('checkbox');
 			});
 			//自定义表单校验
-			pform.verify({
-				checkRepwd : function(value) {
-					if (value != $("#add-object-form").find("#userPwd").val()) {
-						return "两次输入的密码不一致";
-					}
-				},
-				checkRepwd2 : function(value) {
-					if (value != $("#update-object-form").find("#userPwd").val()) {
-						return "两次输入的密码不一致";
-					}
-				}
-			});
+			pform.verify();
 			//现在一级菜单联动二级菜单
 			pform.on('select(parentMenuCode)', function(data) {
-				setMenuList("menuLevel=2&parentCode=" + data.value, "menuCode", 2);
+				setMenuList("add-object-form", "menuLevel=2&parentCode=" + data.value, "menuCode", 2, null);
+			});
+			pform.on('select(parentMenuCode4Edit)', function(data) {
+				setMenuList("update-object-form", "menuLevel=2&parentCode=" + data.value, "menuCode", 2, null);
 			});
 			//监听新增提交
 			pform.on('submit(form-add-submit)', function(data) {
@@ -295,7 +267,7 @@
 			param.container = "paging";
 			param.pageSize = 5;
 			param.url = "../autWidget/list";
-			param.userName = $("#searchKey").val();
+			param.fullMenuName = $("#searchKey").val();
 			tool.loadpage(param);
 		}
 		//获取勾选数据id
@@ -305,22 +277,26 @@
 				;
 			});
 		}
-		function setMenuList(param, pid, level) {
+		function setMenuList(formId, param, pid, level, defaultValue) {
 			param = param + "&_csrf=" + $("#_csrf").val()
 			tool.post("../autMenu/getMenuList", param, function(retList) {
 				var optionStr = "<option value=\"\">请选择</option>";
 				for (var i = 0; i < retList.length; i++) {
-					optionStr += "<option value=\""+retList[i].menuCode+"\">" + retList[i].menuName + "</option>";
+					if (defaultValue != null && retList[i].menuCode == defaultValue) {
+						optionStr += "<option value=\""+retList[i].menuCode+"\" selected=\"selected\">" + retList[i].menuName + "</option>";
+					} else {
+						optionStr += "<option value=\""+retList[i].menuCode+"\">" + retList[i].menuName + "</option>";
+					}
 				}
-				$("#" + pid).empty();
-				$(optionStr).appendTo("#" + pid);
+				$("#" + formId + " #" + pid).empty();
+				$(optionStr).appendTo("#" + formId + " #" + pid);
 				//如果二级菜单有数据，则必选，如果没有则不必选  
 				if (level == 2) {
 					if (retList.length > 0) {
-						$("#" + pid).attr("lay-verify", "required");
+						$("#" + formId + " #" + pid).attr("lay-verify", "required");
 					} else {
-						$("#" + pid).removeAttr("lay-verify");
-						$("#" + pid).removeClass("layui-form-danger");
+						$("#" + formId + " #" + pid).removeAttr("lay-verify");
+						$("#" + formId + " #" + pid).removeClass("layui-form-danger");
 					}
 				}
 				pform.render();
@@ -329,7 +305,7 @@
 		//打开新增对象窗口
 		function openAddWin() {
 			//设置一级菜单
-			setMenuList("menuLevel=1", "parentMenuCode", 1);
+			setMenuList("add-object-form", "menuLevel=1", "parentMenuCode", 1, null);
 			var index = layer.open({
 				title : '新增',
 				maxmin : false,
@@ -349,12 +325,13 @@
 			}
 		}
 		//编辑对象
-		function showEdit(id) {
+		function showEdit(id, defaultValue, defaultValue2) {
+			setMenuList("update-object-form", "menuLevel=1", "parentMenuCode", 1, defaultValue);
+			setMenuList("update-object-form", "menuLevel=2&parentCode=" + defaultValue, "menuCode", 2, defaultValue2);
 			var object = tool.getById("../autWidget/getById", id);
 			for ( var key in object) {
 				$("#update-object-form").find("#" + key).val(object[key]);
 			}
-			$("#update-object-form").find("#userPwd2").val(object.userPwd);
 			var index = layer.open({
 				title : '编辑',
 				maxmin : false,
@@ -365,7 +342,10 @@
 			layer.full(index);
 		}
 		//详情对象
-		function showView(id) {
+		function showView(id, defaultValue, defaultValue2) {
+			setMenuList("view-object-form", "menuLevel=1", "parentMenuCode", 1, defaultValue);
+			setMenuList("view-object-form", "menuLevel=2&parentCode=" + defaultValue, "menuCode", 2, defaultValue2);
+
 			var object = tool.getById("../autWidget/getById", id);
 			for ( var key in object) {
 				$("#view-object-form").find("#" + key).val(object[key]);

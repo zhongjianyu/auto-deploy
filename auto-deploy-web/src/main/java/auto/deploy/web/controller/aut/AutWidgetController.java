@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.toolkit.StringUtils;
 
+import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.aut.AutMenu;
 import auto.deploy.dao.entity.aut.AutWidget;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.object.aut.dto.AutWidgetDO;
+import auto.deploy.service.aut.AutMenuService;
 import auto.deploy.service.aut.AutWidgetService;
 import auto.deploy.web.controller.BaseController;
 
@@ -30,6 +34,8 @@ import auto.deploy.web.controller.BaseController;
 public class AutWidgetController extends BaseController {
 	@Resource
 	private AutWidgetService autWidgetService;
+	@Resource
+	private AutMenuService autMenuService;
 
 	/**
 	 * 
@@ -84,11 +90,32 @@ public class AutWidgetController extends BaseController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutWidget obj) {
 		RetMsg retMsg = new RetMsg();
 
-		// obj.set...
-
-		autWidgetService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			if (StringUtils.isNotEmpty(obj.getMenuCode())) {
+				// 二级
+				obj.setWidgetCode(autMenuService.getNextCode(2, obj.getMenuCode(), true));
+				// 查询二级菜单
+				Where<AutMenu> where2 = new Where<AutMenu>();
+				where2.eq("menu_code", obj.getMenuCode());
+				AutMenu menu = autMenuService.selectOne(where2);
+				obj.setMenuId(menu.getId());
+			} else {
+				// 一级
+				obj.setWidgetCode(autMenuService.getNextCode(1, obj.getParentMenuCode(), true));
+			}
+			// 查询一级菜单
+			Where<AutMenu> where = new Where<AutMenu>();
+			where.eq("menu_code", obj.getParentMenuCode());
+			AutMenu parentMenu = autMenuService.selectOne(where);
+			obj.setParentMenuId(parentMenu.getId());
+			autWidgetService.insert(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 
@@ -130,7 +157,8 @@ public class AutWidgetController extends BaseController {
 		RetMsg retMsg = new RetMsg();
 
 		AutWidget orgnlObj = autWidgetService.selectById(obj.getId());
-		// orgnlObj.set...
+		orgnlObj.setIsActive(obj.getIsActive());
+		orgnlObj.setWidgetName(obj.getWidgetName());
 
 		autWidgetService.updateById(orgnlObj);
 		retMsg.setCode(0);

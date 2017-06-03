@@ -88,7 +88,7 @@ public class AutMenuController extends BaseController {
 		RetMsg retMsg = new RetMsg();
 		// 判断菜单编码是否存在
 		try {
-			obj.setMenuCode(autMenuService.getNextMenuCode(obj.getMenuLevel(), obj.getParentCode()));
+			obj.setMenuCode(autMenuService.getNextCode(obj.getMenuLevel(), obj.getParentCode(), false));
 			autMenuService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");
