@@ -49,7 +49,7 @@
 							<td style="width:170px;">
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}')" text="授权"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.roleName}}')" text="授权"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
@@ -190,21 +190,22 @@
 			</div>
 		</form>
 	</div>
+	<!-- 授权 -->
 	<div id="auth-div" style="display: none; padding-left: 10px; padding-right: 10px;">
+		<input type="hidden" name="roleId" id="roleId">
 		<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
 			<table class="layui-table">
 				<tbody id="paging2-data">
 					<script id="paging2-script" type="text/html">
 					{{each records value index}}
 						<tr>
-							{{if value.autMenu.menuLevel == 1}}<td><input type="checkbox" name="" title="{{value.autMenu.menuName}}" style="height:40px;"></td><td></td>{{/if}}
-							{{if value.autMenu.menuLevel == 2}}<td></td><td><input type="checkbox" name="" title="{{value.autMenu.menuName}}" style="height:40px;"></td>{{/if}}
+							{{if value.autMenu.menuLevel == 1}}<td><input {{if value.isCheck == 1}}checked{{/if}} type="checkbox" flag="1" value="{{value.autMenu.id}}" name="" title="{{value.autMenu.menuName}}" style="height:40px;"></td><td></td>{{/if}}
+							{{if value.autMenu.menuLevel == 2}}<td></td><td><input {{if value.isCheck == 1}}checked{{/if}} type="checkbox" flag="1" value="{{value.autMenu.id}}" name="" title="{{value.autMenu.menuName}}" style="height:40px;"></td>{{/if}}
 							<td style="width:30px;">{{if value.autMenu.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.autMenu.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
-							<td style="width:210px;">
-								{{if value.menuLevel == 1}}<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary layui-btn-mini" id="show-edit" onclick="openAddWin2('{{value.menuCode}}','{{value.menuName}}')" text="新增子菜单"/>{{/if}}
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+							<td>
+								{{each value.widgetList value2}}
+								<input {{if value2.isCheck == 1}}checked{{/if}} type="checkbox" flag="2" value="{{value2.autWidget.id}}" name="" title="{{value2.autWidget.widgetName}}" style="height:40px;">
+								{{/each}}
 							</td>
 						</tr>
 					{{/each}}
@@ -253,6 +254,19 @@
 				tool.post("../autRole/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
 			});
+			//勾选监听
+			pform.on('checkbox', function(data) {
+				//tool.post("../autRole/update", $("#update-object-form").serialize(), postCallBack, false);
+				var isCheck = data.elem.checked ? 1 : 0;
+				var id = data.value;
+				var type = $(data.elem).attr("flag");
+				var roleId = $("#auth-div #roleId").val();
+				var _csrf = $("#_csrf").val();
+				var param = "_csrf=" + _csrf + "&isCheck=" + isCheck + "&id=" + id + "&type=" + type + "&roleId=" + roleId;
+				tool.post("../autRole/setAuth", param, function(retMsg) {
+				}, true);
+				return false;
+			});
 			//初始化出发数据加载
 			loadData();
 		});
@@ -260,7 +274,7 @@
 		function loadData() {
 			var param = new Object();
 			param.container = "paging";
-			param.pageSize = 5;
+			param.pageSize = 10;
 			param.url = "../autRole/list";
 			param.roleName = $("#searchKey").val();
 			tool.loadpage(param);
@@ -339,20 +353,21 @@
 			});
 		}
 		//角色授权
-		function showAuth(roleId) {
+		function showAuth(roleId, roleName) {
+			$("#auth-div #roleId").val(roleId);
 			var param = new Object();
 			param.container = "paging2";
-			param.pageSize = 5;
+			param.pageSize = 100;
 			param.url = "../autRole/menuWidgetList";
+			param.roleId = roleId;
 			tool.loadpage(param);
 			var index = layer.open({
-				title : '授权',
+				title : "【" + roleName + "】授权",
 				maxmin : false,
 				type : 1,
 				content : $('#auth-div')
 			});
 			pform.render();
-			console.log($("#auth-div").find(".layui-form-checkbox").length);
 			layer.full(index);
 		}
 	</script>

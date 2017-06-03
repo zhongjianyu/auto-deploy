@@ -29,6 +29,10 @@ public class AutWidgetDO {
 	 * 完整归属菜单名：一级+二级菜单名称
 	 */
 	private String fullMenuName;
+	/**
+	 * 是否选中
+	 */
+	private Integer isCheck;
 
 	public AutWidget getAutWidget() {
 		return autWidget;
@@ -60,6 +64,14 @@ public class AutWidgetDO {
 
 	public void setFullMenuName(String fullMenuName) {
 		this.fullMenuName = fullMenuName;
+	}
+
+	public Integer getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Integer isCheck) {
+		this.isCheck = isCheck;
 	}
 
 }

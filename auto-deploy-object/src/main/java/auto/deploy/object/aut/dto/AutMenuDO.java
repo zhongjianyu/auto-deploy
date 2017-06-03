@@ -3,7 +3,6 @@ package auto.deploy.object.aut.dto;
 import java.util.List;
 
 import auto.deploy.dao.entity.aut.AutMenu;
-import auto.deploy.dao.entity.aut.AutWidget;
 
 /**
  * 
@@ -17,7 +16,8 @@ public class AutMenuDO {
 
 	private AutMenu autMenu;
 	private AutMenu parentMenu;
-	private List<AutWidget> widgetList;
+	private List<AutWidgetDO> widgetList;
+	private Integer isCheck;
 
 	public AutMenu getAutMenu() {
 		return autMenu;
@@ -35,12 +35,20 @@ public class AutMenuDO {
 		this.parentMenu = parentMenu;
 	}
 
-	public List<AutWidget> getWidgetList() {
+	public List<AutWidgetDO> getWidgetList() {
 		return widgetList;
 	}
 
-	public void setWidgetList(List<AutWidget> widgetList) {
+	public void setWidgetList(List<AutWidgetDO> widgetList) {
 		this.widgetList = widgetList;
+	}
+
+	public Integer getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(Integer isCheck) {
+		this.isCheck = isCheck;
 	}
 
 }
