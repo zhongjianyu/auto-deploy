@@ -37,7 +37,6 @@
 						<th>是否过期</th>
 						<th>是否被锁</th>
 						<th>证书状态</th>
-						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -53,8 +52,7 @@
 							<td>{{if value.isAccountExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isAccountExpired == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{if value.isAccountLocked == 1}}<font color="red">锁定</font>{{/if}}{{if value.isAccountLocked == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{if value.isCredentialsExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isCredentialsExpired == 0}}<font color="green">正常</font>{{/if}}</td>
-							<td>{{value.createTime}}</td>
-							<td style="width:130px;">
+							<td>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
 								<!--
@@ -62,6 +60,7 @@
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.userName}}')" text="分配角色"/>
 							</td>
 						</tr>
 					{{/each}}
@@ -258,6 +257,28 @@
 			</div>
 		</form>
 	</div>
+	<!-- 分配角色 -->
+	<div id="auth-div" style="display: none; padding-left: 10px; padding-right: 10px;">
+		<input type="hidden" name="userId" id="userId">
+		<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+			<table class="layui-table">
+				<tbody id="paging2-data">
+					<script id="paging2-script" type="text/html">
+					<tr>
+						<td>
+					{{each records value index}}
+							<input {{if value.isCheck == 1}}checked{{/if}} type="checkbox" value="{{value.autRole.id}}" name="" title="{{value.autRole.roleName}}" style="height:40px;">
+					{{/each}}
+						</td>
+					</tr>
+					</script>
+				</tbody>
+			</table>
+		</div>
+		<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+			<div id="paging2-footer" class="page" style="background-color: white; text-align: center;"></div>
+		</div>
+	</div>
 	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="../../plugins/layui/lay/modules/laypage.js"></script>
 	<script type="text/javascript" src="../../js/template-web.js"></script>
@@ -293,6 +314,17 @@
 			//监听新增提交
 			pform.on('submit(form-update-submit)', function(data) {
 				tool.post("../autUser/update", $("#update-object-form").serialize(), postCallBack, false);
+				return false;
+			});
+			//勾选监听
+			pform.on('checkbox', function(data) {
+				var isCheck = data.elem.checked ? 1 : 0;
+				var id = data.value;
+				var userId = $("#auth-div #userId").val();
+				var _csrf = $("#_csrf").val();
+				var param = "_csrf=" + _csrf + "&isCheck=" + isCheck + "&id=" + id + "&userId=" + userId;
+				tool.post("../autUser/setAuth", param, function(retMsg) {
+				}, true);
 				return false;
 			});
 			//初始化出发数据加载
@@ -379,6 +411,24 @@
 					tool.error(retMsg.message);
 				}
 			});
+		}
+		//分配角色
+		function showAuth(userId, userName) {
+			$("#auth-div #userId").val(userId);
+			var param = new Object();
+			param.container = "paging2";
+			param.pageSize = 100;
+			param.url = "../autUser/roleList";
+			param.userId = userId;
+			tool.loadpage(param);
+			var index = layer.open({
+				title : "【" + userName + "】分配角色",
+				maxmin : false,
+				type : 1,
+				content : $('#auth-div')
+			});
+			pform.render();
+			layer.full(index);
 		}
 	</script>
 </body>

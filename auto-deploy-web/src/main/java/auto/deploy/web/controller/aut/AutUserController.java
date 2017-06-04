@@ -1,5 +1,10 @@
 package auto.deploy.web.controller.aut;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,10 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.aut.AutRole;
 import auto.deploy.dao.entity.aut.AutUser;
+import auto.deploy.dao.entity.aut.AutUserRole;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
+import auto.deploy.object.aut.dto.AutRoleDO;
 import auto.deploy.security.CustomPasswordEncoder;
+import auto.deploy.service.aut.AutRoleService;
+import auto.deploy.service.aut.AutUserRoleService;
 import auto.deploy.service.aut.AutUserService;
 import auto.deploy.util.EncryptUtil;
 
@@ -33,6 +43,10 @@ public class AutUserController {
 	private AutUserService autUserService;
 	@Resource
 	private CustomPasswordEncoder customPasswordEncoder;
+	@Resource
+	private AutUserRoleService autUserRoleService;
+	@Resource
+	private AutRoleService autRoleService;
 
 	/**
 	 * 
@@ -173,5 +187,97 @@ public class AutUserController {
 		// 密码MD5后传递到前台
 		autUser.setUserPwd(EncryptUtil.encryptMD5(autUser.getUserPwd()));
 		return autUser;
+	}
+
+	/**
+	 * 
+	 * @描述：角色表.
+	 *
+	 * 			@返回：Page<AutMenu>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-05-27
+	 */
+	@RequestMapping("/roleList")
+	@ResponseBody
+	public Page<AutRoleDO> roleList(HttpServletRequest request, HttpServletResponse response, PageBean pageBean) {
+		Page<AutRoleDO> page = new Page<AutRoleDO>();
+		long userId = Long.parseLong(request.getParameter("userId"));
+		try {
+			Where<AutUserRole> w1 = new Where<AutUserRole>();
+			w1.eq("user_id", userId).eq("is_active", 1);
+			w1.setSqlSelect("role_id");
+			List<AutUserRole> autUserRoleList = autUserRoleService.selectList(w1);
+			Set<Long> roleIdSet = new HashSet<Long>();
+			for (AutUserRole autUserRole : autUserRoleList) {
+				roleIdSet.add(autUserRole.getRoleId());
+			}
+
+			Page<AutRole> rolePage = autRoleService.list(pageBean, new AutRole());
+			List<AutRole> roleList = rolePage.getRecords();
+
+			page.setCurrent(rolePage.getCurrent());
+			page.setSize(rolePage.getSize());
+			page.setTotal(rolePage.getTotal());
+			List<AutRoleDO> voList = new ArrayList<AutRoleDO>();
+			for (AutRole autRole : roleList) {
+				AutRoleDO roleDO = new AutRoleDO();
+				if (roleIdSet.contains(autRole.getId())) {
+					roleDO.setIsCheck(1);
+				} else {
+					roleDO.setIsCheck(0);
+				}
+				roleDO.setAutRole(autRole);
+				voList.add(roleDO);
+			}
+			page.setRecords(voList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
+
+	/**
+	 * 
+	 * @描述：用户分配角色
+	 *
+	 * @返回：RetMsg
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-05-27
+	 */
+	@RequestMapping("/setAuth")
+	@ResponseBody
+	public RetMsg setAuth(HttpServletRequest request, HttpServletResponse response) {
+		RetMsg retMsg = new RetMsg();
+
+		int isActive = Integer.parseInt(request.getParameter("isCheck"));
+		long id = Long.parseLong(request.getParameter("id"));
+		long userId = Long.parseLong(request.getParameter("userId"));
+		// 菜单权限
+		Where<AutUserRole> where = new Where<AutUserRole>();
+		where.eq("user_id", userId);
+		where.eq("role_id", id);
+		AutUserRole autUserRole = autUserRoleService.selectOne(where);
+		if (autUserRole == null) {
+			AutUser autUser = autUserService.selectById(userId);
+			AutRole autRole = autRoleService.selectById(id);
+			autUserRole = new AutUserRole();
+			autUserRole.setUserId(userId);
+			autUserRole.setRoleId(autRole.getId());
+			autUserRole.setRoleCode(autRole.getRoleCode());
+			autUserRole.setUserName(autUser.getUserName());
+			autUserRole.setRoleName(autRole.getRoleName());
+			autUserRole.setIsActive(isActive);
+			autUserRoleService.insert(autUserRole);
+		} else {
+			autUserRole.setIsActive(isActive);
+			autUserRoleService.updateById(autUserRole);
+		}
+		retMsg.setCode(0);
+		retMsg.setMessage("操作成功");
+		return retMsg;
 	}
 }
