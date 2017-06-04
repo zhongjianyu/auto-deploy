@@ -433,10 +433,15 @@
 			$("#update-object-form").find("#menuLevel_s").attr("disabled", "disabled");
 			if (autMenu.menuLevel == 1) {
 				$("#update-object-form").find("#parentMenuName").parent().parent().hide();
+				//如果是一级菜单，则菜单链接不用必填
+				$("#update-object-form #menuHref").removeAttr("lay-verify");
+				$("#update-object-form #menuHref").removeClass("layui-form-danger");
 			} else {
 				$("#update-object-form").find("#parentMenuName").parent().parent().show();
 				$("#update-object-form").find("#parentMenuName").val(object.parentMenu.menuName);
 				$("#update-object-form").find("#parentMenuName").attr("disabled", "disabled");
+				//如果是二级菜单，则菜单链接必填
+				$("#update-object-form #menuHref").attr("lay-verify", "required");
 			}
 			var index = layer.open({
 				title : '编辑',
