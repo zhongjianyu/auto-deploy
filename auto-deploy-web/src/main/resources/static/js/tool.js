@@ -12,6 +12,7 @@ var tool = {
 		tool.post(param.url, param, function(initPageData) {
 			layui.laypage({
 				cont : param.container + "-footer",// 分页容器id
+				total : initPageData.total,// 总记录数
 				pages : initPageData.pages,// 总页数
 				pageSize : param.pageSize,// 每页记录数
 				skip : true,// 是否显示跳转页
@@ -25,7 +26,7 @@ var tool = {
 					} else {
 						param.pageNum = obj.curr;
 						var pageLoadIndex = layer.load(2, {
-							time : 1 * 500
+							time : 1 * 300
 						});
 						tool.post(param.url, param, function(pageData) {
 							layer.close(pageLoadIndex);
