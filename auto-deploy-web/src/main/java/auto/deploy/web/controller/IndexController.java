@@ -52,6 +52,21 @@ public class IndexController extends BaseController {
 		request.setAttribute("CURRENT_NICK_NAME", getCustomDetail().getNickName());
 		return "index/index";
 	}
+	/**
+	 * 
+	 * @描述：主页
+	 *
+	 * @返回：String
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月22日 下午11:05:27
+	 */
+	@RequestMapping("/index/main")
+	public String main(HttpServletRequest request) {
+		request.setAttribute("CURRENT_NICK_NAME", getCustomDetail().getNickName());
+		return "index/main";
+	}
 
 	/**
 	 * 
