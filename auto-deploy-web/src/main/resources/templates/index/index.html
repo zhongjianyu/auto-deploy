@@ -78,26 +78,30 @@
 		</form>
 	</div>
 	<!-- 修改密码窗口 -->
-	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-change-pwd">
-		<form class="layui-form" id="change-pwd-form">
+	<div style="padding: 10px; display: none;" id="win-change-pwd">
+		<form class="layui-form layui-form-pane" id="change-pwd-form">
 			<div class="layui-form-item">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<label class="layui-form-label">原密码</label>
 				<div class="layui-input-block">
 					<input type="password" name="oldPwd" id="oldPwd" lay-verify="required" autocomplete="off" placeholder="原密码" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">新密码</label>
 				<div class="layui-input-block">
 					<input type="password" name="newPwd" id="newPwd" lay-verify="required" autocomplete="off" placeholder="新密码" class="layui-input">
 				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">新密码确认</label>
 				<div class="layui-input-block">
 					<input type="password" name="newPwd2" id="newPwd2" lay-verify="newPwd2" autocomplete="off" placeholder="新密码确认" class="layui-input">
 				</div>
-				<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
-					<button class="layui-btn layui-btn-small" lay-submit="" lay-filter="form-change-submit">确定修改</button>
-					<button type="reset" class="layui-btn layui-btn-small layui-btn-primary">重置</button>
-				</div>
+			</div>
+			<div class="layui-input-block" style="text-align: right; margin-top: 15px;">
+				<button class="layui-btn layui-btn-small" lay-submit="" lay-filter="form-change-submit">确定修改</button>
+				<button type="reset" class="layui-btn layui-btn-small layui-btn-primary">重置</button>
 			</div>
 		</form>
 	</div>
@@ -146,15 +150,15 @@
 			maxmin : true,
 			type : 1,
 			content : $('#win-change-pwd'),
-			area : [ '400px', '240px' ]
+			area : [ '400px', '260px' ]
 		});
 	}
-	function userInfoPage(){
+	function userInfoPage() {
 		parent.tab.tabAdd({
-            href: "index/userInfoPage",
-            icon: "fa-user",
-            title: "个人信息"
-        });
+			href : "index/userInfoPage",
+			icon : "fa-user",
+			title : "个人信息"
+		});
 	}
 </script>
 </html>
