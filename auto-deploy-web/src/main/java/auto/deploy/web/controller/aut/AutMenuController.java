@@ -86,12 +86,19 @@ public class AutMenuController extends BaseController {
 	@ResponseBody
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		RetMsg retMsg = new RetMsg();
-		// 判断菜单编码是否存在
+		// 判断菜单名称是否存在
 		try {
-			obj.setMenuCode(autMenuService.getNextCode(obj.getMenuLevel(), obj.getParentCode(), false));
-			autMenuService.insert(obj);
-			retMsg.setCode(0);
-			retMsg.setMessage("操作成功");
+			Where<AutMenu> where = new Where<AutMenu>();
+			where.eq("menu_name", obj.getMenuName());
+			if (autMenuService.selectCount(where) > 0) {
+				retMsg.setCode(1);
+				retMsg.setMessage("菜单名称已被占用");
+			} else {
+				obj.setMenuCode(autMenuService.getNextCode(obj.getMenuLevel(), obj.getParentCode(), false));
+				autMenuService.insert(obj);
+				retMsg.setCode(0);
+				retMsg.setMessage("操作成功");
+			}
 		} catch (Exception e) {
 			retMsg.setCode(1);
 			e.printStackTrace();
@@ -142,16 +149,25 @@ public class AutMenuController extends BaseController {
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		RetMsg retMsg = new RetMsg();
 
-		AutMenu orgnlObj = autMenuService.selectById(obj.getId());
-		orgnlObj.setMenuName(obj.getMenuName());
-		orgnlObj.setMenuHref(obj.getMenuHref());
-		orgnlObj.setMenuIcon(obj.getMenuIcon());
-		orgnlObj.setMenuRank(obj.getMenuRank());
-		orgnlObj.setIsActive(obj.getIsActive());
+		// 检查菜单名称是否已被占用
+		Where<AutMenu> where = new Where<AutMenu>();
+		where.eq("menu_name", obj.getMenuName());
+		where.ne("id", obj.getId());
+		if (autMenuService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("菜单名称已被占用");
+		} else {
+			AutMenu orgnlObj = autMenuService.selectById(obj.getId());
+			orgnlObj.setMenuName(obj.getMenuName());
+			orgnlObj.setMenuHref(obj.getMenuHref());
+			orgnlObj.setMenuIcon(obj.getMenuIcon());
+			orgnlObj.setMenuRank(obj.getMenuRank());
+			orgnlObj.setIsActive(obj.getIsActive());
 
-		autMenuService.updateById(orgnlObj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+			autMenuService.updateById(orgnlObj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
 
