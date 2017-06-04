@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.sys.SysParameter;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -29,7 +30,7 @@ import auto.deploy.web.controller.BaseController;
 public class SysParameterController extends BaseController {
 	@Resource
 	private SysParameterService sysParameterService;
-	
+
 	/**
 	 * 
 	 * @描述：系统参数表(页面).
@@ -41,11 +42,11 @@ public class SysParameterController extends BaseController {
 	 * @时间：2017-06-04
 	 */
 	@RequestMapping("/sysParameterPage")
-	public String sysParameterPage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String sysParameterPage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "sys/sysParameterPage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：系统参数表(分页列表).
@@ -67,7 +68,6 @@ public class SysParameterController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -84,14 +84,20 @@ public class SysParameterController extends BaseController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, SysParameter obj) {
 		RetMsg retMsg = new RetMsg();
 
-		// obj.set...
-
-		sysParameterService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		// 判断key是否已被使用
+		Where<SysParameter> where = new Where<SysParameter>();
+		where.eq("param_key", obj.getParamKey());
+		if (sysParameterService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("参数key已经存在");
+		} else {
+			sysParameterService.insert(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：系统参数表(根据ID删除对象).
@@ -113,7 +119,7 @@ public class SysParameterController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：系统参数表(根据ID修改对象).
@@ -128,16 +134,26 @@ public class SysParameterController extends BaseController {
 	@ResponseBody
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, SysParameter obj) {
 		RetMsg retMsg = new RetMsg();
-
-		SysParameter orgnlObj = sysParameterService.selectById(obj.getId());
-		// orgnlObj.set...
-
-		sysParameterService.updateById(orgnlObj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		// 判断key是否已经被占用
+		Where<SysParameter> where = new Where<SysParameter>();
+		where.eq("param_key", obj.getParamKey());
+		where.ne("id", obj.getId());
+		if (sysParameterService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("参数key已经存在");
+		} else {
+			SysParameter orgnlObj = sysParameterService.selectById(obj.getId());
+			orgnlObj.setParamDesc(obj.getParamDesc());
+			orgnlObj.setParamKey(obj.getParamKey());
+			orgnlObj.setParamValue(obj.getParamValue());
+			orgnlObj.setIsActive(obj.getIsActive());
+			sysParameterService.updateById(orgnlObj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：系统参数表(根据ID获取对象).
