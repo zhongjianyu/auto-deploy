@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-24
+ * @时间: 2017-06-05
  */
 public interface SysOperateLogMapper extends BaseMapper<SysOperateLog> {
 

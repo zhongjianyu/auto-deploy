@@ -3,6 +3,7 @@ package auto.deploy.security;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -50,12 +52,21 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			return;
 		}
 		String targetUrl = "/";
-		
-		//登录成功，插入操作日志
+
+		// 登录成功，插入操作日志(以后改成异步插入)
 		SysOperateLog sysOperateLog = new SysOperateLog();
-		
+		CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Date date = new Date();
+		sysOperateLog.setOperateUserId(customUser.getUserId());
+		sysOperateLog.setOperateUserName(customUser.getUsername());
+		sysOperateLog.setOperateUserIp(request.getRemoteAddr());
+		sysOperateLog.setOperateTime(date);
+		sysOperateLog.setRequestAddress(request.getRequestURL().toString());
+		sysOperateLog.setOperateLogName("[登录操作]");
+		sysOperateLog.setOperateDetailDesc("[登录操作]");
+		sysOperateLog.setMethodName("auto.deploy.security.CustomUserDetailsService.loadUserByUsername");
 		sysOperateLogService.insert(sysOperateLog);
-		
+
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 

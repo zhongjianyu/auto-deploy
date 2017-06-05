@@ -58,12 +58,12 @@ public class WebTaskTest {
 
 	@Test
 	public void webLogTaskTest() throws Exception {
-		for (int i = 0; i < 100; i++) {
+		/*for (int i = 0; i < 100; i++) {
 			webTask.webLogTask(i);
 		}
 		for (int i = 0; i < 100; i++) {
 			webTask.webLogTask2(i);
-		}
+		}*/
 	}
 
 }

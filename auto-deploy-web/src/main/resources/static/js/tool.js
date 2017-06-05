@@ -4,7 +4,7 @@ var tool = {
 	 */
 	loadpage : function(param) {
 		var initLoadIndex = layer.load(2, {
-			time : 1 * 500
+			time : 1 * 300
 		});
 		param._csrf = $("#_csrf").val();
 		param.pageNum = 1;

@@ -2,6 +2,8 @@ package auto.deploy.dao.entity.sys;
 
 import java.util.Date;
 import auto.deploy.dao.entity.Entity;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * 
@@ -9,7 +11,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-24
+ * @时间: 2017-06-05
  */
 public class SysOperateLog extends Entity<SysOperateLog> {
 
@@ -18,23 +20,28 @@ public class SysOperateLog extends Entity<SysOperateLog> {
     /**
      * 操作用户ID
      */
+	@JsonSerialize(using = ToStringSerializer.class)
 	private Long operateUserId;
     /**
      * 操作用户账号
      */
 	private String operateUserName;
     /**
+     * 操作用户IP
+     */
+	private String operateUserIp;
+    /**
      * 操作时间
      */
 	private Date operateTime;
     /**
+     * 请求地址
+     */
+	private String requestAddress;
+    /**
      * 操作日志名称
      */
 	private String operateLogName;
-    /**
-     * 操作类名
-     */
-	private String className;
     /**
      * 方法名
      */
@@ -63,6 +70,15 @@ public class SysOperateLog extends Entity<SysOperateLog> {
 		return this;
 	}
 
+	public String getOperateUserIp() {
+		return operateUserIp;
+	}
+
+	public SysOperateLog setOperateUserIp(String operateUserIp) {
+		this.operateUserIp = operateUserIp;
+		return this;
+	}
+
 	public Date getOperateTime() {
 		return operateTime;
 	}
@@ -72,21 +88,21 @@ public class SysOperateLog extends Entity<SysOperateLog> {
 		return this;
 	}
 
+	public String getRequestAddress() {
+		return requestAddress;
+	}
+
+	public SysOperateLog setRequestAddress(String requestAddress) {
+		this.requestAddress = requestAddress;
+		return this;
+	}
+
 	public String getOperateLogName() {
 		return operateLogName;
 	}
 
 	public SysOperateLog setOperateLogName(String operateLogName) {
 		this.operateLogName = operateLogName;
-		return this;
-	}
-
-	public String getClassName() {
-		return className;
-	}
-
-	public SysOperateLog setClassName(String className) {
-		this.className = className;
 		return this;
 	}
 
