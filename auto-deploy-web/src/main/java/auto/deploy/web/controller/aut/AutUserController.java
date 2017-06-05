@@ -27,6 +27,7 @@ import auto.deploy.service.aut.AutRoleService;
 import auto.deploy.service.aut.AutUserRoleService;
 import auto.deploy.service.aut.AutUserService;
 import auto.deploy.util.EncryptUtil;
+import auto.deploy.web.annotation.FuncObj;
 
 /**
  * 
@@ -75,6 +76,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[搜索]")
 	public Page<AutUser> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutUser obj) {
 		Page<AutUser> page = null;
 		try {
@@ -97,6 +99,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -128,6 +131,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -150,6 +154,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[修改]")
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -182,6 +187,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/getById")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[详情]")
 	public AutUser getById(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		AutUser autUser = autUserService.selectById(obj.getId());
 		// 密码MD5后传递到前台
@@ -201,6 +207,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/roleList")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[分配角色(查看)]")
 	public Page<AutRoleDO> roleList(HttpServletRequest request, HttpServletResponse response, PageBean pageBean) {
 		Page<AutRoleDO> page = new Page<AutRoleDO>();
 		long userId = Long.parseLong(request.getParameter("userId"));
@@ -250,6 +257,7 @@ public class AutUserController {
 	 */
 	@RequestMapping("/setAuth")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[用户管理]-[分配角色(操作)]")
 	public RetMsg setAuth(HttpServletRequest request, HttpServletResponse response) {
 		RetMsg retMsg = new RetMsg();
 

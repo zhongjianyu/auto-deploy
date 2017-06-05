@@ -18,6 +18,7 @@ import auto.deploy.object.aut.vo.NavigationVO;
 import auto.deploy.security.CustomPasswordEncoder;
 import auto.deploy.service.aut.AutMenuRoleService;
 import auto.deploy.service.aut.AutUserService;
+import auto.deploy.web.annotation.FuncObj;
 
 /**
  * 
@@ -52,6 +53,7 @@ public class IndexController extends BaseController {
 		request.setAttribute("CURRENT_NICK_NAME", getCustomDetail().getNickName());
 		return "index/index";
 	}
+
 	/**
 	 * 
 	 * @描述：主页
@@ -79,6 +81,7 @@ public class IndexController extends BaseController {
 	 * @时间：2017年5月22日 下午11:05:27
 	 */
 	@RequestMapping("/index/userInfoPage")
+	@FuncObj(desc = "[首页]-[个人信息]")
 	public String userInfoPage(HttpServletRequest request) {
 		AutUser autUser = autUserService.selectById(getCustomDetail().getUserId());
 		request.setAttribute("nickName", autUser.getNickName());
@@ -125,6 +128,7 @@ public class IndexController extends BaseController {
 
 	@RequestMapping("/index/doChangePwd")
 	@ResponseBody
+	@FuncObj(desc = "[首页]-[修改密码]-[确定修改]")
 	public RetMsg doChangePwd(HttpServletRequest request, HttpServletResponse response) {
 		String oldPwd = request.getParameter("oldPwd");
 		String newPwd = request.getParameter("newPwd");
@@ -144,6 +148,7 @@ public class IndexController extends BaseController {
 
 	@RequestMapping("/index/saveUserInfo")
 	@ResponseBody
+	@FuncObj(desc = "[首页]-[个人信息]-[保存]")
 	public RetMsg saveUserInfo(HttpServletRequest request, HttpServletResponse response) {
 		String nickName = request.getParameter("nickName");
 		AutUser autUser = autUserService.selectById(getCustomDetail().getUserId());

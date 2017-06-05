@@ -17,6 +17,7 @@ import auto.deploy.dao.entity.sys.SysDataDict;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.service.sys.SysDataDictService;
+import auto.deploy.web.annotation.FuncObj;
 import auto.deploy.web.controller.BaseController;
 
 /**
@@ -61,6 +62,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[搜索]")
 	public Page<SysDataDict> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, SysDataDict obj) {
 		Page<SysDataDict> page = null;
 		try {
@@ -83,6 +85,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, SysDataDict obj, String[] dictKey1, String[] dictValue1,
 			String[] isActive1) {
 		RetMsg retMsg = new RetMsg();
@@ -121,6 +124,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -143,6 +147,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/deleteByCode")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[删除]")
 	public RetMsg deleteByCode(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -167,6 +172,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[修改]")
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, SysDataDict obj, String[] dictKey1, String[] dictValue1,
 			String[] isActive1, String[] id1) {
 		RetMsg retMsg = new RetMsg();
@@ -193,6 +199,7 @@ public class SysDataDictController extends BaseController {
 	 */
 	@RequestMapping("/getById")
 	@ResponseBody
+	@FuncObj(desc = "[系统管理]-[数据字典]-[详情]")
 	public SysDataDict getById(HttpServletRequest request, HttpServletResponse response, SysDataDict obj) {
 		return sysDataDictService.selectById(obj.getId());
 	}

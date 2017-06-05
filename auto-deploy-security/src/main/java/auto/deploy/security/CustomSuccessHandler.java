@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,9 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
+
+import auto.deploy.dao.entity.sys.SysOperateLog;
+import auto.deploy.service.sys.SysOperateLogService;
 
 /**
  * 
@@ -27,6 +31,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+	@Resource
+	private SysOperateLogService sysOperateLogService;
 
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -43,6 +50,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			return;
 		}
 		String targetUrl = "/";
+		
+		//登录成功，插入操作日志
+		SysOperateLog sysOperateLog = new SysOperateLog();
+		
+		sysOperateLogService.insert(sysOperateLog);
+		
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 

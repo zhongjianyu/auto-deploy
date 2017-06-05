@@ -26,7 +26,7 @@ public class MpGenerator {
 		// 模块名
 		String moduleName = "sys";
 		// 表名
-		String[] tableName = new String[] {"sys_parameter"};
+		String[] tableName = new String[] {"sys_operate_log"};
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置

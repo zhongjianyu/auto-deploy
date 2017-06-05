@@ -30,6 +30,7 @@ import auto.deploy.service.aut.AutMenuService;
 import auto.deploy.service.aut.AutRoleService;
 import auto.deploy.service.aut.AutWidgetRoleService;
 import auto.deploy.service.aut.AutWidgetService;
+import auto.deploy.web.annotation.FuncObj;
 import auto.deploy.web.controller.BaseController;
 
 /**
@@ -82,6 +83,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[搜索]")
 	public Page<AutRole> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutRole obj) {
 		Page<AutRole> page = null;
 		try {
@@ -104,6 +106,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
 		// 检查角色名称和角色代码是否已经存在
@@ -133,6 +136,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -155,6 +159,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[修改]")
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -190,6 +195,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/getById")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[详情]")
 	public AutRole getById(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		return autRoleService.selectById(obj.getId());
 	}
@@ -206,6 +212,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/menuWidgetList")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[授权(查看)]")
 	public Page<AutMenuDO> menuWidgetList(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutMenu obj) {
 		Page<AutMenuDO> page = new Page<AutMenuDO>();
 		long roleId = Long.parseLong(request.getParameter("roleId"));
@@ -280,6 +287,7 @@ public class AutRoleController extends BaseController {
 	 */
 	@RequestMapping("/setAuth")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[角色管理]-[授权(操作)]")
 	public RetMsg setAuth(HttpServletRequest request, HttpServletResponse response) {
 		RetMsg retMsg = new RetMsg();
 

@@ -18,6 +18,7 @@ import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.object.aut.dto.AutMenuDO;
 import auto.deploy.service.aut.AutMenuService;
+import auto.deploy.web.annotation.FuncObj;
 import auto.deploy.web.controller.BaseController;
 
 /**
@@ -62,6 +63,7 @@ public class AutMenuController extends BaseController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单管理]-[搜索]")
 	public Page<AutMenu> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutMenu obj) {
 		Page<AutMenu> page = null;
 		try {
@@ -84,6 +86,7 @@ public class AutMenuController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		RetMsg retMsg = new RetMsg();
 		// 判断菜单名称是否存在
@@ -118,6 +121,7 @@ public class AutMenuController extends BaseController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单管理]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -146,6 +150,7 @@ public class AutMenuController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单管理]-[修改]")
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -183,6 +188,7 @@ public class AutMenuController extends BaseController {
 	 */
 	@RequestMapping("/getById")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单管理]-[详情]")
 	public AutMenuDO getById(HttpServletRequest request, HttpServletResponse response, AutMenu obj) {
 		AutMenuDO autMenuDO = new AutMenuDO();
 		AutMenu autMenu = autMenuService.selectById(obj.getId());

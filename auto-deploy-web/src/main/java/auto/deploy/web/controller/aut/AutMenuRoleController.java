@@ -14,6 +14,7 @@ import auto.deploy.dao.entity.aut.AutMenuRole;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.service.aut.AutMenuRoleService;
+import auto.deploy.web.annotation.FuncObj;
 import auto.deploy.web.controller.BaseController;
 
 /**
@@ -29,7 +30,7 @@ import auto.deploy.web.controller.BaseController;
 public class AutMenuRoleController extends BaseController {
 	@Resource
 	private AutMenuRoleService autMenuRoleService;
-	
+
 	/**
 	 * 
 	 * @描述：菜单-角色表(页面).
@@ -41,11 +42,11 @@ public class AutMenuRoleController extends BaseController {
 	 * @时间：2017-05-27
 	 */
 	@RequestMapping("/autMenuRolePage")
-	public String autMenuRolePage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String autMenuRolePage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "aut/autMenuRolePage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：菜单-角色表(分页列表).
@@ -58,6 +59,7 @@ public class AutMenuRoleController extends BaseController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单角色管理]-[搜索]")
 	public Page<AutMenuRole> list(HttpServletRequest request, HttpServletResponse response, PageBean pageBean, AutMenuRole obj) {
 		Page<AutMenuRole> page = null;
 		try {
@@ -67,7 +69,6 @@ public class AutMenuRoleController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -81,6 +82,7 @@ public class AutMenuRoleController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单角色管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutMenuRole obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -91,7 +93,7 @@ public class AutMenuRoleController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：菜单-角色表(根据ID删除对象).
@@ -104,6 +106,7 @@ public class AutMenuRoleController extends BaseController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单角色管理]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutMenuRole obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -113,7 +116,7 @@ public class AutMenuRoleController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：菜单-角色表(根据ID修改对象).
@@ -126,6 +129,7 @@ public class AutMenuRoleController extends BaseController {
 	 */
 	@RequestMapping("/update")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单角色管理]-[修改]")
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutMenuRole obj) {
 		RetMsg retMsg = new RetMsg();
 
@@ -137,7 +141,7 @@ public class AutMenuRoleController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：菜单-角色表(根据ID获取对象).
@@ -150,6 +154,7 @@ public class AutMenuRoleController extends BaseController {
 	 */
 	@RequestMapping("/getById")
 	@ResponseBody
+	@FuncObj(desc = "[权限管理]-[菜单角色管理]-[详情]")
 	public AutMenuRole getById(HttpServletRequest request, HttpServletResponse response, AutMenuRole obj) {
 		return autMenuRoleService.selectById(obj.getId());
 	}
