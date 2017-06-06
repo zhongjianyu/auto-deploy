@@ -17,10 +17,10 @@
 					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input"
 						style="height: 30px; line-height: 30px;">
 				</div>
-				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
+				<span><@a code="010101" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
+					<span><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
 						icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
@@ -43,13 +43,13 @@
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
 							<td style="width:130px;">
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}

@@ -17,7 +17,7 @@
 					<input type="text" name="searchKey" id="searchKey" placeholder="输入关键字" autocomplete="off" class="layui-input"
 						style="height: 30px; line-height: 30px;">
 				</div>
-				<span><@a code="000101" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
+				<span><@a code="010301" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 			</form>
 		</blockquote>
@@ -43,7 +43,7 @@
 							<td>{{value.operateLogName}}</td>
 							<td>{{value.operateTime}}</td>
 							<td>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								<@a code="010302" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}

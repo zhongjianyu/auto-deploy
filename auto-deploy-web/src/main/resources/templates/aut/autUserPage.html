@@ -20,7 +20,7 @@
 				<span><@a code="000101" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
+					<span><@a code="000102" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
 						icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
@@ -53,14 +53,14 @@
 							<td>{{if value.isAccountLocked == 1}}<font color="red">锁定</font>{{/if}}{{if value.isAccountLocked == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{if value.isCredentialsExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isCredentialsExpired == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
+								<@a code="000103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
+								<@a code="000104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.userName}}')" text="分配角色"/>
+								<@a code="000105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								<@a code="000106" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.userName}}')" text="分配角色"/>
 							</td>
 						</tr>
 					{{/each}}

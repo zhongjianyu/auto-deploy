@@ -17,10 +17,10 @@
 					<input type="text" name="searchKey" id="searchKey" placeholder="输入角色名称或代码查询" autocomplete="off" class="layui-input"
 						style="height: 30px; line-height: 30px;">
 				</div>
-				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
+				<span><@a code="000201" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
+					<span><@a code="000202" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
 						icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
@@ -47,13 +47,13 @@
 							<td>{{value.roleCode}}</td>
 							<td>{{if value.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
 							<td style="width:170px;">
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.roleName}}')" text="授权"/>
+								<@a code="000203" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
+								<@a code="000204" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
+								<@a code="000205" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showAuth('{{value.id}}','{{value.roleName}}')" text="授权"/>
 								<!--
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								<@a code="000206" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}

@@ -17,10 +17,10 @@
 					<input type="text" name="searchKey" id="searchKey" placeholder="输入菜单名称关键字" autocomplete="off" class="layui-input"
 						style="height: 30px; line-height: 30px;">
 				</div>
-				<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
+				<span><@a code="000301" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
 					icon="&#xe615;" text="搜索"/></span>
 				<div style="float: right;">
-					<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
+					<span><@a code="000302" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="openAddWin()" iclass="layui-icon"
 						icon="&#xe608;" text="新增"/></span>
 				</div>
 			</form>
@@ -57,10 +57,10 @@
 							<td><li class="fa {{value.menuIcon}}"></li></td>
 							<td>{{if value.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>
 							<td style="width:210px;">
-								{{if value.menuLevel == 1}}<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary layui-btn-mini" id="show-edit" onclick="openAddWin2('{{value.menuCode}}','{{value.menuName}}')" text="新增子菜单"/>{{/if}}
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
+								{{if value.menuLevel == 1}}<@a code="000303" href="javascript:void(0)" class="layui-btn layui-btn-primary layui-btn-mini" id="show-edit" onclick="openAddWin2('{{value.menuCode}}','{{value.menuName}}')" text="新增子菜单"/>{{/if}}
+								<@a code="000304" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
+								<@a code="000305" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
+								<@a code="000306" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
 							</td>
 						</tr>
 					{{/each}}
