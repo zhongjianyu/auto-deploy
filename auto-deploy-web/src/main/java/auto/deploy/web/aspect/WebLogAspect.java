@@ -1,5 +1,6 @@
 package auto.deploy.web.aspect;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -83,7 +84,8 @@ public class WebLogAspect {
 				sysOperateLog.setOperateUserId(0L);
 				sysOperateLog.setOperateUserName("anonymous");
 			}
-			sysOperateLog.setOperateUserIp(request.getRemoteAddr());
+			// sysOperateLog.setOperateUserIp(request.getRemoteAddr());
+			sysOperateLog.setOperateUserIp(getIpAddress(request));
 			sysOperateLog.setOperateTime(date);
 			sysOperateLog.setRequestAddress(request.getRequestURL().toString());
 			sysOperateLog.setMethodName(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
@@ -94,6 +96,49 @@ public class WebLogAspect {
 			webTask.webLogTask(sysOperateLog);
 		}
 
+	}
+
+	/**
+	 * 
+	 * @描述：获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址
+	 *
+	 * @返回：String
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月6日 下午12:47:16
+	 */
+	private String getIpAddress(HttpServletRequest request) throws IOException {
+		// 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址
+
+		String ip = request.getHeader("X-Forwarded-For");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("Proxy-Client-IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("WL-Proxy-Client-IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("HTTP_CLIENT_IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getRemoteAddr();
+			}
+		} else if (ip.length() > 15) {
+			String[] ips = ip.split(",");
+			for (int index = 0; index < ips.length; index++) {
+				String strIp = (String) ips[index];
+				if (!("unknown".equalsIgnoreCase(strIp))) {
+					ip = strIp;
+					break;
+				}
+			}
+		}
+		return ip;
 	}
 
 }
