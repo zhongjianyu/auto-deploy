@@ -39,6 +39,7 @@
 		<module>auto-deploy-redis</module>
 		<module>auto-deploy-object</module>
 		<module>auto-deploy-gitlab</module>
+		<module>auto-deploy-activiti</module>
 	</modules>
 
 
