@@ -26,6 +26,7 @@
 		<org.springframework.security.core.version>4.2.2.RELEASE</org.springframework.security.core.version>
 		<com.alibaba.fastjson.version>1.2.31</com.alibaba.fastjson.version>
 		<joda.time.version>2.9.9</joda.time.version>
+		<org.activiti.version>5.22.0</org.activiti.version>
 	</properties>
 
 	<modules>
@@ -113,6 +114,22 @@
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>${joda.time.version}</version>
+			</dependency>
+			<!-- activiti -->
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-engine</artifactId>
+				<version>${org.activiti.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-spring</artifactId>
+				<version>${org.activiti.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-bpmn-model</artifactId>
+				<version>${org.activiti.version}</version>
 			</dependency>
 
 
