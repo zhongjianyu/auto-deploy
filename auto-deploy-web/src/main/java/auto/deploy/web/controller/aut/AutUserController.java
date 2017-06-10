@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.activiti.service.ActivitiService;
 import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutRole;
 import auto.deploy.dao.entity.aut.AutUser;
@@ -48,6 +49,8 @@ public class AutUserController {
 	private AutUserRoleService autUserRoleService;
 	@Resource
 	private AutRoleService autRoleService;
+	@Resource
+	private ActivitiService activitiService;
 
 	/**
 	 * 
@@ -115,6 +118,8 @@ public class AutUserController {
 			autUserService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");
+			// 同步activiti用户
+			activitiService.addUser(obj.getId());
 		}
 
 		return retMsg;
@@ -140,6 +145,9 @@ public class AutUserController {
 
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
+
+		// 同步activiti用户
+		activitiService.delUser(obj.getId());
 		return retMsg;
 	}
 
@@ -290,9 +298,21 @@ public class AutUserController {
 			autUserRole.setRoleName(autRole.getRoleName());
 			autUserRole.setIsActive(isActive);
 			autUserRoleService.insert(autUserRole);
+			// 同步activiti用户
+			if (isActive == 1) {
+				activitiService.addUserGroup(userId, id);
+			} else {
+				activitiService.delUserGroup(userId, id);
+			}
 		} else {
 			autUserRole.setIsActive(isActive);
 			autUserRoleService.updateById(autUserRole);
+			// 同步activiti用户
+			if (isActive == 1) {
+				activitiService.addUserGroup(userId, id);
+			} else {
+				activitiService.delUserGroup(userId, id);
+			}
 		}
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");

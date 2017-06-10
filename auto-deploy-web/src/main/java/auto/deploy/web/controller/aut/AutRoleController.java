@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.activiti.service.ActivitiService;
 import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutMenu;
 import auto.deploy.dao.entity.aut.AutMenuRole;
@@ -54,6 +55,8 @@ public class AutRoleController extends BaseController {
 	private AutMenuRoleService autMenuRoleService;
 	@Resource
 	private AutWidgetRoleService autWidgetRoleService;
+	@Resource
+	private ActivitiService activitiService;
 
 	/**
 	 * 
@@ -120,6 +123,8 @@ public class AutRoleController extends BaseController {
 			autRoleService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");
+			// 同步activiti用户
+			activitiService.addGroup(obj.getId());
 		}
 		return retMsg;
 	}
@@ -144,6 +149,8 @@ public class AutRoleController extends BaseController {
 
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
+		// 同步activiti用户
+		activitiService.delGroup(obj.getId());
 		return retMsg;
 	}
 
