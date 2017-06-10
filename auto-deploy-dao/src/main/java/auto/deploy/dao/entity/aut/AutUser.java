@@ -8,7 +8,7 @@ import auto.deploy.dao.entity.Entity;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-05-28
+ * @时间: 2017-06-10
  */
 public class AutUser extends Entity<AutUser> {
 
@@ -42,6 +42,10 @@ public class AutUser extends Entity<AutUser> {
      * 昵称(显示名称)
      */
 	private String nickName;
+    /**
+     * 用户邮箱
+     */
+	private String userEmail;
 
 
 	public String getUserPwd() {
@@ -104,6 +108,15 @@ public class AutUser extends Entity<AutUser> {
 
 	public AutUser setNickName(String nickName) {
 		this.nickName = nickName;
+		return this;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public AutUser setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 		return this;
 	}
 

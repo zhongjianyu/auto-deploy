@@ -106,9 +106,10 @@ public class AutUserController {
 		// 检查用户名是否存在
 		Where<AutUser> where = new Where<AutUser>();
 		where.eq("user_name", obj.getUserName());
+		where.or("user_email = {0}", obj.getUserEmail());
 		if (autUserService.selectCount(where) > 0) {
 			retMsg.setCode(1);
-			retMsg.setMessage("账号已被注册");
+			retMsg.setMessage("账号或邮箱已被注册");
 		} else {
 			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
 			autUserService.insert(obj);
@@ -158,20 +159,29 @@ public class AutUserController {
 	public RetMsg update(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 
-		AutUser orgnlObj = autUserService.selectById(obj.getId());
-		orgnlObj.setNickName(obj.getNickName());
-		// 如果MD5值相等，则没有修改密码,否则修改了
-		if (!obj.getUserPwd().equals(EncryptUtil.encryptMD5(orgnlObj.getUserPwd()))) {
-			orgnlObj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
-		}
-		orgnlObj.setIsActive(obj.getIsActive());
-		orgnlObj.setIsAccountExpired(obj.getIsAccountExpired());
-		orgnlObj.setIsAccountLocked(obj.getIsAccountLocked());
-		orgnlObj.setIsCredentialsExpired(obj.getIsCredentialsExpired());
+		// 检查邮箱是否在其他用户中存在
+		Where<AutUser> where = new Where<AutUser>();
+		where.ne("id", obj.getId());
+		where.eq("user_email", obj.getUserEmail());
+		if (autUserService.selectCount(where) > 0) {
+			retMsg.setCode(1);
+			retMsg.setMessage("邮箱已被占用");
+		} else {
+			AutUser orgnlObj = autUserService.selectById(obj.getId());
+			orgnlObj.setNickName(obj.getNickName());
+			// 如果MD5值相等，则没有修改密码,否则修改了
+			if (!obj.getUserPwd().equals(EncryptUtil.encryptMD5(orgnlObj.getUserPwd()))) {
+				orgnlObj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
+			}
+			orgnlObj.setIsActive(obj.getIsActive());
+			orgnlObj.setIsAccountExpired(obj.getIsAccountExpired());
+			orgnlObj.setIsAccountLocked(obj.getIsAccountLocked());
+			orgnlObj.setIsCredentialsExpired(obj.getIsCredentialsExpired());
 
-		autUserService.updateById(orgnlObj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+			autUserService.updateById(orgnlObj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		}
 		return retMsg;
 	}
 

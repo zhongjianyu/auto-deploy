@@ -29,6 +29,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser>imple
 		if (StringUtils.isNotEmpty(obj.getUserName())) {
 			where.like("user_name", obj.getUserName());
 			where.or("nick_name LIKE {0}", "%" + obj.getUserName() + "%");
+			where.or("user_email LIKE {0}", "%" + obj.getUserName() + "%");
 		}
 		where.orderBy("create_time", false);
 		Page<AutUser> page = selectPage(new Page<AutUser>(pageBean.getPageNum(), pageBean.getPageSize()), where);

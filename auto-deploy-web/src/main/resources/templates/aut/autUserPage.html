@@ -14,7 +14,7 @@
 		<blockquote class="layui-elem-quote" style="padding: 5px;">
 			<form class="layui-form" action="">
 				<div class="layui-input-inline">
-					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号或昵称关键字" autocomplete="off" class="layui-input"
+					<input type="text" name="searchKey" id="searchKey" placeholder="输入账号昵称邮箱关键字" autocomplete="off" class="layui-input"
 						style="height: 30px; line-height: 30px;">
 				</div>
 				<span><@a code="000101" href="javascript:void(0)" class="layui-btn layui-btn-small" id="" onclick="loadData()" iclass="layui-icon"
@@ -37,6 +37,7 @@
 						<th>是否过期</th>
 						<th>是否被锁</th>
 						<th>证书状态</th>
+						<th>邮箱</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -52,6 +53,7 @@
 							<td>{{if value.isAccountExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isAccountExpired == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{if value.isAccountLocked == 1}}<font color="red">锁定</font>{{/if}}{{if value.isAccountLocked == 0}}<font color="green">正常</font>{{/if}}</td>
 							<td>{{if value.isCredentialsExpired == 1}}<font color="red">过期</font>{{/if}}{{if value.isCredentialsExpired == 0}}<font color="green">正常</font>{{/if}}</td>
+							<td>{{value.userEmail}}</td>
 							<td>
 								<@a code="000103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
 								<@a code="000104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
@@ -98,6 +100,12 @@
 				<label class="layui-form-label">密码确认</label>
 				<div class="layui-input-block">
 					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd" autocomplete="off" placeholder="新密码确认" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" name="userEmail" id="userEmail" lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -154,6 +162,12 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" name="userEmail" id="userEmail" lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">密码确认</label>
 				<div class="layui-input-block">
 					<input type="password" name="userPwd2" id="userPwd2" lay-verify="required|checkRepwd2" autocomplete="off" placeholder="密码确认" class="layui-input">
@@ -203,6 +217,12 @@
 				<label class="layui-form-label">昵称</label>
 				<div class="layui-input-block">
 					<input type="text" name="nickName" id="nickName" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" name="userEmail" id="userEmail" lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">

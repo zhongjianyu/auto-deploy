@@ -20,11 +20,12 @@
 		<result column="is_account_locked" property="isAccountLocked" />
 		<result column="is_credentials_expired" property="isCredentialsExpired" />
 		<result column="nick_name" property="nickName" />
+		<result column="user_email" property="userEmail" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, user_pwd, user_name, is_active, is_account_expired, is_account_locked, is_credentials_expired, nick_name
+        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, user_pwd, user_name, is_active, is_account_expired, is_account_locked, is_credentials_expired, nick_name, user_email
     </sql>
 
 </mapper>
