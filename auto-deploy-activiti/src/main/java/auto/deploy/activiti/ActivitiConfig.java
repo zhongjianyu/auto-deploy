@@ -69,41 +69,121 @@ public class ActivitiConfig {
 		return pe;
 	}
 
+	/**
+	 * 
+	 * @描述：动态Bpmn服务
+	 *
+	 * @返回：DynamicBpmnService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:58:32
+	 */
 	@Bean
 	public DynamicBpmnService getDynamicBpmnService() {
 		return getProcessEngine().getDynamicBpmnService();
 	}
 
+	/**
+	 * 
+	 * @描述：表单服务
+	 *
+	 * @返回：FormService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:58:20
+	 */
 	@Bean
 	public FormService getFormService() {
 		return getProcessEngine().getFormService();
 	}
 
+	/**
+	 * 
+	 * @描述：历史服务
+	 *
+	 * @返回：HistoryService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:58:11
+	 */
 	@Bean
 	public HistoryService getHistoryService() {
 		return getProcessEngine().getHistoryService();
 	}
 
+	/**
+	 * 
+	 * @描述：身份服务
+	 *
+	 * @返回：IdentityService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:57:59
+	 */
 	@Bean
 	public IdentityService getIdentityService() {
 		return getProcessEngine().getIdentityService();
 	}
 
+	/**
+	 * 
+	 * @描述：管理服务
+	 *
+	 * @返回：ManagementService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:57:51
+	 */
 	@Bean
 	public ManagementService getManagementService() {
 		return getProcessEngine().getManagementService();
 	}
 
+	/**
+	 * 
+	 * @描述：仓库服务
+	 *
+	 * @返回：RepositoryService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:57:06
+	 */
 	@Bean
 	public RepositoryService getRepositoryService() {
 		return getProcessEngine().getRepositoryService();
 	}
 
+	/**
+	 * 
+	 * @描述：运行时服务
+	 *
+	 * @返回：RuntimeService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:56:48
+	 */
 	@Bean
 	public RuntimeService getRuntimeService() {
 		return getProcessEngine().getRuntimeService();
 	}
 
+	/**
+	 * 
+	 * @描述：任务服务
+	 *
+	 * @返回：TaskService
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月10日 下午2:56:33
+	 */
 	@Bean
 	public TaskService getTaskService() {
 		return getProcessEngine().getTaskService();
