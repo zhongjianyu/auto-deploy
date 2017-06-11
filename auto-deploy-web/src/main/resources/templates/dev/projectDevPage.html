@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="../../css/global.css" media="all">
+<link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/table.css" />
+</head>
+<body>
+	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div class="admin-main" style="margin: 10px;">
+		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 30px;">
+			<ul class="layui-tab-title" style="border-bottom-width: 0px;">
+				<li class="layui-this">项目分支</li>
+				<li>日常开发</li>
+				<li>日常测试</li>
+				<li>预发环境</li>
+				<li>生产环境</li>
+			</ul>
+			<div class="layui-tab-content" style="padding: 0px;">
+				<div class="layui-tab-item layui-show">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group"><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
+									onclick="openAddWin()" iclass="fa fa-plus-circle" icon="" text="新建分支"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
+									onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/> <@a code="010102" href="javascript:void(0)" class="layui-btn
+									layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/> <@a code="010102"
+									href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon=""
+									text="重新部署"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()"
+									iclass="fa fa-arrow-circle-right" icon="" text="进入测试"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small
+									layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="返回开发"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small
+									layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/></div>
+						</form>
+					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group"><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
+									onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="新增"/> <@a code="010102" href="javascript:void(0)" class="layui-btn
+									layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="layui-icon" icon="&#xe608;" text="新增"/> <@a code="010102"
+									href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="layui-icon"
+									icon="&#xe608;" text="新增"/></div>
+						</form>
+					</blockquote>
+				</div>
+				<div class="layui-tab-item">内容3</div>
+				<div class="layui-tab-item">内容4</div>
+				<div class="layui-tab-item">内容5</div>
+			</div>
+		</div>
+	</div>
+	<!-- 新增对象窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-add-object">
+		<form class="layui-form layui-form-pane" id="add-object-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典编码</label>
+				<div class="layui-input-block">
+					<input type="text" name="dictCode" id="dictCode" lay-verify="required" autocomplete="off" placeholder="字典编码" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="dictName" id="dictName" lay-verify="required" autocomplete="off" placeholder="字典名称" class="layui-input">
+				</div>
+			</div>
+			<fieldset class="layui-elem-field" style="padding: 10px;" id="add-fieldset">
+				<legend>字典值</legend>
+				<div class="add-dict-key-value">
+					<div class="layui-form-item layui-input-inline">
+						<label class="layui-form-label">字典key</label>
+						<div class="layui-input-block">
+							<input type="text" name="dictKey1" id="dictKey1" lay-verify="required" autocomplete="off" placeholder="字典key" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-input-inline">
+						<label class="layui-form-label">字典value</label>
+						<div class="layui-input-block">
+							<input type="text" name="dictValue1" id="dictValue1" lay-verify="required" autocomplete="off" placeholder="字典value" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-input-inline">
+						<label class="layui-form-label">是否激活</label>
+						<div class="layui-input-block">
+							<select name="isActive1" id="isActive1">
+								<option value="">请选择</option>
+								<option value="1">激活</option>
+								<option value="0">冻结</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item layui-input-inline">
+						<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate(1,this)" text="删除"/></span> <span><@a
+							code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate(2,this)" text="新增"/></span>
+					</div>
+				</div>
+			</fieldset>
+
+
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
+				<div style="float: right;">
+					<button class="layui-btn" lay-submit="" lay-filter="form-add-submit">
+						<i class="fa fa-save"></i> 保存
+					</button>
+					<button type="reset" class="layui-btn layui-btn-primary">
+						<li class="fa fa-eraser"></li> 重置
+					</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<!-- 编辑对象窗口 -->
+	<div class="update-dict-key-value" style="display: none;">
+		<input type="hidden" name="id1" id="id1">
+		<div class="layui-form-item layui-input-inline">
+			<label class="layui-form-label">字典key</label>
+			<div class="layui-input-block">
+				<input type="text" name="dictKey1" id="dictKey1" lay-verify="required" autocomplete="off" placeholder="字典key" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item layui-input-inline">
+			<label class="layui-form-label">字典value</label>
+			<div class="layui-input-block">
+				<input type="text" name="dictValue1" id="dictValue1" lay-verify="required" autocomplete="off" placeholder="字典value" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item layui-input-inline">
+			<label class="layui-form-label">是否激活</label>
+			<div class="layui-input-block">
+				<select name="isActive1" id="isActive1">
+					<option value="">请选择</option>
+					<option value="1">激活</option>
+					<option value="0">冻结</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item layui-input-inline">
+			<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate2(1,this)" text="删除"/></span> <span><@a
+				code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate2(2,this)" text="新增"/></span>
+		</div>
+	</div>
+	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-update-object">
+		<form class="layui-form layui-form-pane" id="update-object-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典编码</label>
+				<div class="layui-input-block">
+					<input disabled="disabled" type="text" name="dictCode2" id="dictCode2" lay-verify="required" autocomplete="off" placeholder="字典编码"
+						class="layui-input">
+					<input type="hidden" name="dictCode" id="dictCode">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="dictName" id="dictName" lay-verify="required" autocomplete="off" placeholder="字典名称" class="layui-input">
+				</div>
+			</div>
+			<fieldset class="layui-elem-field" style="padding: 10px;" id="update-fieldset">
+				<legend>字典值</legend>
+			</fieldset>
+
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
+				<div style="float: right;">
+					<button class="layui-btn" lay-submit="" lay-filter="form-update-submit">
+						<i class="fa fa-save"></i> 保存
+					</button>
+					<button type="reset" class="layui-btn layui-btn-primary">
+						<li class="fa fa-eraser"></li> 重置
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 详情对象窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px;" id="win-view-object">
+		<form class="layui-form layui-form-pane" id="view-object-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典编码</label>
+				<div class="layui-input-block">
+					<input disabled="disabled" type="text" name="dictCode2" id="dictCode2" lay-verify="required" autocomplete="off" placeholder="字典编码"
+						class="layui-input">
+					<input type="hidden" name="dictCode" id="dictCode">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">字典名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="dictName" id="dictName" lay-verify="required" autocomplete="off" placeholder="字典名称" class="layui-input">
+				</div>
+			</div>
+			<fieldset class="layui-elem-field" style="padding: 10px;" id="view-fieldset">
+				<legend>字典值</legend>
+			</fieldset>
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="../../plugins/layui/lay/modules/laypage.js"></script>
+	<script type="text/javascript" src="../../js/template-web.js"></script>
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+	<script type="text/javascript" src="../../js/tool.js"></script>
+	<script>
+		var pform;
+		//添加事件
+		layui.use([ 'form', 'element' ], function() {
+			pform = layui.form();
+			pform.on('select(isActive)', function(data) {
+				//alert(data.value);
+				//form.render('checkbox');
+			});
+			//自定义表单校验
+			pform.verify();
+			//监听新增提交
+			pform.on('submit(form-add-submit)', function(data) {
+				tool.post("../sysDataDict/add", $("#add-object-form").serialize(), postCallBack, false);
+				return false;
+			});
+			//监听新增提交
+			pform.on('submit(form-update-submit)', function(data) {
+				tool.post("../sysDataDict/update", $("#update-object-form").serialize(), postCallBack, false);
+				return false;
+			});
+			//初始化出发数据加载
+			loadData();
+		});
+		//加载数据
+		function loadData() {
+			var param = new Object();
+			param.container = "paging";
+			param.pageSize = 10;
+			param.url = "../sysDataDict/list";
+			param.dictCode = $("#searchKey").val();
+			tool.loadpage(param);
+		}
+		//获取勾选数据id
+		function getCheckItmes() {
+			$(".check-id:checked").each(function() {
+				//console.log($(this).attr("id"));
+				;
+			});
+		}
+		//打开新增对象窗口
+		function openAddWin() {
+			var index = layer.open({
+				title : '新增',
+				maxmin : false,
+				type : 1,
+				content : $('#win-add-object')
+			});
+			layer.full(index);
+		}
+		//新增对象回调
+		function postCallBack(retMsg) {
+			if (retMsg.code == 0) {
+				tool.success(retMsg.message);
+				loadData();
+			} else {
+				tool.error(retMsg.message);
+			}
+		}
+		//编辑对象
+		function showEdit(code) {
+			var object = getListByCode(code);
+			$("#update-object-form").find("#dictCode").val(object[0].dictCode);
+			$("#update-object-form").find("#dictCode2").val(object[0].dictCode);
+			$("#update-object-form").find("#dictName").val(object[0].dictName);
+
+			$("#update-object-form").find(".update-dict-key-value-dyna").remove();
+
+			for (var i = 0; i < object.length; i++) {
+				var keyValueDiv = $(".update-dict-key-value").clone();
+				keyValueDiv.attr("class", "update-dict-key-value-dyna").show();
+				keyValueDiv.appendTo("#update-fieldset");
+				//赋值
+				keyValueDiv.find("#dictKey1").val(object[i].dictKey);
+				keyValueDiv.find("#dictValue1").val(object[i].dictValue);
+				keyValueDiv.find("#isActive1").val(object[i].isActive);
+				keyValueDiv.find("#id1").val(object[i].id);
+			}
+			var index = layer.open({
+				title : '编辑',
+				maxmin : false,
+				type : 1,
+				content : $('#win-update-object')
+			});
+			pform.render();
+			layer.full(index);
+		}
+		//详情对象
+		function showView(code) {
+			var object = getListByCode(code);
+			$("#view-object-form").find("#dictCode").val(object[0].dictCode);
+			$("#view-object-form").find("#dictCode2").val(object[0].dictCode);
+			$("#view-object-form").find("#dictName").val(object[0].dictName);
+
+			$("#view-object-form").find(".update-dict-key-value-dyna").remove();
+
+			for (var i = 0; i < object.length; i++) {
+				var keyValueDiv = $(".update-dict-key-value").clone();
+				keyValueDiv.attr("class", "update-dict-key-value-dyna").show();
+				keyValueDiv.appendTo("#view-fieldset");
+				//赋值
+				keyValueDiv.find("#dictKey1").val(object[i].dictKey);
+				keyValueDiv.find("#dictValue1").val(object[i].dictValue);
+				keyValueDiv.find("#isActive1").val(object[i].isActive);
+				keyValueDiv.find("#id1").val(object[i].id);
+			}
+			$('#view-object-form :input').attr("disabled", "disabled");
+			var index = layer.open({
+				title : '编辑',
+				maxmin : false,
+				type : 1,
+				content : $('#win-view-object')
+			});
+			pform.render();
+			layer.full(index);
+		}
+		//删除对象
+		function showDelete(code) {
+			layer.confirm('确定删除 ?', {
+				icon : 3,
+				title : '提示'
+			}, function(index) {
+				//var retMsg = tool.deleteById("../sysDataDict/delete", id)
+				var retMsg = deleteByCode("../sysDataDict/deleteByCode", code)
+				if (retMsg.code == 0) {
+					tool.success(retMsg.message);
+					loadData();
+				} else {
+					tool.error(retMsg.message);
+				}
+			});
+		}
+		function operate(flag, obj) {
+			if (flag == 1) {
+				if ($(".add-dict-key-value").length == 1) {
+					tool.error("至少要有一个key-value值");
+					return;
+				}
+				//删除
+				$(obj).parent().parent().parent().remove();
+			} else {
+				//新增
+				var keyValueDiv = $(obj).parent().parent().parent().clone();
+				keyValueDiv.find(":input").val("");
+				keyValueDiv.appendTo("#add-fieldset");
+			}
+			//重新渲染
+			pform.render();
+		}
+		function operate2(flag, obj) {
+			if (flag == 1) {
+				if ($(".update-dict-key-value-dyna").length == 1) {
+					tool.error("至少要有一个key-value值");
+					return;
+				}
+				//删除
+				$(obj).parent().parent().parent().remove();
+			} else {
+				//新增
+				var keyValueDiv = $(obj).parent().parent().parent().clone();
+				keyValueDiv.find(":input").val("");
+				keyValueDiv.appendTo("#update-fieldset");
+			}
+			//重新渲染
+			pform.render();
+		}
+		function getListByCode(code) {
+			var obj;
+			var param = new Object();
+			param._csrf = $("#_csrf").val();
+			param.dictCode = code;
+			tool.post("../sysDataDict/getListByCode", param, function(o) {
+				obj = o;
+			}, false);
+			return obj;
+		}
+		function deleteByCode(url, code) {
+			var obj;
+			var param = new Object();
+			param._csrf = $("#_csrf").val();
+			param.dictCode = code;
+			tool.post(url, param, function(o) {
+				obj = o;
+			}, false);
+			return obj;
+		}
+	</script>
+</body>
+
+</html>
