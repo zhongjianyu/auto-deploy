@@ -16,6 +16,7 @@
 				<li class="layui-this">项目分支</li>
 				<li>日常开发</li>
 				<li>日常测试</li>
+				<li>验收测试</li>
 				<li>预发环境</li>
 				<li>生产环境</li>
 			</ul>
@@ -24,15 +25,10 @@
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
-								<div class="layui-btn-group"><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
-									onclick="openAddWin()" iclass="fa fa-plus-circle" icon="" text="新建分支"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
-									onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/> <@a code="010102" href="javascript:void(0)" class="layui-btn
-									layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/> <@a code="010102"
-									href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon=""
-									text="重新部署"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()"
-									iclass="fa fa-arrow-circle-right" icon="" text="进入测试"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small
-									layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="返回开发"/><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small
-									layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/></div>
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-plus-circle" icon="" text="新建分支"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-right" icon="" text="进入日常开发"/>
+								</div>
 						</form>
 					</blockquote>
 					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
@@ -75,17 +71,250 @@
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
-								<div class="layui-btn-group"><@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id=""
-									onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="新增"/> <@a code="010102" href="javascript:void(0)" class="layui-btn
-									layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="layui-icon" icon="&#xe608;" text="新增"/> <@a code="010102"
-									href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="layui-icon"
-									icon="&#xe608;" text="新增"/></div>
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon="" text="重新部署"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-right" icon="" text="进入日常测试"/>
+								</div>
 						</form>
 					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
 				</div>
-				<div class="layui-tab-item">内容3</div>
-				<div class="layui-tab-item">内容4</div>
-				<div class="layui-tab-item">内容5</div>
+				<div class="layui-tab-item">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="退回日常开发"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon="" text="重新部署"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-right" icon="" text="进入验收测试"/>
+								</div>
+						</form>
+					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="退回日常测试"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon="" text="重新部署"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-right" icon="" text="进入预发环境"/>
+								</div>
+						</form>
+					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="退回验收测试"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon="" text="重新部署"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-right" icon="" text="进入生产环境"/>
+								</div>
+						</form>
+					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+						<form class="layui-form" action="">
+							<div class="layui-input-inline">
+								<div class="layui-btn-group">
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-arrow-circle-left" icon="" text="退回预发环境"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-stop-circle" icon="" text="停止运行"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-play-circle-o" icon="" text="部署项目"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-refresh" icon="" text="重新部署"/>
+									<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-cog" icon="" text="环境配置"/>
+								</div>
+						</form>
+					</blockquote>
+					<div class="layui-field-box layui-form" style="padding-bottom: 22px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
+							<thead>
+								<tr>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th>字典编码</th>
+									<th>字典名称</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="paging-data">
+								<script id="paging-script" type="text/html">
+					{{each records value index}}
+						<tr>
+							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
+							<td>{{value.dictCode}}</td>
+							<td>{{value.dictName}}</td>
+							<td style="width:130px;">
+								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
+								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
+								<!--
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
+								-->
+								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
+							</td>
+						</tr>
+					{{/each}}
+					</script>
+							</tbody>
+						</table>
+					</div>
+					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
+						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
