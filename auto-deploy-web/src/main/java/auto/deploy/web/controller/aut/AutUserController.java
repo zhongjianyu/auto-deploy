@@ -20,6 +20,7 @@ import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.aut.AutRole;
 import auto.deploy.dao.entity.aut.AutUser;
 import auto.deploy.dao.entity.aut.AutUserRole;
+import auto.deploy.gitlab.service.GitlabService;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.object.aut.dto.AutRoleDO;
@@ -51,6 +52,8 @@ public class AutUserController {
 	private AutRoleService autRoleService;
 	@Resource
 	private ActivitiService activitiService;
+	@Resource
+	private GitlabService gitlabService;
 
 	/**
 	 * 
@@ -114,12 +117,16 @@ public class AutUserController {
 			retMsg.setCode(1);
 			retMsg.setMessage("账号或邮箱已被注册");
 		} else {
+			String charPassword = obj.getUserPwd();
 			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
 			autUserService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");
 			// 同步activiti用户
 			activitiService.addUser(obj.getId());
+			// 同步gitlab用户
+			obj.setUserPwd(charPassword);
+			gitlabService.addUser(obj);
 		}
 
 		return retMsg;
