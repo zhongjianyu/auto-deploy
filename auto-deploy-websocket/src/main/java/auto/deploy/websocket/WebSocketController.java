@@ -25,7 +25,7 @@ public class WebSocketController {
 
 	@MessageMapping("/say")
 	@ResponseBody
-	public WebScoketMsg say(WebScoketMsg msg) {
+	public WebSocketMsg say(WebSocketMsg msg) {
 		webSocketService.pushMessage(msg);
 		return null;
 	}
@@ -36,8 +36,8 @@ public class WebSocketController {
 	}
 	
 	@RequestMapping("/say1")
-	public WebScoketMsg say() {
-		WebScoketMsg msg = new WebScoketMsg();
+	public WebSocketMsg say() {
+		WebSocketMsg msg = new WebSocketMsg();
 		msg.setMessage("玻璃春天");
 		webSocketService.pushMessage(msg);
 		return null;

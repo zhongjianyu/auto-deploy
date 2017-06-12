@@ -8,7 +8,7 @@ package auto.deploy.websocket;
  *
  * @时间：2017年5月4日 下午9:43:37
  */
-public class WebScoketMsg {
+public class WebSocketMsg {
 
 	/**
 	 * 返回码

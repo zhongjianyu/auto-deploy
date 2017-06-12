@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import auto.deploy.websocket.WebScoketMsg;
+import auto.deploy.websocket.WebSocketMsg;
 import auto.deploy.websocket.service.WebSocketService;
 
 /**
@@ -25,12 +25,12 @@ public class WebSocketServiceImpl implements WebSocketService {
 	private SimpMessagingTemplate template;
 
 	@Override
-	public void pushMessage(WebScoketMsg msg) {
+	public void pushMessage(WebSocketMsg msg) {
 		template.convertAndSend("/topic/getResponse", msg);
 	}
 
 	@Override
-	public void pushMessageToUser(WebScoketMsg msg, List<Long> userIds) {
+	public void pushMessageToUser(WebSocketMsg msg, List<Long> userIds) {
 		for (Long id : userIds) {
 			template.convertAndSendToUser(id.toString(), "/point2point/getResponse", msg);
 		}

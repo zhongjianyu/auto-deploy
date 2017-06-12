@@ -2,7 +2,7 @@ package auto.deploy.websocket.service;
 
 import java.util.List;
 
-import auto.deploy.websocket.WebScoketMsg;
+import auto.deploy.websocket.WebSocketMsg;
 
 /**
  * 
@@ -24,7 +24,7 @@ public interface WebSocketService {
 	 *
 	 * @时间：2017年6月12日 下午12:58:18
 	 */
-	public void pushMessage(WebScoketMsg msg);
+	public void pushMessage(WebSocketMsg msg);
 
 	/**
 	 * 
@@ -36,5 +36,5 @@ public interface WebSocketService {
 	 *
 	 * @时间：2017年6月12日 下午12:58:18
 	 */
-	public void pushMessageToUser(WebScoketMsg msg, List<Long> userIds);
+	public void pushMessageToUser(WebSocketMsg msg, List<Long> userIds);
 }
