@@ -131,6 +131,14 @@
 			return false;
 		});
 
+		layer.open({
+			title : "系统消息",
+			shade : false,
+			//time : 10000,
+			offset : 'rb',
+			content : '传入任意的文本或html' //这里content是一个普通的String
+		});
+
 	});
 	function postCallBack(retMsg) {
 		if (retMsg.code == 0) {
@@ -163,7 +171,13 @@
 			title : "个人信息"
 		});
 	}
-	disconnect();
-	connect();
+	//topicCallback-广播回调，point2pointCallback--点对点回调
+	connect(topicCallback, point2pointCallback);
+	function topicCallback(d) {
+
+	}
+	function point2pointCallback(d) {
+
+	}
 </script>
 </html>
