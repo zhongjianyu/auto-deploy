@@ -1,9 +1,13 @@
 package auto.deploy.websocket;
 
+import javax.annotation.Resource;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import auto.deploy.websocket.service.WebSocketService;
 
 /**
  * 
@@ -16,20 +20,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebSocketController {
 
-	@MessageMapping("/welcome") // 浏览器发送请求通过@messageMapping 映射/welcome 这个地址。
-	@SendTo("/topic/getResponse") // 服务器端有消息时,会订阅@SendTo中的路径的浏览器发送消息。
+	@Resource
+	private WebSocketService webSocketService;
+
+	@MessageMapping("/say")
+	@ResponseBody
 	public WebScoketMsg say(WebScoketMsg msg) {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		msg.setContext(msg.getContext() + ",你好");
-		return msg;
+		webSocketService.pushMessage(msg);
+		return null;
 	}
 
 	@RequestMapping("ws")
 	public String ws() {
 		return "ws";
+	}
+	
+	@RequestMapping("/say1")
+	public WebScoketMsg say() {
+		WebScoketMsg msg = new WebScoketMsg();
+		msg.setMessage("玻璃春天");
+		webSocketService.pushMessage(msg);
+		return null;
 	}
 }
