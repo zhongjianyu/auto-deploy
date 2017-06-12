@@ -36,5 +36,5 @@ public interface WebSocketService {
 	 *
 	 * @时间：2017年6月12日 下午12:58:18
 	 */
-	public void pushMessageToUser(WebSocketMsg msg, List<Long> userIds);
+	public void pushMessageToUser(WebSocketMsg msg, List<String> userIds);
 }

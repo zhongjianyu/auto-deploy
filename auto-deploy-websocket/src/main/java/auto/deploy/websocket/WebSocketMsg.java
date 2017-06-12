@@ -22,10 +22,6 @@ public class WebSocketMsg {
 	 * 返回对象
 	 */
 	private Object object;
-	/**
-	 * 消息描述 
-	 */
-	private String desc;
 
 	public Integer getCode() {
 		return code;
@@ -49,14 +45,6 @@ public class WebSocketMsg {
 
 	public void setObject(Object object) {
 		this.object = object;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 }

@@ -110,6 +110,9 @@
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/tool.js"></script>
+<script type="text/javascript" src="ws/sockjs.min.js"></script>
+<script type="text/javascript" src="ws/stomp.min.js"></script>
+<script type="text/javascript" src="ws/websocket.js"></script>
 <script>
 	layui.use([ 'form', 'layer' ], function() {
 		var $ = layui.jquery, layer = layui.layer;
@@ -160,5 +163,7 @@
 			title : "个人信息"
 		});
 	}
+	disconnect();
+	connect();
 </script>
 </html>
