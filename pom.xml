@@ -27,6 +27,7 @@
 		<com.alibaba.fastjson.version>1.2.31</com.alibaba.fastjson.version>
 		<joda.time.version>2.9.9</joda.time.version>
 		<org.activiti.version>5.22.0</org.activiti.version>
+		<com.sshtools.version>1.5.5</com.sshtools.version>
 	</properties>
 
 	<modules>
@@ -131,6 +132,14 @@
 				<artifactId>activiti-bpmn-model</artifactId>
 				<version>${org.activiti.version}</version>
 			</dependency>
+			<!-- ssh -->
+			<dependency>
+				<groupId>com.sshtools</groupId>
+				<artifactId>j2ssh-maverick</artifactId>
+				<version>${com.sshtools.version}</version>
+			</dependency>
+
+
 
 
 
@@ -230,6 +239,11 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc-portlet</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-messaging</artifactId>
 				<version>${org.springframework.version}</version>
 			</dependency>
 			<!-- Spring Dependency End -->

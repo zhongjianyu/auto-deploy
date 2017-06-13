@@ -37,9 +37,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
+		<!-- 消息推送 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-messaging</artifactId>
+		</dependency>
+		<!-- ssh操作 -->
+		<dependency>
+			<groupId>com.sshtools</groupId>
+			<artifactId>j2ssh-maverick</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
