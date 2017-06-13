@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>auto-deploy</groupId>
@@ -27,8 +28,9 @@
 		<com.alibaba.fastjson.version>1.2.31</com.alibaba.fastjson.version>
 		<joda.time.version>2.9.9</joda.time.version>
 		<org.activiti.version>5.22.0</org.activiti.version>
-		<com.sshtools.version>1.5.5</com.sshtools.version>
+		<com.jcraft.version>0.1.54</com.jcraft.version>
 	</properties>
+
 
 	<modules>
 		<module>auto-deploy-config</module>
@@ -132,11 +134,11 @@
 				<artifactId>activiti-bpmn-model</artifactId>
 				<version>${org.activiti.version}</version>
 			</dependency>
-			<!-- ssh -->
+			<!-- ssh4jsch -->
 			<dependency>
-				<groupId>com.sshtools</groupId>
-				<artifactId>j2ssh-maverick</artifactId>
-				<version>${com.sshtools.version}</version>
+				<groupId>com.jcraft</groupId>
+				<artifactId>jsch</artifactId>
+				<version>${com.jcraft.version}</version>
 			</dependency>
 
 
