@@ -1,8 +1,10 @@
 package auto.deploy.websocket.service;
 
+import auto.deploy.websocket.object.ServerConfig;
+
 /**
  * 
- * @描述：ssh执行器
+ * @描述：ssh执行器(接口).
  *
  * @作者：zhongjy
  *
@@ -20,5 +22,5 @@ public interface SSHExecutorService {
 	 *
 	 * @时间：2017年6月13日 下午9:57:16
 	 */
-	public void tailLog();
+	public void tailLog(String cmd, String userName, ServerConfig config);
 }
