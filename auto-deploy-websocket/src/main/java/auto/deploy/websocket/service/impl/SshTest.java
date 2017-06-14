@@ -15,7 +15,7 @@ public class SshTest {
 
 	private static final String USER = "root";
 	private static final String PASSWORD = "2jyA1987";
-	private static final String HOST = "120.25.81.213";
+	private static final String HOST = "192.168.0.123";
 	private static final int DEFAULT_SSH_PORT = 22;
 
 	public static void main(String[] arg) {
