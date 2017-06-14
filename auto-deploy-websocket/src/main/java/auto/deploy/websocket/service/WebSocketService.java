@@ -28,7 +28,7 @@ public interface WebSocketService {
 
 	/**
 	 * 
-	 * @描述：点对点消息推送
+	 * @描述：点对点消息推送(多用户).
 	 *
 	 * @返回：void
 	 *
@@ -36,5 +36,17 @@ public interface WebSocketService {
 	 *
 	 * @时间：2017年6月12日 下午12:58:18
 	 */
-	public void pushMessageToUser(WebSocketMsg msg, List<String> userIds);
+	public void pushMessageToUserList(WebSocketMsg msg, List<String> userNames);
+
+	/**
+	 * 
+	 * @描述：点对点消息推送(单用户).
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月12日 下午12:58:18
+	 */
+	public void pushMessageToUser(WebSocketMsg msg, String userName);
 }

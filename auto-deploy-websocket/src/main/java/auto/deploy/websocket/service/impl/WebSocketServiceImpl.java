@@ -30,10 +30,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 	}
 
 	@Override
-	public void pushMessageToUser(WebSocketMsg msg, List<String> userNames) {
+	public void pushMessageToUserList(WebSocketMsg msg, List<String> userNames) {
 		for (String userName : userNames) {
 			template.convertAndSendToUser(userName, "/point2point/getResponse", msg);
 		}
+	}
+
+	@Override
+	public void pushMessageToUser(WebSocketMsg msg, String userName) {
+		template.convertAndSendToUser(userName, "/point2point/getResponse", msg);
 	}
 
 }

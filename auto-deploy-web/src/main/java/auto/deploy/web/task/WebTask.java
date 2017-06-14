@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import auto.deploy.dao.entity.sys.SysOperateLog;
 import auto.deploy.service.sys.SysOperateLogService;
+import auto.deploy.websocket.object.ServerConfig;
+import auto.deploy.websocket.service.SSHExecutorService;
 
 /**
  * 
@@ -25,6 +27,8 @@ public class WebTask {
 
 	@Resource
 	private SysOperateLogService sysOperateLogService;
+	@Resource
+	private SSHExecutorService sSHExecutorService;
 
 	/**
 	 * 
@@ -40,6 +44,21 @@ public class WebTask {
 	public void webLogTask(SysOperateLog sysOperateLog) throws InterruptedException {
 		sysOperateLogService.insert(sysOperateLog);
 		logger.info("操作日志记录成功...");
+	}
+
+	/**
+	 * 
+	 * @描述：tailLog处理线程
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月5日 下午7:08:59
+	 */
+	@Async("taskAsyncPool")
+	public void tailLogTask(String cmd, String userName, ServerConfig config) throws InterruptedException {
+		sSHExecutorService.tailLog(cmd, userName, config);
 	}
 
 }

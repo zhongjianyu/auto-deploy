@@ -5,12 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
+import auto.deploy.websocket.WebSocketMsg;
 import auto.deploy.websocket.object.ServerConfig;
 import auto.deploy.websocket.service.SSHExecutorService;
+import auto.deploy.websocket.service.WebSocketService;
 import auto.deploy.websocket.util.SshUtil;
 
 /**
@@ -21,7 +26,11 @@ import auto.deploy.websocket.util.SshUtil;
  * 
  * @时间：2017年6月14日 下午4:41:36
  */
+@Service
 public class SSHExecutorServiceImpl implements SSHExecutorService {
+
+	@Resource
+	private WebSocketService webSocketService;
 
 	@Override
 	public void tailLog(String cmd, String userName, ServerConfig config) {
@@ -30,7 +39,6 @@ public class SSHExecutorServiceImpl implements SSHExecutorService {
 		InputStream in = null;
 		try {
 			session = SshUtil.getSession(config);
-
 			channelExec = (ChannelExec) session.openChannel("exec");
 			channelExec.setCommand(cmd);
 			channelExec.setInputStream(null);
@@ -39,9 +47,12 @@ public class SSHExecutorServiceImpl implements SSHExecutorService {
 			channelExec.connect();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;
+			WebSocketMsg msg = new WebSocketMsg();
+			msg.setCode(0);
 			while ((line = reader.readLine()) != null) {
 				// 将实时日志通过WebSocket发送给客户端，给每一行添加一个HTML换行
-				System.out.println(line);
+				msg.setMessage(line);
+				webSocketService.pushMessageToUser(msg, userName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
