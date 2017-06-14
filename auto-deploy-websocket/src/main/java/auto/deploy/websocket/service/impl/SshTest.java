@@ -13,8 +13,8 @@ import auto.deploy.websocket.util.SshUtil;
 
 public class SshTest {
 
-	private static final String USER = "root";
-	private static final String PASSWORD = "2jyA1987";
+	private static final String USER = "dev";
+	private static final String PASSWORD = "1qaz@WSX";
 	private static final String HOST = "192.168.0.123";
 	private static final int DEFAULT_SSH_PORT = 22;
 
@@ -30,7 +30,7 @@ public class SshTest {
 
 			Session session = SshUtil.getSession(config);
 
-			String cmd = "tail -f /root/projects/16tbk/logs/log";
+			String cmd = "ls";
 			ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
 			channelExec.setCommand(cmd);
 			channelExec.setInputStream(null);

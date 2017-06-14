@@ -33,6 +33,7 @@ public class SshUtil {
 			JSch jsch = new JSch();
 			session = jsch.getSession(config.getUserName(), config.getHost(), config.getPort());
 			session.setPassword(config.getUserPwd());
+			session.setConfig("userauth.gssapi-with-mic", "no");
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.setUserInfo(new SshUserInfo());
 			session.connect(config.getTimeOut());
