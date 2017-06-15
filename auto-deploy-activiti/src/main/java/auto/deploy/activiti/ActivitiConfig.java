@@ -14,7 +14,8 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
+
+import auto.deploy.dao.config.DynamicDataSource;
 
 /**
  * 
@@ -28,10 +29,10 @@ import org.springframework.core.env.Environment;
 public class ActivitiConfig {
 
 	/**
-	 * 读取配置文件
+	 * 动态数据源
 	 */
 	@Resource
-	private Environment environment;
+	private DynamicDataSource dataSource;
 
 	@Bean
 	public ProcessEngine getProcessEngine() {
@@ -39,22 +40,23 @@ public class ActivitiConfig {
 		 * 获取流程引擎配置
 		 */
 		ProcessEngineConfiguration pec = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+		pec.setDataSource(dataSource);
 		/**
 		 * 配置驱动
 		 */
-		pec.setJdbcDriver(environment.getProperty("spring.datasource.driver-class-name"));
+		// pec.setJdbcDriver(environment.getProperty("spring.datasource.driver-class-name"));
 		/**
 		 * 配置连接地址
 		 */
-		pec.setJdbcUrl(environment.getProperty("spring.datasource.url"));
+		// pec.setJdbcUrl(environment.getProperty("spring.datasource.url"));
 		/**
 		 * 用户名
 		 */
-		pec.setJdbcUsername(environment.getProperty("spring.datasource.username"));
+		// pec.setJdbcUsername(environment.getProperty("spring.datasource.username"));
 		/**
 		 * 密码
 		 */
-		pec.setJdbcPassword(environment.getProperty("spring.datasource.password"));
+		// pec.setJdbcPassword(environment.getProperty("spring.datasource.password"));
 
 		/**
 		 * 配置模式 true 自动创建和更新表

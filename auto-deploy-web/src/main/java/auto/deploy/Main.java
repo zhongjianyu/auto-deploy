@@ -7,11 +7,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import auto.deploy.config.DatabaseBiz001Config;
+import auto.deploy.config.DatabaseDefaultConfig;
+import auto.deploy.config.TaskThreadPoolConfig;
 import auto.deploy.util.SpringContextUtil;
 import auto.deploy.web.event.EnvironmentPreparedEvent;
 import auto.deploy.web.event.PreparedEvent;
 import auto.deploy.web.event.ReadyEvent;
-import auto.deploy.web.pool.TaskThreadPoolConfig;
 
 /**
  * 
@@ -26,7 +28,7 @@ import auto.deploy.web.pool.TaskThreadPoolConfig;
 // 异步线程
 @EnableAsync
 // 开启配置属性支持
-@EnableConfigurationProperties({ TaskThreadPoolConfig.class })
+@EnableConfigurationProperties({ TaskThreadPoolConfig.class, DatabaseDefaultConfig.class, DatabaseBiz001Config.class })
 public class Main {
 	/**
 	 * 

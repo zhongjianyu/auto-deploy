@@ -1,7 +1,7 @@
 package auto.deploy.dao.config;
 
 public enum DBTypeEnum {
-	one("dataSource_one"), two("dataSource_two");
+	def("dataSource_default"), d001("dataSource_biz001");
 	private String value;
 
 	DBTypeEnum(String value) {

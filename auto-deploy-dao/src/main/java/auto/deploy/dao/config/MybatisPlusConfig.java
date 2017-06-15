@@ -1,5 +1,6 @@
 package auto.deploy.dao.config;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,6 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.tomcat.jdbc.pool.PoolConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
@@ -30,7 +30,9 @@ import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
-import com.baomidou.mybatisplus.toolkit.DruidUtils;
+
+import auto.deploy.config.DatabaseBiz001Config;
+import auto.deploy.config.DatabaseDefaultConfig;
 
 /**
  * 
@@ -44,20 +46,21 @@ import com.baomidou.mybatisplus.toolkit.DruidUtils;
 @MapperScan("auto.deploy.dao.mapper*")
 @EnableConfigurationProperties(MybatisProperties.class)
 public class MybatisPlusConfig {
-	@Autowired
-	private DataSource dataSource;
 
 	@Autowired
 	private MybatisProperties properties;
-
 	@Autowired
 	private ResourceLoader resourceLoader = new DefaultResourceLoader();
-
 	@Autowired(required = false)
 	private Interceptor[] interceptors;
-
 	@Autowired(required = false)
 	private DatabaseIdProvider databaseIdProvider;
+	@Autowired
+	private DatabaseDefaultConfig databaseDefaultConfig;
+	@Autowired
+	private DatabaseBiz001Config databaseBiz001Config;
+	@Autowired
+	private DynamicDataSource dataSource;
 
 	/**
 	 * 
@@ -171,55 +174,138 @@ public class MybatisPlusConfig {
 	 *
 	 * @时间：2017年6月15日 下午3:21:43
 	 */
-	/*
-	 * @Bean public DynamicDataSource dynamicDataSource() { DynamicDataSource
-	 * dynamicDataSource = new DynamicDataSource(); // 目标数据源 Map<Object, Object>
-	 * map = new HashMap<Object, Object>();
-	 * dynamicDataSource.setTargetDataSources(map); // 默认数据源
-	 * dynamicDataSource.setDefaultTargetDataSource(dataSource); return null; }
+	@Bean
+	public DynamicDataSource dynamicDataSource() {
+		DynamicDataSource dynamicDataSource = new DynamicDataSource();
+		// 候选数据源
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		map.put("dataSource_default", getDruidDataSourceDefault());
+		map.put("dataSource_biz001", getDruidDataSourceBiz001());
+		dynamicDataSource.setTargetDataSources(map);
+		// 默认数据源
+		dynamicDataSource.setDefaultTargetDataSource(getDruidDataSourceDefault());
+		//dynamicDataSource.determineCurrentLookupKey();
+		return dynamicDataSource;
+	}
+
+	/**
+	 * 
+	 * @描述：默认数据源
+	 *
+	 * @返回：DataSource
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月15日 下午10:03:35
 	 */
-	// https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_DruidDataSource%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE
-	public DataSource getDataSource() {
+	public DataSource getDruidDataSourceDefault() {
 		DruidDataSource ds = new DruidDataSource();
 		/**
-		 * 基本属性 url、user、password
+		 * 基本属性 type、driverClass、url、user、password
 		 */
-		ds.setUrl(null);
-		ds.setUsername(username);
-		ds.setPassword(password);
+		ds.setDbType(databaseDefaultConfig.getDbType());
+		ds.setDriverClassName(databaseDefaultConfig.getDriverClassName());
+		ds.setUrl(databaseDefaultConfig.getUrl());
+		ds.setUsername(databaseDefaultConfig.getUsername());
+		ds.setPassword(databaseDefaultConfig.getPassword());
 		/**
 		 * 配置初始化大小、最小、最大
 		 */
-		ds.setInitialSize(initialSize);
-		ds.setMinIdle(value);
-		ds.setMaxActive(maxActive);
+		ds.setInitialSize(databaseDefaultConfig.getInitialSize());
+		ds.setMinIdle(databaseDefaultConfig.getMinIdle());
+		ds.setMaxActive(databaseDefaultConfig.getMaxActive());
 		/**
 		 * 配置获取连接等待超时的时间
 		 */
-		ds.setMaxWait(maxWaitMillis);
+		ds.setMaxWait(databaseDefaultConfig.getMaxWait());
 		/**
 		 * 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
 		 */
-		ds.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+		ds.setTimeBetweenEvictionRunsMillis(databaseDefaultConfig.getTimeBetweenEvictionRunsMillis());
 		/**
 		 * 配置一个连接在池中最小生存的时间，单位是毫秒
 		 */
-		ds.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-		
-		ds.setValidationQuery("SELECT 'x'");
-		ds.setTestWhileIdle(true);
-		ds.setTestOnBorrow(false);
-		ds.setTestOnReturn(false);
-		
+		ds.setMinEvictableIdleTimeMillis(databaseDefaultConfig.getMinEvictableIdleTimeMillis());
+
+		ds.setValidationQuery(databaseDefaultConfig.getValidationQuery());
+		ds.setTestWhileIdle(databaseDefaultConfig.isTestWhileIdle());
+		ds.setTestOnBorrow(databaseDefaultConfig.isTestOnBorrow());
+		ds.setTestOnReturn(databaseDefaultConfig.isTestOnReturn());
+
 		/**
 		 * 打开PSCache，并且指定每个连接上PSCache的大小
 		 */
-		ds.setPoolPreparedStatements(false);
-		ds.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+		ds.setPoolPreparedStatements(databaseDefaultConfig.isPoolPreparedStatements());
+		ds.setMaxPoolPreparedStatementPerConnectionSize(databaseDefaultConfig.getMaxPoolPreparedStatementPerConnectionSize());
 		/**
 		 * 配置监控统计拦截的filters
 		 */
-		ds.setFilters("stat");
+		try {
+			ds.setFilters(databaseDefaultConfig.getFilters());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ds;
+	}
+
+	/**
+	 * 
+	 * @描述：业务系统001数据源
+	 *
+	 * @返回：DataSource
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月15日 下午10:03:50
+	 */
+	public DataSource getDruidDataSourceBiz001() {
+		DruidDataSource ds = new DruidDataSource();
+
+		/**
+		 * 基本属性 type、driverClass、url、user、password
+		 */
+		ds.setDbType(databaseBiz001Config.getDbType());
+		ds.setDriverClassName(databaseBiz001Config.getDriverClassName());
+		ds.setUrl(databaseBiz001Config.getUrl());
+		ds.setUsername(databaseBiz001Config.getUsername());
+		ds.setPassword(databaseBiz001Config.getPassword());
+		/**
+		 * 配置初始化大小、最小、最大
+		 */
+		ds.setInitialSize(databaseBiz001Config.getInitialSize());
+		ds.setMinIdle(databaseBiz001Config.getMinIdle());
+		ds.setMaxActive(databaseBiz001Config.getMaxActive());
+		/**
+		 * 配置获取连接等待超时的时间
+		 */
+		ds.setMaxWait(databaseBiz001Config.getMaxWait());
+		/**
+		 * 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+		 */
+		ds.setTimeBetweenEvictionRunsMillis(databaseBiz001Config.getTimeBetweenEvictionRunsMillis());
+		/**
+		 * 配置一个连接在池中最小生存的时间，单位是毫秒
+		 */
+		ds.setMinEvictableIdleTimeMillis(databaseBiz001Config.getMinEvictableIdleTimeMillis());
+
+		ds.setValidationQuery(databaseBiz001Config.getValidationQuery());
+		ds.setTestWhileIdle(databaseBiz001Config.isTestWhileIdle());
+		ds.setTestOnBorrow(databaseBiz001Config.isTestOnBorrow());
+		ds.setTestOnReturn(databaseBiz001Config.isTestOnReturn());
+
+		/**
+		 * 打开PSCache，并且指定每个连接上PSCache的大小
+		 */
+		ds.setPoolPreparedStatements(databaseBiz001Config.isPoolPreparedStatements());
+		ds.setMaxPoolPreparedStatementPerConnectionSize(databaseBiz001Config.getMaxPoolPreparedStatementPerConnectionSize());
+		/**
+		 * 配置监控统计拦截的filters
+		 */
+		try {
+			ds.setFilters(databaseBiz001Config.getFilters());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return ds;
 	}
 

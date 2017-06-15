@@ -1,4 +1,4 @@
-package auto.deploy.web.pool;
+package auto.deploy.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
