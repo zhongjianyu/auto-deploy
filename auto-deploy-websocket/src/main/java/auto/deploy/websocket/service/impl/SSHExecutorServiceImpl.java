@@ -53,6 +53,8 @@ public class SSHExecutorServiceImpl implements SSHExecutorService {
 				// 将实时日志通过WebSocket发送给客户端，给每一行添加一个HTML换行
 				msg.setMessage(line);
 				webSocketService.pushMessageToUser(msg, userName);
+				// 根据项目启动(部署)状态来决定是否跳出循环
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
