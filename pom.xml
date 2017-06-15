@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>auto-deploy</groupId>
@@ -29,6 +28,7 @@
 		<joda.time.version>2.9.9</joda.time.version>
 		<org.activiti.version>5.22.0</org.activiti.version>
 		<com.jcraft.version>0.1.54</com.jcraft.version>
+		<com.alibaba.version>1.0.31</com.alibaba.version>
 	</properties>
 
 
@@ -140,6 +140,13 @@
 				<artifactId>jsch</artifactId>
 				<version>${com.jcraft.version}</version>
 			</dependency>
+			<!-- druid -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${com.alibaba.version}</version>
+			</dependency>
+
 
 
 

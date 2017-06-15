@@ -1,9 +1,13 @@
 package auto.deploy.dao.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
+import org.apache.tomcat.jdbc.pool.PoolConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
@@ -16,6 +20,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
@@ -25,6 +30,7 @@ import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.toolkit.DruidUtils;
 
 /**
  * 
@@ -154,4 +160,67 @@ public class MybatisPlusConfig {
 		}
 		return mybatisPlus;
 	}
+
+	/**
+	 * 
+	 * @描述：动态数据源
+	 *
+	 * @返回：DynamicDataSource
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年6月15日 下午3:21:43
+	 */
+	/*
+	 * @Bean public DynamicDataSource dynamicDataSource() { DynamicDataSource
+	 * dynamicDataSource = new DynamicDataSource(); // 目标数据源 Map<Object, Object>
+	 * map = new HashMap<Object, Object>();
+	 * dynamicDataSource.setTargetDataSources(map); // 默认数据源
+	 * dynamicDataSource.setDefaultTargetDataSource(dataSource); return null; }
+	 */
+	// https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_DruidDataSource%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE
+	public DataSource getDataSource() {
+		DruidDataSource ds = new DruidDataSource();
+		/**
+		 * 基本属性 url、user、password
+		 */
+		ds.setUrl(null);
+		ds.setUsername(username);
+		ds.setPassword(password);
+		/**
+		 * 配置初始化大小、最小、最大
+		 */
+		ds.setInitialSize(initialSize);
+		ds.setMinIdle(value);
+		ds.setMaxActive(maxActive);
+		/**
+		 * 配置获取连接等待超时的时间
+		 */
+		ds.setMaxWait(maxWaitMillis);
+		/**
+		 * 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+		 */
+		ds.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+		/**
+		 * 配置一个连接在池中最小生存的时间，单位是毫秒
+		 */
+		ds.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+		
+		ds.setValidationQuery("SELECT 'x'");
+		ds.setTestWhileIdle(true);
+		ds.setTestOnBorrow(false);
+		ds.setTestOnReturn(false);
+		
+		/**
+		 * 打开PSCache，并且指定每个连接上PSCache的大小
+		 */
+		ds.setPoolPreparedStatements(false);
+		ds.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+		/**
+		 * 配置监控统计拦截的filters
+		 */
+		ds.setFilters("stat");
+		return ds;
+	}
+
 }
