@@ -10,7 +10,7 @@ package auto.deploy.dao.config;
  */
 public class DbContextHolder {
 
-	private static final ThreadLocal contextHolder = new ThreadLocal<>();
+	private static final ThreadLocal<Object> contextHolder = new ThreadLocal<>();
 
 	/**
 	 * 
