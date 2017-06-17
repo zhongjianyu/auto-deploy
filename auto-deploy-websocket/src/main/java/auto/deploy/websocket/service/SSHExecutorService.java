@@ -22,5 +22,5 @@ public interface SSHExecutorService {
 	 *
 	 * @时间：2017年6月13日 下午9:57:16
 	 */
-	public void tailLog(String cmd, String userName, ServerConfig config);
+	public void tailDeployLog(String cmd, String userName, ServerConfig config);
 }

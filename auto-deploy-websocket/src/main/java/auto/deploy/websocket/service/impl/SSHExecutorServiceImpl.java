@@ -33,7 +33,7 @@ public class SSHExecutorServiceImpl implements SSHExecutorService {
 	private WebSocketService webSocketService;
 
 	@Override
-	public void tailLog(String cmd, String userName, ServerConfig config) {
+	public void tailDeployLog(String cmd, String userName, ServerConfig config) {
 		Session session = null;
 		ChannelExec channelExec = null;
 		InputStream in = null;

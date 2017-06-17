@@ -58,7 +58,7 @@ public class WebTask {
 	 */
 	@Async("taskAsyncPool")
 	public void tailLogTask(String cmd, String userName, ServerConfig config) throws InterruptedException {
-		sSHExecutorService.tailLog(cmd, userName, config);
+		sSHExecutorService.tailDeployLog(cmd, userName, config);
 	}
 
 }
