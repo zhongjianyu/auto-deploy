@@ -3,6 +3,8 @@ package auto.deploy.dao.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -174,12 +176,14 @@ public class MybatisPlusConfig {
 	public DynamicDataSource dynamicDataSource() {
 		DynamicDataSource dynamicDataSource = new DynamicDataSource();
 		// 候选数据源
+		DataSource dataSource_default = DSUtil.getDataSource(databaseDefaultConfig);
+		DataSource dataSource_biz001 = DSUtil.getDataSource(databaseBiz001Config);
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		map.put("dataSource_default", DSUtil.getDataSource(databaseDefaultConfig));
-		map.put("dataSource_biz001", DSUtil.getDataSource(databaseBiz001Config));
+		map.put("dataSource_default", dataSource_default);
+		map.put("dataSource_biz001", dataSource_biz001);
 		dynamicDataSource.setTargetDataSources(map);
 		// 默认数据源
-		dynamicDataSource.setDefaultTargetDataSource(DSUtil.getDataSource(databaseBiz001Config));
+		dynamicDataSource.setDefaultTargetDataSource(dataSource_default);
 		return dynamicDataSource;
 	}
 }
