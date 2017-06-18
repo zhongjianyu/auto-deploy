@@ -13,15 +13,15 @@
 	<div class="admin-main" style="margin: 10px;">
 		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 30px;">
 			<ul class="layui-tab-title" style="border-bottom-width: 0px;">
-				<li class="layui-this">项目分支</li>
-				<li>日常开发</li>
-				<li>日常测试</li>
-				<li>验收测试</li>
-				<li>预发环境</li>
-				<li>生产环境</li>
+				<@li code="" id="title-001" text="项目分支"/>
+				<@li code="" id="title-002" text="日常开发"/>
+				<@li code="" id="title-003" text="日常测试"/>
+				<@li code="" id="title-004" text="验收测试"/>
+				<@li code="" id="title-005" text="预发环境"/>
+				<@li code="" id="title-006" text="生产环境"/>
 			</ul>
 			<div class="layui-tab-content" style="padding: 0px;">
-				<div class="layui-tab-item layui-show">
+				<div class="layui-tab-item layui-show title-001-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -68,7 +68,7 @@
 						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item">
+				<div class="layui-tab-item title-002-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -118,7 +118,7 @@
 						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item">
+				<div class="layui-tab-item title-003-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -169,7 +169,7 @@
 						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item">
+				<div class="layui-tab-item title-004-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -220,7 +220,7 @@
 						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item">
+				<div class="layui-tab-item title-005-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -271,7 +271,7 @@
 						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item">
+				<div class="layui-tab-item title-006-content">
 					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
@@ -503,6 +503,8 @@
 				tool.post("../sysDataDict/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
 			});
+			//模拟点击第一个个titlel
+			$('.layui-tab-title').find("li").first().trigger("click");
 			//初始化出发数据加载
 			loadData();
 		});

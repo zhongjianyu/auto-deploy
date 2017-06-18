@@ -43,6 +43,8 @@ public class TagConfig {
 		map.put("select", new Select(sysDataDictService));
 		// 下拉标签
 		map.put("selectTable", new SelectTable(dataSource));
+		// li标签
+		map.put("li", new Li(autWidgetRoleService));
 		freeMarkerConfigurer.setFreemarkerVariables(map);
 		freeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates");
 		return freeMarkerConfigurer;
