@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import auto.deploy.dao.config.DynamicDataSource;
 import auto.deploy.service.aut.AutWidgetRoleService;
 import auto.deploy.service.sys.SysDataDictService;
 
@@ -27,6 +28,8 @@ public class TagConfig {
 	private AutWidgetRoleService autWidgetRoleService;
 	@Resource
 	private SysDataDictService sysDataDictService;
+	@Resource
+	private DynamicDataSource dataSource;
 
 	@Bean
 	public FreeMarkerConfigurer freeMarkerConfigurer() {
@@ -38,6 +41,8 @@ public class TagConfig {
 		map.put("button", new Button(autWidgetRoleService));
 		// 下拉标签
 		map.put("select", new Select(sysDataDictService));
+		// 下拉标签
+		map.put("selectTable", new SelectTable(dataSource));
 		freeMarkerConfigurer.setFreemarkerVariables(map);
 		freeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates");
 		return freeMarkerConfigurer;
