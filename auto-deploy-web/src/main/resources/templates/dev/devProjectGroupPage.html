@@ -32,6 +32,7 @@
 						<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
 						<th>分组名称</th>
 						<th>是否激活</th>
+						<th>gitlab分组ID</th>
 						<th>分组描述</th>
 						<th>操作</th>
 					</tr>
@@ -43,6 +44,7 @@
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.groupName}}</td>
 							<td>{{if value.isActive == 1}}<font color="green">激活</font>{{/if}}{{if value.isActive == 0}}<font color="red">冻结</font>{{/if}}</td>		
+							<td>{{value.gitlabGroupId}}</td>
 							<td>{{value.groupDesc}}</td>
 							<td>
 								<@a code="000103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
@@ -147,6 +149,12 @@
 				<label class="layui-form-label">分组描述</label>
 				<div class="layui-input-block">
 					<input type="text" name="groupDesc" id="groupDesc" lay-verify="required" autocomplete="off" placeholder="分组描述" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">gitlab分组ID</label>
+				<div class="layui-input-block">
+					<input type="text" name="gitlabGroupId" id="gitlabGroupId" lay-verify="required" autocomplete="off" placeholder="gitlab分组ID" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
