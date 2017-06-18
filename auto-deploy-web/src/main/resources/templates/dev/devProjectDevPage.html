@@ -11,8 +11,8 @@
 <body>
 	<input type="hidden" name="${_csrf.parameterName}" id="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="admin-main" style="margin: 10px;">
-		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 30px;">
-			<ul class="layui-tab-title" style="border-bottom-width: 0px;">
+		<div class="layui-tab layui-tab-brief" lay-filter="dev-project-dev" style="height: 30px;">
+			<ul class="layui-tab-title" style="border-bottom-width: 1px;">
 				<@li code="" id="title-001" text="项目分支"/>
 				<@li code="" id="title-002" text="日常开发"/>
 				<@li code="" id="title-003" text="日常测试"/>
@@ -21,8 +21,8 @@
 				<@li code="" id="title-006" text="生产环境"/>
 			</ul>
 			<div class="layui-tab-content" style="padding: 0px;">
-				<div class="layui-tab-item layui-show title-001-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-001-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -36,28 +36,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging1_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging1-data">
+								<script id="paging1-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -65,11 +55,11 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging1-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item title-002-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-002-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -86,28 +76,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging2_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging2-data">
+								<script id="paging2-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -115,11 +95,11 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging2-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item title-003-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-003-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -137,28 +117,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging3_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging3-data">
+								<script id="paging3-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -166,11 +136,11 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging3-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item title-004-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-004-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -188,28 +158,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging4_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging4-data">
+								<script id="paging4-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -217,11 +177,11 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging4-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item title-005-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-005-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -239,28 +199,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging5_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging5-data">
+								<script id="paging5-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -268,11 +218,11 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging5-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
-				<div class="layui-tab-item title-006-content">
-					<blockquote class="layui-elem-quote" style="padding: 5px; border-left-width: 0px; margin-bottom: 0px; padding-left: 0px; padding-bottom: 0px;">
+				<div class="layui-tab-item" id="title-006-content">
+					<blockquote class="layui-elem-quote" style="padding: 3px; border-left-width: 1px;border-right-width: 1px; margin-bottom: 0px; padding-left: 3px; padding-bottom: 3px;border-left-color: #e2e2e2;border-right-color: #e2e2e2;border-right-style: solid;">
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
@@ -289,28 +239,18 @@
 						<table class="layui-table admin-table" style="padding-top: 0px; margin-top: 0px;">
 							<thead>
 								<tr>
-									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging_check-all"></th>
+									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging6_check-all"></th>
 									<th>字典编码</th>
 									<th>字典名称</th>
-									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody id="paging-data">
-								<script id="paging-script" type="text/html">
+							<tbody id="paging6-data">
+								<script id="paging6-script" type="text/html">
 					{{each records value index}}
 						<tr>
 							<td><input type="checkbox" lay-skin="primary" class="check-id" id="{{value.id}}"></td>
 							<td>{{value.dictCode}}</td>
 							<td>{{value.dictName}}</td>
-							<td style="width:130px;">
-								<@a code="010103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.dictCode}}')" text="编辑"/>
-								<@a code="010104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.dictCode}}')" text="详情"/>
-								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
-								-->
-								<@a code="010105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.dictCode}}')" text="删除"/>
-							</td>
 						</tr>
 					{{/each}}
 					</script>
@@ -318,7 +258,7 @@
 						</table>
 					</div>
 					<div class="admin-table-page" style="border-width: 0px; z-index: 0;">
-						<div id="paging-footer" class="page" style="background-color: white; text-align: center;"></div>
+						<div id="paging6-footer" class="page" style="background-color: white; text-align: center;"></div>
 					</div>
 				</div>
 			</div>
@@ -486,6 +426,7 @@
 		var pform;
 		//添加事件
 		layui.use([ 'form', 'element' ], function() {
+			var element = layui.element();
 			pform = layui.form();
 			pform.on('select(isActive)', function(data) {
 				//alert(data.value);
@@ -503,10 +444,41 @@
 				tool.post("../sysDataDict/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
 			});
-			//模拟点击第一个个titlel
-			$('.layui-tab-title').find("li").first().trigger("click");
+			//隐藏不需要展示的内容div
+			var contentIdArray = new Array()
+			var index = 0;
+			$('.layui-tab-title').find("li").each(function() {
+				var titleId = $(this).attr("id");
+				contentIdArray[index] = titleId + "-content";
+				index = index + 1;
+			});
+			$('.layui-tab-content').find(".layui-tab-item").each(function() {
+				var contentId = $(this).attr("id");
+				if($.inArray(contentId, contentIdArray) == -1){
+					$(this).remove();
+				}
+			});
 			//初始化出发数据加载
-			loadData();
+			//loadData();
+			//添加title切换监听事件
+			element.on('tab(dev-project-dev)', function(data){
+			    var titleId = $(data.elem.context).attr("id");
+			    if(titleId == "title-001"){
+			    	//项目分支
+			    }else if(titleId == "title-002"){
+			    	//日常开发
+			    }else if(titleId == "title-003"){
+			    	//日常测试
+			    }else if(titleId == "title-004"){
+			    	//验收测试
+			    }else if(titleId == "title-005"){
+			    	//预发环境
+			    }else if(titleId == "title-006"){
+			    	//生产环境
+			    }
+			});
+			//模拟点击第一个个title
+			$('.layui-tab-title').find("li").first().trigger("click");
 		});
 		//加载数据
 		function loadData() {
