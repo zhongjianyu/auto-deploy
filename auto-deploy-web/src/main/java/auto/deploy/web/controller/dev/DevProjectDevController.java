@@ -25,8 +25,8 @@ import auto.deploy.websocket.service.SSHExecutorService;
  * @时间: 2017-05-27
  */
 @Controller
-@RequestMapping("/dev/projectDev")
-public class ProjectDevController extends BaseController {
+@RequestMapping("/dev/devProjectDev")
+public class DevProjectDevController extends BaseController {
 
 	@Resource
 	private SSHExecutorService sSHExecutorService;
@@ -45,9 +45,9 @@ public class ProjectDevController extends BaseController {
 	 *
 	 * @时间：2017-05-27
 	 */
-	@RequestMapping("/projectDevPage")
+	@RequestMapping("/devProjectDevPage")
 	public String projectDevPage(HttpServletRequest request, HttpServletResponse response) {
-		return "dev/projectDevPage";
+		return "dev/devProjectDevPage";
 	}
 
 	@RequestMapping("/doDeploy")

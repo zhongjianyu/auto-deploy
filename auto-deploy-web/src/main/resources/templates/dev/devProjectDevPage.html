@@ -672,7 +672,7 @@
 		function doDeploy() {
 			var param = new Object();
 			param._csrf = $("#_csrf").val();
-			tool.post("../projectDev/doDeploy", param, function(o) {
+			tool.post("../devProjectDev/doDeploy", param, function(o) {
 				if (o.code == 0) {
 					tool.success(o.message);
 				} else {
@@ -684,7 +684,7 @@
 		function unDeploy() {
 			var param = new Object();
 			param._csrf = $("#_csrf").val();
-			tool.post("../projectDev/unDeploy", param, function(o) {
+			tool.post("../devProjectDev/unDeploy", param, function(o) {
 				if (o.code == 0) {
 					tool.success(o.message);
 				} else {
