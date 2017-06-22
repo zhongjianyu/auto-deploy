@@ -1,4 +1,4 @@
-package auto.deploy.dao.test;
+package auto.deploy.web.task;
 
 import org.junit.Test;
 
