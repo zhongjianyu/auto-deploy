@@ -74,6 +74,7 @@ public class DSUtil {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ds.setConnectionProperties(db.getConnectionProperties());
 		return ds;
 	}
 }

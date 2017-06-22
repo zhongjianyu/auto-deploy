@@ -50,6 +50,11 @@ public class Database {
 	 * 配置监控统计拦截的filters
 	 */
 	private String filters;
+	
+	/**
+	 * 数据库密码加密配置
+	 */
+	private String connectionProperties;
 
 	public String getUrl() {
 		return url;
@@ -194,4 +199,14 @@ public class Database {
 	public void setDriverClassName(String driverClassName) {
 		this.driverClassName = driverClassName;
 	}
+
+	public String getConnectionProperties() {
+		return connectionProperties;
+	}
+
+	public void setConnectionProperties(String connectionProperties) {
+		this.connectionProperties = connectionProperties;
+	}
+	
+	
 }
