@@ -1,9 +1,18 @@
 启动项目命令(在jar的根目录下执行，windows环境)
-java -Dserver.port=40004 -jar huhamerchapi-1.0.0-exec.jar
+windows启动指定端口和编码(如果不指定则使用配置中的端口)
+java -Dserver.port=40004 -Dfile.encoding=utf-8 -jar auto-deploy-web-1.0.0-SNAPSHOT-exec.jar
+windows启动(使用配置中的端口)
+java -Dfile.encoding=utf-8 -jar auto-deploy-web-1.0.0-SNAPSHOT-exec.jar
 
 linux后台启动(Linux环境)
-nohup java -Dserver.port=40004 -jar huhamerchapi-1.0.0-exec.jar &
+linux启动指定端口
+nohup java -Dserver.port=40004 -jar auto-deploy-web-1.0.0-SNAPSHOT-exec.jar &
+linux启动(使用配置中的端口)
+nohup java -jar auto-deploy-web-1.0.0-SNAPSHOT-exec.jar &
+
 查出进程
 ps -ef | grep 40004
 kill -s 9 线程号
+
+部署打包：mvn clean package -Dmaven.test.skip=true
 

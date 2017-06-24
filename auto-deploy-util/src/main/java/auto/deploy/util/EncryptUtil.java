@@ -13,9 +13,6 @@ import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 /**
  * 
  * @描述：加密解密类
@@ -189,7 +186,6 @@ public class EncryptUtil {
 		}
 		byte[] keyByte = null;
 		Cipher cipher;
-		BASE64Encoder bas64 = new BASE64Encoder();
 		try {
 			cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -200,9 +196,10 @@ public class EncryptUtil {
 		}
 		/* 加密后base64编码后返回 */
 		// Log.info("加密成功...");
-		String retStr = bas64.encode(keyByte);
+		byte[] encodeKey = Base64.encode(keyByte);
+		String retKey = new String(encodeKey);
 		/* 转16进制后再输出 */
-		retStr = str2hex(retStr);
+		String retStr = str2hex(retKey);
 		return retStr;
 	}
 
@@ -232,12 +229,12 @@ public class EncryptUtil {
 		}
 		Cipher cipher;
 		byte[] keyByte = null;
-		BASE64Decoder base64 = new BASE64Decoder();
+		// BASE64Decoder base64 = new BASE64Decoder();
 		byte[] dataByte = null;
 		String retStr = null;
 		try {
 			/* 解密前base64编码转byte后再解密 */
-			dataByte = base64.decodeBuffer(data);
+			dataByte = Base64.decode(data.getBytes());
 			cipher = Cipher.getInstance("DES");
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			keyByte = cipher.doFinal(dataByte);
@@ -315,10 +312,7 @@ public class EncryptUtil {
 		System.out.println(encryptMD5("adfdfdf"));
 		System.out.println(encryptSHA("adfdfdf222222222222"));
 
-		System.out.println(encryptDES("fdfdfdfdfdfdfdf889", "seven"));
-		System.out.println(decryptDES("663531534d6c50676d5a347a516730564d4d64752f5a736651494a726d434254", "seven"));
-
-		System.out.println(str2hex("ffdd123中国"));
-		System.out.println(hex2str("66666464313233e4b8ade59bbd"));
+		System.out.println(encryptDES("中国你好", "chk_12"));
+		System.out.println(decryptDES("6a7231427933367436683574753654375a7169444b673d3d", "chk_12"));
 	}
 }
