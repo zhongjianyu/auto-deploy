@@ -7,7 +7,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<name>auto-deploy-activiti</name>
+	<name>auto-deploy-timer</name>
 	<url>http://maven.apache.org</url>
 
 	<artifactId>auto-deploy-timer</artifactId>
@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>auto-deploy</groupId>
-			<artifactId>auto-deploy-dao</artifactId>
+			<artifactId>auto-deploy-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- auto-deploy util -->

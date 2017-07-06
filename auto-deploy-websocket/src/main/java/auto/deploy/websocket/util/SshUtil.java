@@ -39,6 +39,7 @@ public class SshUtil {
 			session.connect(config.getTimeOut());
 		} catch (JSchException e) {
 			e.printStackTrace();
+			session = null;
 		}
 		return session;
 	}

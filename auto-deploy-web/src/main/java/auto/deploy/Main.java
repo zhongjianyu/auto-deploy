@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import auto.deploy.config.DatabaseBiz001Config;
@@ -25,6 +26,8 @@ import auto.deploy.web.event.ReadyEvent;
  */
 @EnableTransactionManagement
 @SpringBootApplication
+// 扫描定时器
+@EnableScheduling
 // 异步线程
 @EnableAsync
 // 开启配置属性支持
