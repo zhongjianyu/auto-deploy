@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" exporter="Camunda Modeler" exporterVersion="1.8.2">
-  <process id="Develop" name="Develop" isExecutable="true">
+  <process id="it_project_develop_cycle" name="IT项目开发周期流程" isExecutable="true">
     <userTask id="task_pro_branch" name="项目分支" activiti:candidateGroups="${branchRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
     <userTask id="task_dev" name="日常开发" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
     <userTask id="task_test" name="日常测试" activiti:candidateGroups="${testRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
@@ -81,9 +81,21 @@
     <sequenceFlow id="SequenceFlow_1j57sr6" sourceRef="ExclusiveGateway_1qxijni" targetRef="task_pro_branch">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "branch"}]]></conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="flow22" sourceRef="ExclusiveGateway_1fjw1ww" targetRef="EndEvent_1w5ynzz">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "finish"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow23" sourceRef="ExclusiveGateway_0tnm8oh" targetRef="EndEvent_1w5ynzz">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "finish"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow24" sourceRef="ExclusiveGateway_0fy6fx2" targetRef="EndEvent_1w5ynzz">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "finish"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow25" sourceRef="ExclusiveGateway_0w1hd23" targetRef="EndEvent_1w5ynzz">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "finish"}]]></conditionExpression>
+    </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_Develop">
-    <bpmndi:BPMNPlane bpmnElement="Develop" id="BPMNPlane_Develop">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_it_project_develop_cycle">
+    <bpmndi:BPMNPlane bpmnElement="it_project_develop_cycle" id="BPMNPlane_it_project_develop_cycle">
       <bpmndi:BPMNShape bpmnElement="task_pro_branch" id="BPMNShape_task_pro_branch">
         <omgdc:Bounds height="57.0" width="105.0" x="460.0" y="66.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -262,6 +274,31 @@
         <omgdi:waypoint x="704.0" y="1024.0"></omgdi:waypoint>
         <omgdi:waypoint x="704.0" y="94.0"></omgdi:waypoint>
         <omgdi:waypoint x="565.0" y="94.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+        <omgdi:waypoint x="532.0" y="825.0"></omgdi:waypoint>
+        <omgdi:waypoint x="598.0" y="825.0"></omgdi:waypoint>
+        <omgdi:waypoint x="598.0" y="956.0"></omgdi:waypoint>
+        <omgdi:waypoint x="598.0" y="1102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="531.0" y="1103.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+        <omgdi:waypoint x="532.0" y="635.0"></omgdi:waypoint>
+        <omgdi:waypoint x="661.0" y="635.0"></omgdi:waypoint>
+        <omgdi:waypoint x="661.0" y="1102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="531.0" y="1103.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="492.0" y="450.0"></omgdi:waypoint>
+        <omgdi:waypoint x="304.0" y="449.0"></omgdi:waypoint>
+        <omgdi:waypoint x="304.0" y="1102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="1103.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="492.0" y="275.0"></omgdi:waypoint>
+        <omgdi:waypoint x="287.0" y="275.0"></omgdi:waypoint>
+        <omgdi:waypoint x="287.0" y="1102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="1103.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
