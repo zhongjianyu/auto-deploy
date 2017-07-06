@@ -44,6 +44,7 @@
 		<module>auto-deploy-object</module>
 		<module>auto-deploy-gitlab</module>
 		<module>auto-deploy-activiti</module>
+		<module>auto-deploy-timer</module>
 	</modules>
 
 
