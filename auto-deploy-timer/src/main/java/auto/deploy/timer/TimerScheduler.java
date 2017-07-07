@@ -35,7 +35,7 @@ public class TimerScheduler {
 
 	/**
 	 * 
-	 * @描述：定时检查服务器主机状态(每两分钟执行一次检查).
+	 * @描述：定时检查服务器主机状态(每10分钟执行一次检查).
 	 *
 	 * @返回：void
 	 *
@@ -43,7 +43,7 @@ public class TimerScheduler {
 	 *
 	 * @时间：2017年7月6日 下午9:19:14
 	 */
-	@Scheduled(cron = "0/20 * * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	public void checkServerStatus() {
 		Where<DevServer> where = new Where<DevServer>();
 		where.eq("is_active", 1);
