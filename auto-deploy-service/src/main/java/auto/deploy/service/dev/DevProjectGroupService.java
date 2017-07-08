@@ -1,9 +1,11 @@
 package auto.deploy.service.dev;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import auto.deploy.object.PageBean;
-import auto.deploy.dao.entity.dev.DevProjectGroup;
 import com.baomidou.mybatisplus.service.IService;
+
+import auto.deploy.dao.entity.dev.DevProjectGroup;
+import auto.deploy.object.PageBean;
+import auto.deploy.object.RetMsg;
 
 /**
  * 
@@ -26,4 +28,28 @@ public interface DevProjectGroupService extends IService<DevProjectGroup> {
 	 * @时间：2017-06-17
 	 */
 	public Page<DevProjectGroup> list(PageBean pageBean, DevProjectGroup obj) throws Exception;
-	}
+
+	/**
+	 * 
+	 * @描述：新增分组
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月8日 下午3:44:02
+	 */
+	public RetMsg add(DevProjectGroup obj) throws Exception;
+
+	/**
+	 * 
+	 * @描述：删除分组
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月8日 下午3:44:02
+	 */
+	public RetMsg del(DevProjectGroup obj) throws Exception;
+}

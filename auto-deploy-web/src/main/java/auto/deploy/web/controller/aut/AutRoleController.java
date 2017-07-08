@@ -123,7 +123,7 @@ public class AutRoleController extends BaseController {
 			autRoleService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");
-			// 同步activiti用户
+			// 同步activiti分组
 			activitiService.addGroup(obj.getId());
 		}
 		return retMsg;
@@ -149,7 +149,7 @@ public class AutRoleController extends BaseController {
 
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
-		// 同步activiti用户
+		// 同步activiti分组
 		activitiService.delGroup(obj.getId());
 		return retMsg;
 	}

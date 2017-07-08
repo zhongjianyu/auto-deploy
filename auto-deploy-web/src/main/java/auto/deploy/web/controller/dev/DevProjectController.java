@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import auto.deploy.dao.entity.dev.DevProject;
-import auto.deploy.dao.entity.dev.DevProjectGroup;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
 import auto.deploy.service.dev.DevProjectGroupService;
@@ -33,7 +32,7 @@ public class DevProjectController extends BaseController {
 	private DevProjectService devProjectService;
 	@Resource
 	private DevProjectGroupService devProjectGroupService;
-	
+
 	/**
 	 * 
 	 * @描述：项目表(页面).
@@ -45,11 +44,11 @@ public class DevProjectController extends BaseController {
 	 * @时间：2017-06-17
 	 */
 	@RequestMapping("/devProjectPage")
-	public String devProjectPage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String devProjectPage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "dev/devProjectPage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目表(分页列表).
@@ -71,7 +70,6 @@ public class DevProjectController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -87,19 +85,18 @@ public class DevProjectController extends BaseController {
 	@ResponseBody
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, DevProject obj) {
 		RetMsg retMsg = new RetMsg();
-		
-		obj.setSshLink("www.ssh.link...");
-
-		DevProjectGroup group = devProjectGroupService.selectById(obj.getGroupId());
-		obj.setGroupName(group.getGroupName());
-		obj.setGitlabGroupId(group.getGitlabGroupId());
-		obj.setGitlabProjectId(0);
-		devProjectService.insert(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			devProjectService.add(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目表(根据ID删除对象).
@@ -115,13 +112,18 @@ public class DevProjectController extends BaseController {
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, DevProject obj) {
 		RetMsg retMsg = new RetMsg();
 
-		devProjectService.deleteById(obj.getId());
-
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			devProjectService.del(obj);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目表(根据ID修改对象).
@@ -145,7 +147,7 @@ public class DevProjectController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：项目表(根据ID获取对象).

@@ -108,27 +108,14 @@ public class AutUserController {
 	@FuncObj(desc = "[权限管理]-[用户管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
-
-		// 检查用户名是否存在
-		Where<AutUser> where = new Where<AutUser>();
-		where.eq("user_name", obj.getUserName());
-		where.or("user_email = {0}", obj.getUserEmail());
-		if (autUserService.selectCount(where) > 0) {
-			retMsg.setCode(1);
-			retMsg.setMessage("账号或邮箱已被注册");
-		} else {
-			String charPassword = obj.getUserPwd();
+		try {
 			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
-			autUserService.insert(obj);
-			retMsg.setCode(0);
-			retMsg.setMessage("操作成功");
-			// 同步activiti用户
-			activitiService.addUser(obj.getId());
-			// 同步gitlab用户
-			obj.setUserPwd(charPassword);
-			gitlabService.addUser(obj);
+			retMsg = autUserService.add(obj);
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
 		}
-
 		return retMsg;
 	}
 
@@ -145,16 +132,17 @@ public class AutUserController {
 	@RequestMapping("/delete")
 	@ResponseBody
 	@FuncObj(desc = "[权限管理]-[用户管理]-[删除]")
-	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
+	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutUser autUser) {
 		RetMsg retMsg = new RetMsg();
-
-		autUserService.deleteById(obj.getId());
-
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
-
-		// 同步activiti用户
-		activitiService.delUser(obj.getId());
+		try {
+			autUserService.delete(autUser);
+			retMsg.setCode(0);
+			retMsg.setMessage("操作成功");
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 

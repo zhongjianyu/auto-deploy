@@ -6,11 +6,15 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.gitlab.api.GitlabAPI;
+import org.gitlab.api.models.GitlabGroup;
+import org.gitlab.api.models.GitlabProject;
 import org.gitlab.api.models.GitlabUser;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import auto.deploy.dao.entity.aut.AutUser;
+import auto.deploy.dao.entity.dev.DevProject;
+import auto.deploy.dao.entity.dev.DevProjectGroup;
 import auto.deploy.gitlab.GitlabFactory;
 import auto.deploy.gitlab.service.GitlabService;
 
@@ -80,6 +84,33 @@ public class GitlabServiceImpl implements GitlabService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public GitlabProject createProject(DevProject devProject) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		GitlabGroup group = api.getGroup(devProject.getGitlabGroupId());
+		GitlabProject project = api.createProjectForGroup(devProject.getProjectName(), group, devProject.getProjectDesc());
+		return project;
+	}
+
+	@Override
+	public void delProject(DevProject devProject) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		api.deleteProject(devProject.getGitlabProjectId());
+	}
+
+	@Override
+	public GitlabGroup createGroup(DevProjectGroup devProjectGroup) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		GitlabGroup group = api.createGroup(devProjectGroup.getGroupName());
+		return group;
+	}
+
+	@Override
+	public void delGroup(DevProjectGroup devProjectGroup) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		api.deleteGroup(devProjectGroup.getGitlabGroupId());
 	}
 
 }

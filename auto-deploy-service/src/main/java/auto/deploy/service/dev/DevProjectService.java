@@ -26,4 +26,28 @@ public interface DevProjectService extends IService<DevProject> {
 	 * @时间：2017-06-17
 	 */
 	public Page<DevProject> list(PageBean pageBean, DevProject obj) throws Exception;
-	}
+
+	/**
+	 * 
+	 * @描述：新增项目
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月8日 上午9:11:12
+	 */
+	public void add(DevProject obj) throws Exception;
+
+	/**
+	 * 
+	 * @描述：删除项目
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月8日 上午9:11:12
+	 */
+	public void del(DevProject obj) throws Exception;
+}

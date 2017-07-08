@@ -38,6 +38,12 @@
 			<artifactId>auto-deploy-activiti</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- auto-deploy gitlab -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-gitlab</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

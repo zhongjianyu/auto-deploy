@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
-import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.dev.DevProjectGroup;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -83,17 +82,12 @@ public class DevProjectGroupController extends BaseController {
 	@ResponseBody
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, DevProjectGroup obj) {
 		RetMsg retMsg = new RetMsg();
-
-		Where<DevProjectGroup> where = new Where<DevProjectGroup>();
-		where.eq("group_name", obj.getGroupName());
-		if (devProjectGroupService.selectCount(where) > 0) {
+		try {
+			retMsg = devProjectGroupService.add(obj);
+		} catch (Exception e) {
 			retMsg.setCode(1);
-			retMsg.setMessage("该项目分组已经存在");
-		} else {
-			obj.setGitlabGroupId(0);
-			devProjectGroupService.insert(obj);
-			retMsg.setCode(0);
-			retMsg.setMessage("操作成功");
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
 		}
 		return retMsg;
 	}
@@ -112,11 +106,13 @@ public class DevProjectGroupController extends BaseController {
 	@ResponseBody
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, DevProjectGroup obj) {
 		RetMsg retMsg = new RetMsg();
-
-		devProjectGroupService.deleteById(obj.getId());
-
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			retMsg = devProjectGroupService.del(obj);
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 

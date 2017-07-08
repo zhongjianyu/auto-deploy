@@ -1,15 +1,22 @@
 package auto.deploy.service.dev.impl;
 
-import auto.deploy.dao.entity.dev.DevProject;
-import auto.deploy.dao.mapper.dev.DevProjectMapper;
-import auto.deploy.service.dev.DevProjectService;
+import javax.annotation.Resource;
+
+import org.gitlab.api.models.GitlabProject;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.toolkit.StringUtils;
 
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.plugins.Page;
 import auto.deploy.dao.config.Where;
+import auto.deploy.dao.entity.dev.DevProject;
+import auto.deploy.dao.entity.dev.DevProjectGroup;
+import auto.deploy.dao.mapper.dev.DevProjectMapper;
+import auto.deploy.gitlab.service.GitlabService;
 import auto.deploy.object.PageBean;
+import auto.deploy.service.dev.DevProjectGroupService;
+import auto.deploy.service.dev.DevProjectService;
 
 /**
  * 
@@ -22,6 +29,11 @@ import auto.deploy.object.PageBean;
 @Service
 public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProject> implements DevProjectService {
 
+	@Resource
+	private DevProjectGroupService devProjectGroupService;
+	@Resource
+	private GitlabService gitlabService;
+
 	@Override
 	public Page<DevProject> list(PageBean pageBean, DevProject obj) throws Exception {
 		Where<DevProject> where = new Where<DevProject>();
@@ -32,5 +44,28 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		where.orderBy("create_time", false);
 		Page<DevProject> page = selectPage(new Page<DevProject>(pageBean.getPageNum(), pageBean.getPageSize()), where);
 		return page;
-	}	
+	}
+
+	@Override
+	public void add(DevProject obj) throws Exception {
+		// 获取分组信息
+		DevProjectGroup group = devProjectGroupService.selectById(obj.getGroupId());
+		// 新增git项目
+		obj.setGitlabGroupId(group.getGitlabGroupId());
+		GitlabProject gitlabProject = gitlabService.createProject(obj);
+		// 回填gitlab项目信息
+		obj.setSshLink(gitlabProject.getSshUrl());
+
+		obj.setGroupName(group.getGroupName());
+		obj.setGitlabProjectId(gitlabProject.getId());
+		insert(obj);
+	}
+
+	@Override
+	public void del(DevProject obj) throws Exception {
+		// 删除gitlab项目
+		obj = selectById(obj.getId());
+		gitlabService.delProject(obj);
+		deleteById(obj.getId());
+	}
 }
