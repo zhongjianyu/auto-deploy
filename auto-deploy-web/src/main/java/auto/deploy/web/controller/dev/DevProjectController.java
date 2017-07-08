@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.dev.DevProject;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -86,9 +87,17 @@ public class DevProjectController extends BaseController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, DevProject obj) {
 		RetMsg retMsg = new RetMsg();
 		try {
-			devProjectService.add(obj);
-			retMsg.setCode(0);
-			retMsg.setMessage("操作成功");
+			// 检查项目是否已经存在
+			Where<DevProject> where = new Where<DevProject>();
+			where.eq("project_name", obj.getProjectName());
+			if (devProjectService.selectCount(where) > 0) {
+				retMsg.setCode(1);
+				retMsg.setMessage("项目名称已被使用");
+			} else {
+				devProjectService.add(obj);
+				retMsg.setCode(0);
+				retMsg.setMessage("操作成功");
+			}
 		} catch (Exception e) {
 			retMsg.setCode(1);
 			retMsg.setMessage(e.getMessage());
