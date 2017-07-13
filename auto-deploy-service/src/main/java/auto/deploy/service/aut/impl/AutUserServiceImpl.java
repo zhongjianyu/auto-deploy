@@ -3,6 +3,7 @@ package auto.deploy.service.aut.impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -49,6 +50,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 	}
 
 	@Override
+	@Transactional
 	public void delete(AutUser obj) throws Exception {
 		obj = autUserService.selectById(obj.getId());
 		autUserService.deleteById(obj.getId());
@@ -59,6 +61,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 	}
 
 	@Override
+	@Transactional
 	public RetMsg add(AutUser obj) throws Exception {
 		RetMsg retMsg = new RetMsg();
 		// 检查用户名是否存在

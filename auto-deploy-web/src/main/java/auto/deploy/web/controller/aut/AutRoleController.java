@@ -112,19 +112,11 @@ public class AutRoleController extends BaseController {
 	@FuncObj(desc = "[权限管理]-[角色管理]-[新增]")
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
-		// 检查角色名称和角色代码是否已经存在
-		Where<AutRole> where = new Where<AutRole>();
-		where.eq("role_name", obj.getRoleName());
-		where.or("role_code = {0}", obj.getRoleCode());
-		if (autRoleService.selectCount(where) > 0) {
+		try {
+			retMsg = autRoleService.add(obj);
+		} catch (Exception e) {
 			retMsg.setCode(1);
-			retMsg.setMessage("角色名称或代码已存在");
-		} else {
-			autRoleService.insert(obj);
-			retMsg.setCode(0);
-			retMsg.setMessage("操作成功");
-			// 同步activiti分组
-			activitiService.addGroup(obj.getId());
+			retMsg.setMessage(e.getMessage());
 		}
 		return retMsg;
 	}
@@ -144,13 +136,13 @@ public class AutRoleController extends BaseController {
 	@FuncObj(desc = "[权限管理]-[角色管理]-[删除]")
 	public RetMsg delete(HttpServletRequest request, HttpServletResponse response, AutRole obj) {
 		RetMsg retMsg = new RetMsg();
-
-		autRoleService.deleteById(obj.getId());
-
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
-		// 同步activiti分组
-		activitiService.delGroup(obj.getId());
+		try {
+			retMsg = autRoleService.delete(obj);
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 

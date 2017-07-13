@@ -26,7 +26,7 @@
 						<form class="layui-form" action="">
 							<div class="layui-input-inline">
 								<div class="layui-btn-group">
-								<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="doDeploy()" iclass="fa fa-plus-circle" icon="" text="新建分支"/>
+								<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="openAddWin()" iclass="fa fa-plus-circle" icon="" text="新建分支"/>
 								<@a code="010102" href="javascript:void(0)" class="layui-btn layui-btn-small layui-btn-primary" id="" onclick="unDeploy()" iclass="fa fa-arrow-circle-right" icon="" text="进入日常开发"/>
 								</div>
 							</div>
@@ -505,7 +505,7 @@
 		//打开新增对象窗口
 		function openAddWin() {
 			var index = layer.open({
-				title : '新增',
+				title : '新建分支',
 				maxmin : false,
 				type : 1,
 				content : $('#win-add-object')
