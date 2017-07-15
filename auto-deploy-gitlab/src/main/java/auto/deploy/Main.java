@@ -2,8 +2,12 @@ package auto.deploy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 
+import auto.deploy.config.DatabaseBiz001Config;
+import auto.deploy.config.DatabaseDefaultConfig;
+import auto.deploy.config.TaskThreadPoolConfig;
 import auto.deploy.util.SpringContextUtil;
 
 /**
@@ -15,6 +19,7 @@ import auto.deploy.util.SpringContextUtil;
  * @时间：2017年4月21日 上午8:40:52
  */
 @SpringBootApplication
+@EnableConfigurationProperties({ TaskThreadPoolConfig.class, DatabaseDefaultConfig.class, DatabaseBiz001Config.class })
 public class Main {
 	/**
 	 * 

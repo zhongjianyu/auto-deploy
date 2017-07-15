@@ -51,5 +51,5 @@ public interface AutUserService extends IService<AutUser> {
 	 *
 	 * @时间：2017年7月8日 下午7:37:09
 	 */
-	public RetMsg add(AutUser autUser) throws Exception;
+	public RetMsg add(AutUser autUser,String charPassword) throws Exception;
 }

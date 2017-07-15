@@ -46,14 +46,20 @@ public class Li implements TemplateDirectiveModel {
 		Object lclassObj = map.get("class");
 		Object textObj = map.get("text");
 		Object idObj = map.get("id");
+		Object onclickObj = map.get("onclick");
 
 		String code = codeObj == null ? null : ((SimpleScalar) codeObj).getAsString();
 		String lclass = lclassObj == null ? null : ((SimpleScalar) lclassObj).getAsString();
 		String text = textObj == null ? null : ((SimpleScalar) textObj).getAsString();
 		String id = idObj == null ? null : ((SimpleScalar) idObj).getAsString();
+		String onclick = onclickObj == null ? null : ((SimpleScalar) onclickObj).getAsString();
 		// 构造页面需要显示的元素
 		StringBuffer li = new StringBuffer();
-		li.append("<li class=\"" + lclass + "\" id=\""+id+"\">");
+		li.append("<li class=\"" + lclass + "\" id=\""+id+"\" ");
+		if (onclick != null) {
+			li.append("onclick=\"" + onclick + "\" ");
+		}
+		li.append(">");
 		li.append(text);
 		li.append("</li>");
 		// 不需要权限控制

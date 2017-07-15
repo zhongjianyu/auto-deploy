@@ -37,8 +37,10 @@
 							<thead>
 								<tr>
 									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging1_check-all"></th>
-									<th>字典编码</th>
-									<th>字典名称</th>
+									<th>分支名称</th>
+									<th>源项目名称</th>
+									<th>创建人</th>
+									<th>创建时间</th>
 								</tr>
 							</thead>
 							<tbody id="paging1-data">
@@ -471,6 +473,7 @@
 			    var titleId = $(data.elem.context).attr("id");
 			    if(titleId == "title-001"){
 			    	//项目分支
+			    	alert(1);
 			    }else if(titleId == "title-002"){
 			    	//日常开发
 			    }else if(titleId == "title-003"){

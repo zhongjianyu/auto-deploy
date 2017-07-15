@@ -93,7 +93,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">密码</label>
 				<div class="layui-input-block">
-					<input type="password" name="userPwd" id="userPwd" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+					<input type="password" name="userPwd" id="userPwd" lay-verify="required|pwdLength" autocomplete="off" placeholder="密码" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -158,7 +158,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">密码</label>
 				<div class="layui-input-block">
-					<input type="password" name="userPwd" id="userPwd" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+					<input type="password" name="userPwd" id="userPwd" lay-verify="required|pwdLength" autocomplete="off" placeholder="密码" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -324,7 +324,12 @@
 					if (value != $("#update-object-form").find("#userPwd").val()) {
 						return "两次输入的密码不一致";
 					}
-				}
+				},
+				pwdLength : function(value){
+					if(value.length < 8) {
+						return '密码长度至少8位';
+					}
+				},
 			});
 			//监听新增提交
 			pform.on('submit(form-add-submit)', function(data) {

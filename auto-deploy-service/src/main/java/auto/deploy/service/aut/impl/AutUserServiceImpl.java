@@ -62,7 +62,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 
 	@Override
 	@Transactional
-	public RetMsg add(AutUser obj) throws Exception {
+	public RetMsg add(AutUser obj,String charPassword) throws Exception {
 		RetMsg retMsg = new RetMsg();
 		// 检查用户名是否存在
 		Where<AutUser> where = new Where<AutUser>();
@@ -72,8 +72,6 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 			retMsg.setCode(1);
 			retMsg.setMessage("账号或邮箱已被注册");
 		} else {
-			String charPassword = obj.getUserPwd();
-			// obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
 			autUserService.insert(obj);
 			retMsg.setCode(0);
 			retMsg.setMessage("操作成功");

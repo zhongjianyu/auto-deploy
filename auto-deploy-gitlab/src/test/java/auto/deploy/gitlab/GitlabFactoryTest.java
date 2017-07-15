@@ -18,6 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import auto.deploy.dao.entity.aut.AutUser;
+import auto.deploy.gitlab.service.GitlabService;
+
 /**
  * 
  * @描述：用户service测试类
@@ -35,6 +38,8 @@ public class GitlabFactoryTest {
 	 */
 	@Resource
 	private Environment environment;
+	@Resource
+	private GitlabService gitlabService;
 
 	/**
 	 * 
@@ -266,6 +271,17 @@ public class GitlabFactoryTest {
 		GitlabAPI api2 = GitlabFactory.getInstance(environment).getApi();
 		System.out.println(api == api2);
 		// System.out.println(SpringContextUtil.getBean(Environment.class));
+	}
+	
+	@Test
+	public void createUserTest2() throws IOException {
+		AutUser autUser = new AutUser();
+		autUser.setUserEmail("598761157@qq.com");
+		autUser.setUserPwd("zhongjianyu");
+		autUser.setUserName("sadmin");
+		autUser.setNickName("超级管理员");
+		autUser.setId(866131328341528576L);
+		gitlabService.addUser(autUser);
 	}
 
 }

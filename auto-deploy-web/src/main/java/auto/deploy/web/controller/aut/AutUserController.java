@@ -109,8 +109,9 @@ public class AutUserController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
 		RetMsg retMsg = new RetMsg();
 		try {
+			String charPassword = obj.getUserPwd();
 			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
-			retMsg = autUserService.add(obj);
+			retMsg = autUserService.add(obj,charPassword);
 		} catch (Exception e) {
 			retMsg.setCode(1);
 			retMsg.setMessage(e.getMessage());
@@ -180,6 +181,7 @@ public class AutUserController {
 			orgnlObj.setIsAccountExpired(obj.getIsAccountExpired());
 			orgnlObj.setIsAccountLocked(obj.getIsAccountLocked());
 			orgnlObj.setIsCredentialsExpired(obj.getIsCredentialsExpired());
+			orgnlObj.setUserEmail(obj.getUserEmail());
 
 			autUserService.updateById(orgnlObj);
 			retMsg.setCode(0);
