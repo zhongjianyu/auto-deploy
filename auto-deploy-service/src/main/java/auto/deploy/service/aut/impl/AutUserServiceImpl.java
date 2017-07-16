@@ -1,5 +1,7 @@
 package auto.deploy.service.aut.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -62,7 +64,7 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 
 	@Override
 	@Transactional
-	public RetMsg add(AutUser obj,String charPassword) throws Exception {
+	public RetMsg add(AutUser obj, String charPassword) throws Exception {
 		RetMsg retMsg = new RetMsg();
 		// 检查用户名是否存在
 		Where<AutUser> where = new Where<AutUser>();
@@ -82,5 +84,14 @@ public class AutUserServiceImpl extends ServiceImpl<AutUserMapper, AutUser> impl
 			gitlabService.addUser(obj);
 		}
 		return retMsg;
+	}
+
+	@Override
+	public List<AutUser> getUserList(AutUser obj) {
+		Where<AutUser> where = new Where<AutUser>();
+		where.eq("is_active", 1);
+		where.setSqlSelect("id,user_name,nick_name");
+		List<AutUser> list = selectList(where);
+		return list;
 	}
 }

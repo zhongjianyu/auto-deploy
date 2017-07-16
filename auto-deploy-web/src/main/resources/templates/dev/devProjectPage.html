@@ -51,8 +51,8 @@
 							<td>
 								<@a code="000103" href="javascript:void(0)" class="layui-btn layui-btn-mini" id="show-edit" onclick="showEdit('{{value.id}}')" text="编辑"/>
 								<@a code="000104" href="javascript:void(0)" class="layui-btn layui-btn-warm layui-btn-mini" id="show-view" onclick="showView('{{value.id}}')" text="详情"/>
+								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showUserSetting('{{value.id}}')" text="人员配置"/>
 								<!--
-								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-active" onclick="showActive()" text="激活"/>
 								<@a code="" href="javascript:void(0)" class="layui-btn layui-btn-normal layui-btn-mini" id="show-disactive" onclick="showActive()" text="冻结"/>
 								-->
 								<@a code="000105" href="javascript:void(0)" class="layui-btn layui-btn-danger layui-btn-mini" id="show-delete" onclick="showDelete('{{value.id}}')" text="删除"/>
@@ -245,6 +245,61 @@
 			<div id="paging2-footer" class="page" style="background-color: white; text-align: center;"></div>
 		</div>
 	</div>
+	
+	<!-- 人员配置窗口 -->
+	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-setting-object">
+		<form class="layui-form layui-form-pane" id="setting-object-form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input type="hidden" name="id" id="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">开发人员</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="devUserId" name="devUserId" key="id" text="nick_name" where="and is_active=1"/>
+					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="devUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">开发测试</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="testUserId" name="testUserId" key="id" text="nick_name" where="and is_active=1"/>
+					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="testUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">验收测试</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="checkUserId" name="checkUserId" key="id" text="nick_name" where="and is_active=1"/>
+					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="checkUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">预发审批</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="prepareUserId" name="prepareUserId" key="id" text="nick_name" where="and is_active=1"/>
+					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="prepareUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">生产审批</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="produceUserId" name="produceUserId" key="id" text="nick_name" where="and is_active=1"/>
+					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="produceUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-input-block" style="margin-top: 15px;">
+				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
+				<div style="float: right;">
+					<button class="layui-btn" lay-submit="" lay-filter="form-setting-submit">
+						<i class="fa fa-save"></i> 保存
+					</button>
+					<button type="reset" class="layui-btn layui-btn-primary">
+						<li class="fa fa-eraser"></li> 重置
+					</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
 	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
 	<script type="text/javascript" src="../../plugins/layui/lay/modules/laypage.js"></script>
 	<script type="text/javascript" src="../../js/template-web.js"></script>
@@ -270,6 +325,86 @@
 			pform.on('submit(form-update-submit)', function(data) {
 				tool.post("../devProject/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
+			});
+			//监听配置人员提交
+			pform.on('submit(form-setting-submit)', function(data) {
+				var param = $("#setting-object-form").serialize();
+				//获取各个阶段的配置的用户ID
+				var devUserIds = "";
+				var testUserIds = "";
+				var checkUserIds = "";
+				var prepareUserIds = "";
+				var produceUserIds = "";
+				$("#devUserList_div").find("button").each(function(){
+					devUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				});
+				$("#testUserList_div").find("button").each(function(){
+					testUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				});
+				$("#checkUserList_div").find("button").each(function(){
+					checkUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				});
+				$("#prepareUserList_div").find("button").each(function(){
+					prepareUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				});
+				$("#produceUserList_div").find("button").each(function(){
+					produceUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				});
+				if(devUserIds != ""){
+					devUserIds = devUserIds.substring(0,devUserIds.length-1);
+				}
+				if(testUserIds != ""){
+					testUserIds = testUserIds.substring(0,testUserIds.length-1);
+				}
+				if(checkUserIds != ""){
+					checkUserIds = checkUserIds.substring(0,checkUserIds.length-1);
+				}
+				if(prepareUserIds != ""){
+					prepareUserIds = prepareUserIds.substring(0,prepareUserIds.length-1);
+				}
+				if(produceUserIds != ""){
+					produceUserIds = produceUserIds.substring(0,produceUserIds.length-1);
+				}
+				param = param + "devUserIds="+devUserIds+"&testUserIds="+testUserIds+"&checkUserIds="+checkUserIds+"&prepareUserIds="+prepareUserIds+"&produceUserIds="+produceUserIds;
+				tool.post("../devProject/setActor", param, postCallBack, false);
+				return false;
+			});
+			//下拉框监听事件
+			pform.on('select(devUserId)', function(data){
+				 //如果不存在则增加
+				 if($("#devUserList_div").find("#u_"+data.value).length == 0){
+					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					 $(btnStr).appendTo("#devUserList_div");
+				 }
+				 
+			});
+			pform.on('select(testUserId)', function(data){
+				//如果不存在则增加
+				 if($("#testUserList_div").find("#u_"+data.value).length == 0){
+					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					 $(btnStr).appendTo("#testUserList_div");
+				 }
+			});
+			pform.on('select(checkUserId)', function(data){
+				//如果不存在则增加
+				 if($("#checkUserList_div").find("#u_"+data.value).length == 0){
+					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					 $(btnStr).appendTo("#checkUserList_div");
+				 }
+			});
+			pform.on('select(prepareUserId)', function(data){
+				//如果不存在则增加
+				 if($("#prepareUserList_div").find("#u_"+data.value).length == 0){
+					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					 $(btnStr).appendTo("#prepareUserList_div");
+				 }
+			});
+			pform.on('select(produceUserId)', function(data){
+				//如果不存在则增加
+				 if($("#produceUserList_div").find("#u_"+data.value).length == 0){
+					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					 $(btnStr).appendTo("#produceUserList_div");
+				 }
 			});
 			//初始化出发数据加载
 			loadData();
@@ -356,6 +491,65 @@
 					tool.error(retMsg.message);
 				}
 			});
+		}
+		//打开人员配置窗口
+		function showUserSetting(projectId) {
+			//设置项目ID
+			$("#win-setting-object").find("#id").val(projectId);
+			//情况上次操作记录
+			$("#devUserList_div").empty();
+			$("#testUserList_div").empty();
+			$("#checkUserList_div").empty();
+			$("#prepareUserList_div").empty();
+			$("#produceUserList_div").empty();
+			//获取所有用户信息
+			var param = "_csrf=" + $("#_csrf").val();
+			tool.post("../devProjectActor/getUserListByProjectId", param, function(vo){
+				var buttonStr1="";
+				for(var i = 0;i < vo.devUserList.length; i++){
+					var u = vo.devUserList[i];
+					buttonStr1 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+				}
+				var buttonStr2="";
+				for(var i = 0;i < vo.testUserList.length; i++){
+					var u = vo.devUserList[i];
+					buttonStr2 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+				}
+				var buttonStr3="";
+				for(var i = 0;i < vo.checkUserList.length; i++){
+					var u = vo.devUserList[i];
+					buttonStr3 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+				}
+				var buttonStr4="";
+				for(var i = 0;i < vo.prepareUserList.length; i++){
+					var u = vo.devUserList[i];
+					buttonStr4 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+				}
+				var buttonStr5="";
+				for(var i = 0;i < vo.produceUserList.length; i++){
+					var u = vo.devUserList[i];
+					buttonStr5 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+				}
+				
+				$(buttonStr1).appendTo("#devUserList_div");
+				$(buttonStr2).appendTo("#testUserList_div");
+				$(buttonStr3).appendTo("#checkUserList_div");
+				$(buttonStr4).appendTo("#prepareUserList_div");
+				$(buttonStr5).appendTo("#produceUserList_div");
+			}, false);
+			//获取项目的人员配置信息
+			
+			
+			var index = layer.open({
+				title : '人员配置',
+				maxmin : false,
+				type : 1,
+				content : $('#win-setting-object')
+			});
+			layer.full(index);
+		}
+		function deleteMe(thisObj){
+			$(thisObj).parent().remove();
 		}
 	</script>
 </body>

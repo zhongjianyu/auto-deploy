@@ -2,6 +2,7 @@ package auto.deploy.service.dev;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import auto.deploy.object.PageBean;
+import auto.deploy.object.RetMsg;
 import auto.deploy.dao.entity.dev.DevProject;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -50,4 +51,16 @@ public interface DevProjectService extends IService<DevProject> {
 	 * @时间：2017年7月8日 上午9:11:12
 	 */
 	public void del(DevProject obj) throws Exception;
+
+	/**
+	 * 
+	 * @描述：保存项目配置人员
+	 *
+	 * @返回：RetMsg
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月16日 下午11:00:59
+	 */
+	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds);
 }

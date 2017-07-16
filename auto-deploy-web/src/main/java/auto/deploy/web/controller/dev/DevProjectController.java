@@ -173,4 +173,36 @@ public class DevProjectController extends BaseController {
 		return devProjectService.selectById(obj.getId());
 	}
 
+	/**
+	 * 
+	 * @描述：保存项目配置人员
+	 *
+	 * @返回：RetMsg
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017-06-17
+	 */
+	@RequestMapping("/setActor")
+	@ResponseBody
+	public RetMsg setActor(HttpServletRequest request, HttpServletResponse response, DevProject obj) {
+
+		String devUserIds = request.getParameter("devUserIds");
+		String testUserIds = request.getParameter("testUserIds");
+		String checkUserIds = request.getParameter("checkUserIds");
+		String prepareUserIds = request.getParameter("prepareUserIds");
+		String produceUserIds = request.getParameter("produceUserIds");
+
+		RetMsg retMsg = new RetMsg();
+		try {
+			// 检查项目是否已经存在
+			retMsg = devProjectService.setActor(obj, devUserIds, testUserIds, checkUserIds, prepareUserIds, produceUserIds);
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
+		return retMsg;
+	}
+
 }

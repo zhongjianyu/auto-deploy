@@ -111,7 +111,7 @@ public class AutUserController {
 		try {
 			String charPassword = obj.getUserPwd();
 			obj.setUserPwd(customPasswordEncoder.encode(obj.getUserPwd()));
-			retMsg = autUserService.add(obj,charPassword);
+			retMsg = autUserService.add(obj, charPassword);
 		} catch (Exception e) {
 			retMsg.setCode(1);
 			retMsg.setMessage(e.getMessage());
@@ -314,5 +314,22 @@ public class AutUserController {
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
 		return retMsg;
+	}
+
+	/**
+	 * 
+	 * @描述：获取用户列表（id和昵称）.
+	 *
+	 * @返回：AutUser
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年5月27日 下午4:34:54
+	 */
+	@RequestMapping("/getUserList")
+	@ResponseBody
+	public List<AutUser> getUserList(HttpServletRequest request, HttpServletResponse response, AutUser obj) {
+		List<AutUser> list = autUserService.getUserList(obj);
+		return list;
 	}
 }

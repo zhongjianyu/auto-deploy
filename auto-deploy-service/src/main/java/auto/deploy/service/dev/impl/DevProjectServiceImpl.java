@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.gitlab.api.models.GitlabProject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -15,6 +16,7 @@ import auto.deploy.dao.entity.dev.DevProjectGroup;
 import auto.deploy.dao.mapper.dev.DevProjectMapper;
 import auto.deploy.gitlab.service.GitlabService;
 import auto.deploy.object.PageBean;
+import auto.deploy.object.RetMsg;
 import auto.deploy.service.dev.DevProjectGroupService;
 import auto.deploy.service.dev.DevProjectService;
 
@@ -47,6 +49,7 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 	}
 
 	@Override
+	@Transactional
 	public void add(DevProject obj) throws Exception {
 		// 获取分组信息
 		DevProjectGroup group = devProjectGroupService.selectById(obj.getGroupId());
@@ -62,10 +65,19 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 	}
 
 	@Override
+	@Transactional
 	public void del(DevProject obj) throws Exception {
 		// 删除gitlab项目
 		obj = selectById(obj.getId());
 		gitlabService.delProject(obj);
 		deleteById(obj.getId());
+	}
+
+	@Override
+	@Transactional
+	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds) {
+		RetMsg retMsg = new RetMsg();
+		
+		return retMsg;
 	}
 }

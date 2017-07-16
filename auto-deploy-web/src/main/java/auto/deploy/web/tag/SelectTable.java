@@ -45,6 +45,7 @@ public class SelectTable implements TemplateDirectiveModel {
 		Object sclassObj = map.get("class");
 		Object layVerifyObject = map.get("layVerify");
 		Object whereObj = map.get("where");
+		Object isSearchObj = map.get("isSearch");
 
 		String table = tableObj == null ? null : ((SimpleScalar) tableObj).getAsString();
 		String key = keyObj == null ? null : ((SimpleScalar) keyObj).getAsString();
@@ -55,6 +56,7 @@ public class SelectTable implements TemplateDirectiveModel {
 		String sclass = sclassObj == null ? null : ((SimpleScalar) sclassObj).getAsString();
 		String layVerify = layVerifyObject == null ? null : ((SimpleScalar) layVerifyObject).getAsString();
 		String where = whereObj == null ? null : ((SimpleScalar) whereObj).getAsString();
+		String isSearch = isSearchObj == null ? null : ((SimpleScalar) isSearchObj).getAsString();
 
 		// 构造页面需要显示的元素
 		StringBuffer select = new StringBuffer();
@@ -69,8 +71,15 @@ public class SelectTable implements TemplateDirectiveModel {
 		if (layVerify != null) {
 			select.append("lay-verify=\"" + layVerify + "\" ");
 		}
+		if (isSearch != null) {
+			select.append("lay-search ");
+		}
 		select.append(">");
-		select.append("	 		<option value=\" \"></option>");
+		if (isSearch != null) {
+			select.append("	 		<option value=\"\">搜索</option>");
+		}else{
+			select.append("	 		<option value=\" \"></option>");
+		}
 		// 构造sql获取数据
 		String sql = "SELECT " + key + "," + text + " FROM " + table + " WHERE is_delete = 0 " + where;
 		List<Map<String, String>> list = DB.queryForList(sql, dataSource);
