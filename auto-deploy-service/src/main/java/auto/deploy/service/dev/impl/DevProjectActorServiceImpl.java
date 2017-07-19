@@ -46,7 +46,7 @@ public class DevProjectActorServiceImpl extends ServiceImpl<DevProjectActorMappe
 		Where<DevProjectActor> where = new Where<DevProjectActor>();
 		where.eq("project_id", projectId);
 		where.eq("is_active", 1);
-		where.setSqlSelect("user_id");
+		where.setSqlSelect("user_id,project_stage");
 		List<DevProjectActor> list = selectList(where);
 
 		ProjectUserVO vo = new ProjectUserVO();

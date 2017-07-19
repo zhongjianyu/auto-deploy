@@ -365,7 +365,8 @@
 				if(produceUserIds != ""){
 					produceUserIds = produceUserIds.substring(0,produceUserIds.length-1);
 				}
-				param = param + "devUserIds="+devUserIds+"&testUserIds="+testUserIds+"&checkUserIds="+checkUserIds+"&prepareUserIds="+prepareUserIds+"&produceUserIds="+produceUserIds;
+				param = param + "&devUserIds="+devUserIds+"&testUserIds="+testUserIds+"&checkUserIds="+checkUserIds+"&prepareUserIds="+prepareUserIds+"&produceUserIds="+produceUserIds;
+				//console.log(param);
 				tool.post("../devProject/setActor", param, postCallBack, false);
 				return false;
 			});
@@ -494,6 +495,8 @@
 		}
 		//打开人员配置窗口
 		function showUserSetting(projectId) {
+			//重置
+		    $("#win-setting-object").find("button[type='reset']").trigger("click");
 			//设置项目ID
 			$("#win-setting-object").find("#id").val(projectId);
 			//情况上次操作记录
@@ -503,32 +506,32 @@
 			$("#prepareUserList_div").empty();
 			$("#produceUserList_div").empty();
 			//获取所有用户信息
-			var param = "_csrf=" + $("#_csrf").val();
+			var param = "projectId="+projectId+"&_csrf=" + $("#_csrf").val();
 			tool.post("../devProjectActor/getUserListByProjectId", param, function(vo){
 				var buttonStr1="";
 				for(var i = 0;i < vo.devUserList.length; i++){
 					var u = vo.devUserList[i];
-					buttonStr1 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+					buttonStr1 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
 				var buttonStr2="";
 				for(var i = 0;i < vo.testUserList.length; i++){
-					var u = vo.devUserList[i];
-					buttonStr2 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+					var u = vo.testUserList[i];
+					buttonStr2 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
 				var buttonStr3="";
 				for(var i = 0;i < vo.checkUserList.length; i++){
-					var u = vo.devUserList[i];
-					buttonStr3 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+					var u = vo.checkUserList[i];
+					buttonStr3 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
 				var buttonStr4="";
 				for(var i = 0;i < vo.prepareUserList.length; i++){
-					var u = vo.devUserList[i];
-					buttonStr4 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+					var u = vo.prepareUserList[i];
+					buttonStr4 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
 				var buttonStr5="";
 				for(var i = 0;i < vo.produceUserList.length; i++){
-					var u = vo.devUserList[i];
-					buttonStr5 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe()\">ဆ</i></button>";
+					var u = vo.produceUserList[i];
+					buttonStr5 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
 				
 				$(buttonStr1).appendTo("#devUserList_div");
