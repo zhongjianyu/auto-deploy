@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" exporter="Camunda Modeler" exporterVersion="1.8.2">
   <process id="it_project_develop_cycle" name="IT项目开发周期流程" isExecutable="true">
-    <userTask id="task_pro_branch" name="项目分支" activiti:candidateGroups="${branchRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_dev" name="日常开发" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_test" name="日常测试" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_prepare" name="预发环境" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_check" name="验收测试" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_produce" name="生产环境" activiti:candidateGroups="${developRoleId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_pro_branch" name="项目分支" activiti:candidateGroups="${branchUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_dev" name="日常开发" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_test" name="日常测试" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_prepare" name="预发环境" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_check" name="验收测试" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_produce" name="生产环境" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
     <startEvent id="Develop_start"></startEvent>
     <sequenceFlow id="flow21" sourceRef="Develop_start" targetRef="task_pro_branch"></sequenceFlow>
     <sequenceFlow id="SequenceFlow_06sxc0t" sourceRef="task_pro_branch" targetRef="task_dev"></sequenceFlow>
@@ -93,10 +93,10 @@
     <sequenceFlow id="flow25" sourceRef="ExclusiveGateway_0w1hd23" targetRef="EndEvent_1w5ynzz">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${target == "finish"}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask1" name="日常测试审批" activiti:candidateGroups="${testRoleId}"></userTask>
-    <userTask id="usertask2" name="验收测试审批" activiti:candidateGroups="${checkRoleId}"></userTask>
-    <userTask id="usertask3" name="生产环境审批" activiti:candidateGroups="${produceRoleId}"></userTask>
-    <userTask id="usertask4" name="预发环境审批" activiti:candidateGroups="${prepareRoleId}"></userTask>
+    <userTask id="usertask1" name="日常测试审批" activiti:candidateGroups="${testUserId}"></userTask>
+    <userTask id="usertask2" name="验收测试审批" activiti:candidateGroups="${checkUserId}"></userTask>
+    <userTask id="usertask3" name="生产环境审批" activiti:candidateGroups="${produceUserId}"></userTask>
+    <userTask id="usertask4" name="预发环境审批" activiti:candidateGroups="${prepareUserId}"></userTask>
     <sequenceFlow id="flow26" sourceRef="usertask1" targetRef="ExclusiveGateway_0w1hd23"></sequenceFlow>
     <sequenceFlow id="flow27" sourceRef="usertask2" targetRef="ExclusiveGateway_0fy6fx2"></sequenceFlow>
     <sequenceFlow id="flow28" sourceRef="usertask4" targetRef="ExclusiveGateway_0tnm8oh"></sequenceFlow>
