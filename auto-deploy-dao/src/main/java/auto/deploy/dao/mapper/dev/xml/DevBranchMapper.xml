@@ -18,11 +18,14 @@
 		<result column="project_name" property="projectName" />
 		<result column="is_deploy_success" property="isDeploySuccess" />
 		<result column="project_status" property="projectStatus" />
+		<result column="parent_branch_id" property="parentBranchId" />
+		<result column="parent_branch_name" property="parentBranchName" />
+		<result column="is_active" property="isActive" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, branch_name, project_id, project_name, is_deploy_success, project_status
+        id, create_time, last_update_time, version, is_delete, last_update_user_id, last_update_user_name, create_user_id, create_user_name, branch_name, project_id, project_name, is_deploy_success, project_status, parent_branch_id, parent_branch_name, is_active
     </sql>
 
 </mapper>

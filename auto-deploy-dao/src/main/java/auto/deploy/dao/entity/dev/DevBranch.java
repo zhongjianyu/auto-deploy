@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * 
  * @作者：zhongjy
  * 
- * @时间: 2017-06-17
+ * @时间: 2017-07-25
  */
 public class DevBranch extends Entity<DevBranch> {
 
@@ -37,6 +37,19 @@ public class DevBranch extends Entity<DevBranch> {
      * 项目状态：0-停止,1-运行,2-部署中
      */
 	private Integer projectStatus;
+    /**
+     * 父分支ID
+     */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long parentBranchId;
+    /**
+     * 父分支名称
+     */
+	private String parentBranchName;
+    /**
+     * 是否激活
+     */
+	private Integer isActive;
 
 
 	public String getBranchName() {
@@ -81,6 +94,33 @@ public class DevBranch extends Entity<DevBranch> {
 
 	public DevBranch setProjectStatus(Integer projectStatus) {
 		this.projectStatus = projectStatus;
+		return this;
+	}
+
+	public Long getParentBranchId() {
+		return parentBranchId;
+	}
+
+	public DevBranch setParentBranchId(Long parentBranchId) {
+		this.parentBranchId = parentBranchId;
+		return this;
+	}
+
+	public String getParentBranchName() {
+		return parentBranchName;
+	}
+
+	public DevBranch setParentBranchName(String parentBranchName) {
+		this.parentBranchName = parentBranchName;
+		return this;
+	}
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public DevBranch setIsActive(Integer isActive) {
+		this.isActive = isActive;
 		return this;
 	}
 

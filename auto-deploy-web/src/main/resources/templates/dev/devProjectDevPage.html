@@ -38,7 +38,8 @@
 								<tr>
 									<th style="width: 20px;"><input type="checkbox" lay-skin="primary" lay-filter="paging1_check-all"></th>
 									<th>分支名称</th>
-									<th>源项目名称</th>
+									<th>源项目</th>
+									<th>源分支</th>
 									<th>创建人</th>
 									<th>创建时间</th>
 								</tr>
@@ -278,49 +279,22 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="layui-form-item">
 				<label class="layui-form-label">源项目</label>
+					<@selectTable table="dev_project" layVerify="required" id="projectId" name="projectId" class="layui-input-block" def="" key="id" text="project_name" where="and is_active=1"/>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">源分支</label>
 				<div class="layui-input-block">
-					<input type="text" name="dictCode" id="dictCode" lay-verify="required" autocomplete="off" placeholder="字典编码" class="layui-input">
+					<select id="parentBranchId" name="parentBranchId">
+						<option value="">默认master分支</option>
+					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">字典名称</label>
+				<label class="layui-form-label">分支名称</label>
 				<div class="layui-input-block">
-					<input type="text" name="dictName" id="dictName" lay-verify="required" autocomplete="off" placeholder="字典名称" class="layui-input">
+					<input type="text" name="branchName" id="branchName" lay-verify="required" autocomplete="off" placeholder="分支名称" class="layui-input">
 				</div>
 			</div>
-			<fieldset class="layui-elem-field" style="padding: 10px;" id="add-fieldset">
-				<legend>字典值</legend>
-				<div class="add-dict-key-value">
-					<div class="layui-form-item layui-input-inline">
-						<label class="layui-form-label">字典key</label>
-						<div class="layui-input-block">
-							<input type="text" name="dictKey1" id="dictKey1" lay-verify="required" autocomplete="off" placeholder="字典key" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item layui-input-inline">
-						<label class="layui-form-label">字典value</label>
-						<div class="layui-input-block">
-							<input type="text" name="dictValue1" id="dictValue1" lay-verify="required" autocomplete="off" placeholder="字典value" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item layui-input-inline">
-						<label class="layui-form-label">是否激活</label>
-						<div class="layui-input-block">
-							<select name="isActive1" id="isActive1">
-								<option value="">请选择</option>
-								<option value="1">激活</option>
-								<option value="0">冻结</option>
-							</select>
-						</div>
-					</div>
-					<div class="layui-form-item layui-input-inline">
-						<span><@a code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate(1,this)" text="删除"/></span> <span><@a
-							code="" href="javascript:void(0)" class="layui-btn layui-btn-primary" id="" onclick="operate(2,this)" text="新增"/></span>
-					</div>
-				</div>
-			</fieldset>
-
-
 			<div class="layui-input-block" style="margin-top: 15px;">
 				<a href="javascript:void(0)" class="layui-btn layui-btn-primary" onclick="layer.closeAll();"><i class="fa fa-backward"></i> 返回</a>
 				<div style="float: right;">
@@ -444,13 +418,28 @@
 			pform.verify();
 			//监听新增提交
 			pform.on('submit(form-add-submit)', function(data) {
-				tool.post("../sysDataDict/add", $("#add-object-form").serialize(), postCallBack, false);
+				tool.post("../devBranch/add", $("#add-object-form").serialize(), postCallBack, false);
 				return false;
 			});
 			//监听新增提交
 			pform.on('submit(form-update-submit)', function(data) {
 				tool.post("../sysDataDict/update", $("#update-object-form").serialize(), postCallBack, false);
 				return false;
+			});
+			//添加项目下拉监听事件
+			pform.on('select(projectId)', function(data){
+				//根据项目获取项目分支getListByProjectId
+				var optionStr = "<option value=\"\">默认master分支</option>";
+				var param = new Object();
+				param._csrf = $("#_csrf").val();
+				param.projectId = data.value;
+				console.log(param);
+				tool.post("../devBranch/getListByProjectId", param, function(list) {
+					for (var i = 0; i < list.length; i++) {
+						optionStr += "<option value=\""+list[i].id+"\">"+list[i].branchName+"</option>";
+					}
+				}, false); 
+				$("#parentBranchId").append(optionStr);
 			});
 			//隐藏不需要展示的内容div
 			var contentIdArray = new Array()

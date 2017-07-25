@@ -1,5 +1,8 @@
 package auto.deploy.web.controller.dev;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.dev.DevBranch;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
@@ -29,7 +33,7 @@ import auto.deploy.web.controller.BaseController;
 public class DevBranchController extends BaseController {
 	@Resource
 	private DevBranchService devBranchService;
-	
+
 	/**
 	 * 
 	 * @描述：项目分支表(页面).
@@ -41,11 +45,11 @@ public class DevBranchController extends BaseController {
 	 * @时间：2017-06-17
 	 */
 	@RequestMapping("/devBranchPage")
-	public String devBranchPage(HttpServletRequest request,HttpServletResponse response) {
-		
+	public String devBranchPage(HttpServletRequest request, HttpServletResponse response) {
+
 		return "dev/devBranchPage";
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目分支表(分页列表).
@@ -67,7 +71,6 @@ public class DevBranchController extends BaseController {
 		}
 		return page;
 	}
-	
 
 	/**
 	 * 
@@ -86,12 +89,12 @@ public class DevBranchController extends BaseController {
 
 		// obj.set...
 
-		devBranchService.insert(obj);
+		devBranchService.add(obj);
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目分支表(根据ID删除对象).
@@ -113,7 +116,7 @@ public class DevBranchController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-	
+
 	/**
 	 * 
 	 * @描述：项目分支表(根据ID修改对象).
@@ -137,7 +140,7 @@ public class DevBranchController extends BaseController {
 		retMsg.setMessage("操作成功");
 		return retMsg;
 	}
-    
+
 	/**
 	 * 
 	 * @描述：项目分支表(根据ID获取对象).
@@ -152,6 +155,31 @@ public class DevBranchController extends BaseController {
 	@ResponseBody
 	public DevBranch getById(HttpServletRequest request, HttpServletResponse response, DevBranch obj) {
 		return devBranchService.selectById(obj.getId());
+	}
+
+	/**
+	 * 
+	 * @描述：获取项目分支
+	 *
+	 * @返回：List<DevBranch>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月25日 下午9:24:18
+	 */
+	@RequestMapping("/getListByProjectId")
+	@ResponseBody
+	public List<DevBranch> getListByProjectId(HttpServletRequest request, HttpServletResponse response, DevBranch obj) {
+		List<DevBranch> list = new ArrayList<DevBranch>();
+		try {
+			Where<DevBranch> where = new Where<DevBranch>();
+			where.eq("is_active", 1);
+			where.eq("project_id", obj.getProjectId());
+			list = devBranchService.selectList(where);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

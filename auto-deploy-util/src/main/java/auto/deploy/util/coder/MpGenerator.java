@@ -26,7 +26,7 @@ public class MpGenerator {
 		// 模块名
 		String moduleName = "dev";
 		// 表名
-		String[] tableName = new String[] {"dev_project_actor"};
+		String[] tableName = new String[] {"dev_branch"};
 		// String[] tableName = new String[] { "aut_user" };
 		AutoGenerator mpg = new AutoGenerator();
 		// 全局配置

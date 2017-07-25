@@ -26,4 +26,16 @@ public interface DevBranchService extends IService<DevBranch> {
 	 * @时间：2017-06-17
 	 */
 	public Page<DevBranch> list(PageBean pageBean, DevBranch obj) throws Exception;
-	}
+
+	/**
+	 * 
+	 * @描述：新建分支
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月25日 下午10:00:03
+	 */
+	public void add(DevBranch obj);
+}
