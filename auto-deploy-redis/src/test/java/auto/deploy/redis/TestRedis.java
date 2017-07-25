@@ -35,11 +35,11 @@ public class TestRedis {
 		// System.out.println(stringRedisTemplate.opsForValue().get("aaa"));
 
 		AutUser user1 = new AutUser();
-		user1.setUserName("�й���");
+		user1.setUserName("admin1");
 		AutUser user2 = new AutUser();
-		user2.setUserName("������");
+		user2.setUserName("admin2");
 		AutUser user3 = new AutUser();
-		user3.setUserName("������");
+		user3.setUserName("admin3");
 		List<AutUser> userList = new ArrayList<AutUser>();
 		userList.add(user1);
 		userList.add(user2);
