@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,9 +27,16 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
-	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+			throws IOException, ServletException {
+		String message = "";
+		if (exception instanceof SessionAuthenticationException) {
+			message = "当前用户已在其他地方登录";
+		} else {
+			message = exception.getMessage();
+		}
 		// 保存错误信息
-		request.getSession().setAttribute("SPRING_SECURITY_LAST_EXCEPTION", exception.getMessage());
+		request.getSession().setAttribute("SPRING_SECURITY_LAST_EXCEPTION", message);
 		String targetUrl = "/login.html";
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}

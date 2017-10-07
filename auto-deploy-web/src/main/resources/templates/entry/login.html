@@ -85,6 +85,10 @@ canvas {
 			}
 			return true;
 		});
+		
+		if(parent.length > 0){
+			parent.location.reload();
+		}
 	});
 	function createCode() {
 		var random = Math.random();

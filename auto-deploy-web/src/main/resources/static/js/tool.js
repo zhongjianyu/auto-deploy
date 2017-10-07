@@ -115,6 +115,18 @@ var tool = {
 		});
 	},
 	/**
+	 * 失败提示(点击确定增加回调执行函数)
+	 */
+	error2 : function(message,callBackFunction_) {
+		layer.alert(message, {
+			title : "操作提示",
+			icon : 2
+		}, function(index) {
+			layer.close(index);
+			callBackFunction_()
+		});
+	},
+	/**
 	 * 根据ID获取对象
 	 */
 	getById : function(url, id) {

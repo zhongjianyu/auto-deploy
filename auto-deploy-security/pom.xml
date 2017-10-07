@@ -49,6 +49,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- auto-deploy websocket -->
+		<dependency>
+			<groupId>auto-deploy</groupId>
+			<artifactId>auto-deploy-websocket</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>

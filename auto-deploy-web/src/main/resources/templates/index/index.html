@@ -176,8 +176,14 @@
 	function topicCallback(d) {
 
 	}
-	function point2pointCallback(d) {
-		console.log(d.message);
+	function point2pointCallback(webSocketMsg) {
+		if(webSocketMsg.code == 1){
+			//重复登录提示
+			tool.error2(webSocketMsg.object,function(){
+				//刷新页面
+				 window.location.reload();
+			});
+		}
 	}
 </script>
 </html>
