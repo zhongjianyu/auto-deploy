@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import auto.deploy.config.CasConfig;
 import auto.deploy.config.DatabaseBiz001Config;
 import auto.deploy.config.DatabaseDefaultConfig;
 import auto.deploy.config.TaskThreadPoolConfig;
@@ -31,7 +32,7 @@ import auto.deploy.web.event.ReadyEvent;
 // 异步线程
 @EnableAsync
 // 开启配置属性支持
-@EnableConfigurationProperties({ TaskThreadPoolConfig.class, DatabaseDefaultConfig.class, DatabaseBiz001Config.class })
+@EnableConfigurationProperties({ TaskThreadPoolConfig.class, DatabaseDefaultConfig.class, DatabaseBiz001Config.class, CasConfig.class })
 public class Main {
 	/**
 	 * 

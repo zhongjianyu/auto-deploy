@@ -55,6 +55,11 @@
 			<artifactId>auto-deploy-websocket</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- security 对CAS支持 -->  
+        <dependency>  
+            <groupId>org.springframework.security</groupId>  
+            <artifactId>spring-security-cas</artifactId>  
+        </dependency> 
 	</dependencies>
 
 </project>

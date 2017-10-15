@@ -16,3 +16,7 @@ kill -s 9 线程号
 
 部署打包：mvn clean package -Dmaven.test.skip=true
 
+单点登录切换：替换一下两个类(改成相同名称)
+SecurityConfig.backup->SecurityConfig.java
+CustomUserDetailsService.backup->CustomUserDetailsService.java
+
