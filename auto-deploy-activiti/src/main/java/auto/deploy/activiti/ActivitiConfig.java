@@ -12,8 +12,10 @@ import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import auto.deploy.dao.config.DynamicDataSource;
 
@@ -33,14 +35,25 @@ public class ActivitiConfig {
 	 */
 	@Resource
 	private DynamicDataSource dataSource;
+	/**
+	 * 事务管理器
+	 */
+	@Resource
+	private DataSourceTransactionManager dataSourceTransactionManager;
 
 	@Bean
 	public ProcessEngine getProcessEngine() {
 		/**
 		 * 获取流程引擎配置
 		 */
-		ProcessEngineConfiguration pec = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+		//ProcessEngineConfiguration pec = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+		SpringProcessEngineConfiguration pec = new SpringProcessEngineConfiguration();
 		pec.setDataSource(dataSource);
+
+		/**
+		 * 设置事务管理器(使用spring事务管理器)
+		 */
+		pec.setTransactionManager(dataSourceTransactionManager);
 		/**
 		 * 配置驱动
 		 */
@@ -62,6 +75,12 @@ public class ActivitiConfig {
 		 * 配置模式 true 自动创建和更新表
 		 */
 		pec.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+
+		/**
+		 * 流程图片乱码问题
+		 */
+		pec.setActivityFontName("宋体");
+		pec.setLabelFontName("宋体");
 
 		/**
 		 * 获取流程引擎对象
