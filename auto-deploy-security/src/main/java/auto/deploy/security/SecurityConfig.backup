@@ -25,7 +25,7 @@ import auto.deploy.websocket.service.WebSocketService;
 
 /**
  * 
- * @描述：security配置
+ * @描述：security配置(cas单点登录)
  *
  * @作者：zhongjy
  *
