@@ -89,4 +89,16 @@ public interface GitlabService {
 	 */
 	public void delGroup(DevProjectGroup devProjectGroup) throws Exception;
 
+	/**
+	 * 
+	 * @描述：新建分支
+	 *
+	 * @返回：GitlabProject
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年7月8日 下午3:22:33
+	 */
+	public void addBranch(Integer projectId, String targetBranch, String sourceBranch) throws Exception;
+
 }

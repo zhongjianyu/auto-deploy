@@ -86,12 +86,23 @@ public class DevBranchController extends BaseController {
 	@ResponseBody
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, DevBranch obj) {
 		RetMsg retMsg = new RetMsg();
-
-		// obj.set...
-
-		devBranchService.add(obj);
-		retMsg.setCode(0);
-		retMsg.setMessage("操作成功");
+		try {
+			//检查分支名称是否存在
+			Where<DevBranch> branchWhere = new Where<DevBranch>();
+			branchWhere.eq("branch_name", obj.getBranchName());
+			if(devBranchService.selectCount(branchWhere) > 0){
+				retMsg.setCode(1);
+				retMsg.setMessage("分支名称已存在");
+			}else{
+				devBranchService.add(obj);
+				retMsg.setCode(0);
+				retMsg.setMessage("操作成功");
+			}
+		} catch (Exception e) {
+			retMsg.setCode(1);
+			retMsg.setMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		return retMsg;
 	}
 

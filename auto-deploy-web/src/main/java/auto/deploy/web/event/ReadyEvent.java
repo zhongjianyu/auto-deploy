@@ -21,7 +21,9 @@ public class ReadyEvent implements ApplicationListener<ApplicationReadyEvent> {
 	public void onApplicationEvent(ApplicationReadyEvent e) {
 		logger.info("\n项目启动完毕[事件]：ReadyEvent");
 		// 项目启动(部署)成功，刚刚项目启动(部署)状态
-		// System.out.println(e.getApplicationContext().getBean(UserService.class));
+		// ActivitiService activitiService =
+		// e.getApplicationContext().getBean(ActivitiService.class);
+		// activitiService.doDeploy("ItProjectDevelop");
 	}
 
 }

@@ -273,7 +273,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 新增对象窗口 -->
+	<!-- 新建分支 -->
 	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-add-object">
 		<form class="layui-form layui-form-pane" id="add-object-form">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -439,6 +439,7 @@
 						optionStr += "<option value=\""+list[i].id+"\">"+list[i].branchName+"</option>";
 					}
 				}, false); 
+				$("#parentBranchId").empty();
 				$("#parentBranchId").append(optionStr);
 			});
 			//隐藏不需要展示的内容div

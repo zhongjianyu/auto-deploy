@@ -176,6 +176,7 @@ public class GitlabFactoryTest {
 			System.out.println("项目ID：" + gitlabProject.getId());
 			System.out.println("创建者：" + api.getUser(gitlabProject.getCreatorId()).getUsername());
 			System.out.println("项目名称：" + gitlabProject.getName() + "，SSH地址：" + gitlabProject.getSshUrl() + "，描述：" + gitlabProject.getDescription());
+			System.out.println(gitlabProject.getDefaultBranch());
 		}
 		System.out.println("---------------------------");
 		List<GitlabProject> projectList2 = api.getOwnedProjects();

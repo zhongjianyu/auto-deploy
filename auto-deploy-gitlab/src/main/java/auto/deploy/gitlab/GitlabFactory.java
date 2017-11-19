@@ -41,6 +41,7 @@ public class GitlabFactory {
 			api = GitlabAPI.connect(env.getProperty("gitlab.url"), privateToken);
 		} catch (IOException e) {
 			api = e;
+			e.printStackTrace();
 		}
 	}
 

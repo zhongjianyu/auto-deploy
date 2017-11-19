@@ -1,5 +1,6 @@
 package auto.deploy.gitlab.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.gitlab.api.models.GitlabProject;
 import org.gitlab.api.models.GitlabUser;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import auto.deploy.dao.entity.aut.AutUser;
 import auto.deploy.dao.entity.dev.DevProject;
@@ -111,6 +113,12 @@ public class GitlabServiceImpl implements GitlabService {
 	public void delGroup(DevProjectGroup devProjectGroup) throws Exception {
 		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
 		api.deleteGroup(devProjectGroup.getGitlabGroupId());
+	}
+
+	@Override
+	public void addBranch(Integer projectId, String targetBranch, String sourceBranch) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		api.createBranch(projectId, targetBranch, sourceBranch);
 	}
 
 }

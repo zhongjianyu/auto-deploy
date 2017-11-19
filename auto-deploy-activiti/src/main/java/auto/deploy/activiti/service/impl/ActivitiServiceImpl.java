@@ -1,5 +1,7 @@
 package auto.deploy.activiti.service.impl;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.activiti.engine.DynamicBpmnService;
@@ -12,6 +14,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Service;
 
 import auto.deploy.activiti.service.ActivitiService;
@@ -74,6 +77,23 @@ public class ActivitiServiceImpl implements ActivitiService {
 	@Override
 	public void delUserGroup(Long userId, Long groupId) {
 		identityService.deleteMembership(userId.toString(), groupId.toString());
+	}
+
+	@Override
+	public void doDeploy(String fileName) {
+		repositoryService.createDeployment().addClasspathResource("diagram/" + fileName + ".bpmn")
+				.addClasspathResource("diagram/" + fileName + ".png").deploy();
+	}
+
+	@Override
+	public void doNext(Map<String, Object> variables, String taskId) {
+		taskService.complete(taskId, variables);
+	}
+
+	@Override
+	public ProcessInstance startProcess(String processId) {
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processId);
+		return processInstance;
 	}
 
 }

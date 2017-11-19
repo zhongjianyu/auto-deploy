@@ -28,16 +28,15 @@
 			<artifactId>auto-deploy-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- java-gitlab-api -->
-		<dependency>
-			<groupId>org.gitlab</groupId>
-			<artifactId>java-gitlab-api</artifactId>
-		</dependency>
 		<!-- auto-deploy util -->
 		<dependency>
 			<groupId>auto-deploy</groupId>
 			<artifactId>auto-deploy-util</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

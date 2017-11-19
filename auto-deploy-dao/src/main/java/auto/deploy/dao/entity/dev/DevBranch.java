@@ -30,7 +30,7 @@ public class DevBranch extends Entity<DevBranch> {
      */
 	private String projectName;
     /**
-     * 是否部署成功：1-成功,1-失败
+     * 是否部署成功：1-成功,0-失败
      */
 	private Integer isDeploySuccess;
     /**
