@@ -43,6 +43,7 @@ import org.gitlab.api.models.GitlabRepositoryTree;
 import org.gitlab.api.models.GitlabSSHKey;
 import org.gitlab.api.models.GitlabServiceEmailOnPush;
 import org.gitlab.api.models.GitlabSession;
+import org.gitlab.api.models.GitlabSimpleRepositoryFile;
 import org.gitlab.api.models.GitlabSystemHook;
 import org.gitlab.api.models.GitlabTag;
 import org.gitlab.api.models.GitlabTrigger;
@@ -2609,5 +2610,37 @@ public class GitlabAPI {
 
     public GitlabVersion getVersion() throws IOException {
         return retrieve().to("version",GitlabVersion.class);
+    }
+    
+    /**
+     * Creates a new file in the repository
+     *
+     * @param project The Project
+     * @param path The file path inside the repository
+     * @param branchName The name of a repository branch
+     * @param commitMsg The commit message
+     * @param content The base64 encoded content of the file
+     * @throws IOException on gitlab api call error
+     */
+    public GitlabSimpleRepositoryFile createRepositoryFile(GitlabProject project, String path, String branchName, String commitMsg, String content) throws IOException {
+        String tailUrl = GitlabProject.URL + "/" + project.getId() + "/repository/files";
+        GitlabHTTPRequestor requestor = dispatch();
+
+        return requestor
+        	.with("file_path", sanitizePath(path))
+            .with("branch_name", branchName)
+            .with("encoding", "base64")
+            .with("commit_message", commitMsg)
+            .with("content", content)
+            
+            .to(tailUrl, GitlabSimpleRepositoryFile.class);
+    }
+    
+    private String sanitizePath(String branch){
+        try {
+            return URLEncoder.encode(branch, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException((e));
+        }
     }
 }

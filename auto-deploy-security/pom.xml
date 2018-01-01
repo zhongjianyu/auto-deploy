@@ -55,11 +55,25 @@
 			<artifactId>auto-deploy-websocket</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- security 对CAS支持 -->  
-        <dependency>  
-            <groupId>org.springframework.security</groupId>  
-            <artifactId>spring-security-cas</artifactId>  
-        </dependency> 
+		<!-- security 对CAS支持 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<!-- JDK版本配置 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${org.apache.maven.plugins.compiler.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
