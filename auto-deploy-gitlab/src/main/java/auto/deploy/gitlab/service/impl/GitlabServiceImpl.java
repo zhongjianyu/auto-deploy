@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.gitlab.api.GitlabAPI;
+import org.gitlab.api.models.GitlabBranch;
 import org.gitlab.api.models.GitlabGroup;
 import org.gitlab.api.models.GitlabProject;
 import org.gitlab.api.models.GitlabUser;
@@ -117,6 +118,12 @@ public class GitlabServiceImpl implements GitlabService {
 	public void addBranch(Integer projectId, String targetBranch, String sourceBranch) throws Exception {
 		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
 		api.createBranch(projectId, targetBranch, sourceBranch);
+	}
+	
+	@Override
+	public List<GitlabBranch> getProjectBranchList(Integer projectId) throws Exception {
+		GitlabAPI api = GitlabFactory.getInstance(environment).getApi();
+		return api.getBranches(projectId);
 	}
 
 }

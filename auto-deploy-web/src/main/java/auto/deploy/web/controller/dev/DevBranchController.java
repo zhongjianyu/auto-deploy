@@ -17,6 +17,7 @@ import auto.deploy.dao.config.Where;
 import auto.deploy.dao.entity.dev.DevBranch;
 import auto.deploy.object.PageBean;
 import auto.deploy.object.RetMsg;
+import auto.deploy.security.CustomUser;
 import auto.deploy.service.dev.DevBranchService;
 import auto.deploy.web.controller.BaseController;
 
@@ -87,14 +88,15 @@ public class DevBranchController extends BaseController {
 	public RetMsg add(HttpServletRequest request, HttpServletResponse response, DevBranch obj) {
 		RetMsg retMsg = new RetMsg();
 		try {
-			//检查分支名称是否存在
+			// 检查分支名称是否存在
 			Where<DevBranch> branchWhere = new Where<DevBranch>();
 			branchWhere.eq("branch_name", obj.getBranchName());
-			if(devBranchService.selectCount(branchWhere) > 0){
+			if (devBranchService.selectCount(branchWhere) > 0) {
 				retMsg.setCode(1);
 				retMsg.setMessage("分支名称已存在");
-			}else{
-				devBranchService.add(obj);
+			} else {
+				CustomUser cuser = getCustomDetail();
+				devBranchService.add(obj, cuser.getUserId());
 				retMsg.setCode(0);
 				retMsg.setMessage("操作成功");
 			}

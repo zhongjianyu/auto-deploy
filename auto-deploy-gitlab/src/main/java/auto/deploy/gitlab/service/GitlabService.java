@@ -1,5 +1,8 @@
 package auto.deploy.gitlab.service;
 
+import java.util.List;
+
+import org.gitlab.api.models.GitlabBranch;
 import org.gitlab.api.models.GitlabGroup;
 import org.gitlab.api.models.GitlabProject;
 
@@ -100,5 +103,17 @@ public interface GitlabService {
 	 * @时间：2017年7月8日 下午3:22:33
 	 */
 	public void addBranch(Integer projectId, String targetBranch, String sourceBranch) throws Exception;
+
+	/**
+	 * 
+	 * @描述：获取项目的分支列表
+	 *
+	 * @返回：List<GitlabBranch>
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2018年1月6日 下午2:47:03
+	 */
+	List<GitlabBranch> getProjectBranchList(Integer projectId) throws Exception;
 
 }

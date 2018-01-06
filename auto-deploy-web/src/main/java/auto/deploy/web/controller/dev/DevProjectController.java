@@ -96,7 +96,7 @@ public class DevProjectController extends BaseController {
 			} else {
 				devProjectService.add(obj);
 				retMsg.setCode(0);
-				retMsg.setMessage("操作成功");
+				retMsg.setMessage("操作成功,请在gitlab上 手工添加初始master分支");
 			}
 		} catch (Exception e) {
 			retMsg.setCode(1);
@@ -193,10 +193,16 @@ public class DevProjectController extends BaseController {
 		String prepareUserIds = request.getParameter("prepareUserIds");
 		String produceUserIds = request.getParameter("produceUserIds");
 
+		String testApprovalUserIds = request.getParameter("testApprovalUserIds");
+		String checkApprovalUserIds = request.getParameter("checkApprovalUserIds");
+		String prepareApprovalUserIds = request.getParameter("prepareApprovalUserIds");
+		String produceApprovalUserIds = request.getParameter("produceApprovalUserIds");
+
 		RetMsg retMsg = new RetMsg();
 		try {
 			// 检查项目是否已经存在
-			retMsg = devProjectService.setActor(obj, devUserIds, testUserIds, checkUserIds, prepareUserIds, produceUserIds);
+			retMsg = devProjectService.setActor(obj, devUserIds, testUserIds, checkUserIds, prepareUserIds, produceUserIds, testApprovalUserIds,
+					checkApprovalUserIds, prepareApprovalUserIds, produceApprovalUserIds);
 		} catch (Exception e) {
 			retMsg.setCode(1);
 			retMsg.setMessage(e.getMessage());

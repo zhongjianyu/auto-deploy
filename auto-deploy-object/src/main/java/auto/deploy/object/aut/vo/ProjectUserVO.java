@@ -29,14 +29,31 @@ public final class ProjectUserVO {
 	private List<AutUser> checkUserList;
 
 	/**
-	 * 预发审批
+	 * 预发环境
 	 */
 	private List<AutUser> prepareUserList;
 
 	/**
-	 * 生产审批
+	 * 生产环境
 	 */
 	private List<AutUser> produceUserList;
+
+	/**
+	 * 测试审批
+	 */
+	private List<AutUser> testApprovalUserList;
+	/**
+	 * 验收审批
+	 */
+	private List<AutUser> checkApprovalUserList;
+	/**
+	 * 预发审批
+	 */
+	private List<AutUser> prepareApprovalUserList;
+	/**
+	 * 生产审批
+	 */
+	private List<AutUser> produceApprovalUserList;
 
 	public List<AutUser> getDevUserList() {
 		return devUserList;
@@ -76,6 +93,38 @@ public final class ProjectUserVO {
 
 	public void setProduceUserList(List<AutUser> produceUserList) {
 		this.produceUserList = produceUserList;
+	}
+
+	public List<AutUser> getTestApprovalUserList() {
+		return testApprovalUserList;
+	}
+
+	public void setTestApprovalUserList(List<AutUser> testApprovalUserList) {
+		this.testApprovalUserList = testApprovalUserList;
+	}
+
+	public List<AutUser> getCheckApprovalUserList() {
+		return checkApprovalUserList;
+	}
+
+	public void setCheckApprovalUserList(List<AutUser> checkApprovalUserList) {
+		this.checkApprovalUserList = checkApprovalUserList;
+	}
+
+	public List<AutUser> getPrepareApprovalUserList() {
+		return prepareApprovalUserList;
+	}
+
+	public void setPrepareApprovalUserList(List<AutUser> prepareApprovalUserList) {
+		this.prepareApprovalUserList = prepareApprovalUserList;
+	}
+
+	public List<AutUser> getProduceApprovalUserList() {
+		return produceApprovalUserList;
+	}
+
+	public void setProduceApprovalUserList(List<AutUser> produceApprovalUserList) {
+		this.produceApprovalUserList = produceApprovalUserList;
 	}
 
 }

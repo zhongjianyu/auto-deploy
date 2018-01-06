@@ -56,6 +56,12 @@ public class DevProjectActorServiceImpl extends ServiceImpl<DevProjectActorMappe
 		List<AutUser> checkUserList = new ArrayList<AutUser>();
 		List<AutUser> prepareUserList = new ArrayList<AutUser>();
 		List<AutUser> produceUserList = new ArrayList<AutUser>();
+
+		List<AutUser> testApprovalUserList = new ArrayList<AutUser>();
+		List<AutUser> checkApprovalUserList = new ArrayList<AutUser>();
+		List<AutUser> prepareApprovalUserList = new ArrayList<AutUser>();
+		List<AutUser> produceApprovalUserList = new ArrayList<AutUser>();
+
 		for (DevProjectActor devProjectActor : list) {
 			if (devProjectActor.getProjectStage().intValue() == 1) {
 				devUserList.add(autUserService.selectById(devProjectActor.getUserId()));
@@ -67,6 +73,14 @@ public class DevProjectActorServiceImpl extends ServiceImpl<DevProjectActorMappe
 				prepareUserList.add(autUserService.selectById(devProjectActor.getUserId()));
 			} else if (devProjectActor.getProjectStage().intValue() == 5) {
 				produceUserList.add(autUserService.selectById(devProjectActor.getUserId()));
+			} else if (devProjectActor.getProjectStage().intValue() == 6) {
+				testApprovalUserList.add(autUserService.selectById(devProjectActor.getUserId()));
+			} else if (devProjectActor.getProjectStage().intValue() == 7) {
+				checkApprovalUserList.add(autUserService.selectById(devProjectActor.getUserId()));
+			} else if (devProjectActor.getProjectStage().intValue() == 8) {
+				prepareApprovalUserList.add(autUserService.selectById(devProjectActor.getUserId()));
+			} else if (devProjectActor.getProjectStage().intValue() == 9) {
+				produceApprovalUserList.add(autUserService.selectById(devProjectActor.getUserId()));
 			}
 		}
 		vo.setDevUserList(devUserList);
@@ -74,6 +88,10 @@ public class DevProjectActorServiceImpl extends ServiceImpl<DevProjectActorMappe
 		vo.setCheckUserList(checkUserList);
 		vo.setPrepareUserList(prepareUserList);
 		vo.setProduceUserList(produceUserList);
+		vo.setTestApprovalUserList(testApprovalUserList);
+		vo.setCheckApprovalUserList(checkApprovalUserList);
+		vo.setPrepareApprovalUserList(prepareApprovalUserList);
+		vo.setProduceApprovalUserList(produceApprovalUserList);
 		return vo;
 	}
 }

@@ -37,5 +37,5 @@ public interface DevBranchService extends IService<DevBranch> {
 	 *
 	 * @时间：2017年7月25日 下午10:00:03
 	 */
-	public void add(DevBranch obj) throws Exception;
+	public void add(DevBranch obj, Long userId) throws Exception;
 }

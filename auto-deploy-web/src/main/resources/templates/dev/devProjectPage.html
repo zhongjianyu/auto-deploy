@@ -85,7 +85,8 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">项目分组</label>
-				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id" text="group_name" where="and is_active=1"/>
+				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id"
+				text="group_name" where="and is_active=1"/>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
@@ -124,7 +125,8 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">项目分组</label>
-				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id" text="group_name" where="and is_active=1"/>
+				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id"
+				text="group_name" where="and is_active=1"/>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
@@ -162,7 +164,8 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">项目分组</label>
-				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id" text="group_name" where="and is_active=1"/>
+				<@selectTable table="dev_project_group" layVerify="required" id="groupId" name="groupId" class="layui-input-block" def="" key="id"
+				text="group_name" where="and is_active=1"/>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">SSH地址</label>
@@ -179,10 +182,11 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">gitlab项目ID</label>
 				<div class="layui-input-block">
-					<input type="text" name="gitlabProjectId" id="gitlabProjectId" lay-verify="required" autocomplete="off" placeholder="gitlab项目ID" class="layui-input">
+					<input type="text" name="gitlabProjectId" id="gitlabProjectId" lay-verify="required" autocomplete="off" placeholder="gitlab项目ID"
+						class="layui-input">
 				</div>
 			</div>
-			
+
 			<div class="layui-form-item">
 				<label class="layui-form-label">是否激活</label>
 				<@select dict="IS_ACTIVE" layVerify="required" id="isActive" name="isActive" class="layui-input-block" def=""/>
@@ -245,7 +249,7 @@
 			<div id="paging2-footer" class="page" style="background-color: white; text-align: center;"></div>
 		</div>
 	</div>
-	
+
 	<!-- 人员配置窗口 -->
 	<div style="padding: 10px; display: none; padding-right: 40px; z-index: 19940200;" id="win-setting-object">
 		<form class="layui-form layui-form-pane" id="setting-object-form">
@@ -254,36 +258,73 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">开发人员</label>
 				<div class="layui-input-block">
-					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="devUserId" name="devUserId" key="id" text="nick_name" where="and is_active=1"/>
-					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="devUserList_div"></div>
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="devUserId" name="devUserId" key="id" text="nick_name" where="and
+					is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="devUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" style="color: red;">测试审批</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="testApprovalUserId" name="testApprovalUserId" key="id" text="nick_name"
+					where="and is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="testApprovalUserList_div"></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">开发测试</label>
 				<div class="layui-input-block">
-					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="testUserId" name="testUserId" key="id" text="nick_name" where="and is_active=1"/>
-					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="testUserList_div"></div>
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="testUserId" name="testUserId" key="id" text="nick_name" where="and
+					is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="testUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" style="color: red;">验收审批</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="checkApprovalUserId" name="checkApprovalUserId" key="id" text="nick_name"
+					where="and is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="checkApprovalUserList_div"></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">验收测试</label>
 				<div class="layui-input-block">
-					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="checkUserId" name="checkUserId" key="id" text="nick_name" where="and is_active=1"/>
-					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="checkUserList_div"></div>
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="checkUserId" name="checkUserId" key="id" text="nick_name" where="and
+					is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="checkUserList_div"></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">预发审批</label>
+				<label class="layui-form-label" style="color: red;">预发审批</label>
 				<div class="layui-input-block">
-					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="prepareUserId" name="prepareUserId" key="id" text="nick_name" where="and is_active=1"/>
-					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="prepareUserList_div"></div>
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="prepareApprovalUserId" name="prepareApprovalUserId" key="id"
+					text="nick_name" where="and is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="prepareApprovalUserList_div"></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">生产审批</label>
+				<label class="layui-form-label">预发环境</label>
 				<div class="layui-input-block">
-					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="produceUserId" name="produceUserId" key="id" text="nick_name" where="and is_active=1"/>
-					<div style="border:1px solid #e6e6e6;border-top-width: 0px;" id="produceUserList_div"></div>
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="prepareUserId" name="prepareUserId" key="id" text="nick_name" where="and
+					is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="prepareUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label" style="color: red;">生产审批</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="produceApprovalUserId" name="produceApprovalUserId" key="id"
+					text="nick_name" where="and is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="produceApprovalUserList_div"></div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">生产环境</label>
+				<div class="layui-input-block">
+					<@selectTable isSearch="1" layFilter="dev-user" table="aut_user" id="produceUserId" name="produceUserId" key="id" text="nick_name" where="and
+					is_active=1"/>
+					<div style="border: 1px solid #e6e6e6; border-top-width: 0px;" id="produceUserList_div"></div>
 				</div>
 			</div>
 			<div class="layui-input-block" style="margin-top: 15px;">
@@ -335,77 +376,135 @@
 				var checkUserIds = "";
 				var prepareUserIds = "";
 				var produceUserIds = "";
-				$("#devUserList_div").find("button").each(function(){
-					devUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				var testApprovalUserIds = "";
+				var checkApprovalUserIds = "";
+				var prepareApprovalUserIds = "";
+				var produceApprovalUserIds = "";
+				$("#devUserList_div").find("button").each(function() {
+					devUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
 				});
-				$("#testUserList_div").find("button").each(function(){
-					testUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				$("#testUserList_div").find("button").each(function() {
+					testUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
 				});
-				$("#checkUserList_div").find("button").each(function(){
-					checkUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				$("#checkUserList_div").find("button").each(function() {
+					checkUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
 				});
-				$("#prepareUserList_div").find("button").each(function(){
-					prepareUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				$("#prepareUserList_div").find("button").each(function() {
+					prepareUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
 				});
-				$("#produceUserList_div").find("button").each(function(){
-					produceUserIds += $(this).attr("id").substring(2,$(this).attr("id").length)+",";
+				$("#produceUserList_div").find("button").each(function() {
+					produceUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
 				});
-				if(devUserIds != ""){
-					devUserIds = devUserIds.substring(0,devUserIds.length-1);
+				$("#testApprovalUserList_div").find("button").each(function() {
+					testApprovalUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
+				});
+				$("#checkApprovalUserList_div").find("button").each(function() {
+					checkApprovalUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
+				});
+				$("#prepareApprovalUserList_div").find("button").each(function() {
+					prepareApprovalUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
+				});
+				$("#produceApprovalUserList_div").find("button").each(function() {
+					produceApprovalUserIds += $(this).attr("id").substring(2, $(this).attr("id").length) + ",";
+				});
+
+				if (devUserIds != "") {
+					devUserIds = devUserIds.substring(0, devUserIds.length - 1);
 				}
-				if(testUserIds != ""){
-					testUserIds = testUserIds.substring(0,testUserIds.length-1);
+				if (testUserIds != "") {
+					testUserIds = testUserIds.substring(0, testUserIds.length - 1);
 				}
-				if(checkUserIds != ""){
-					checkUserIds = checkUserIds.substring(0,checkUserIds.length-1);
+				if (checkUserIds != "") {
+					checkUserIds = checkUserIds.substring(0, checkUserIds.length - 1);
 				}
-				if(prepareUserIds != ""){
-					prepareUserIds = prepareUserIds.substring(0,prepareUserIds.length-1);
+				if (prepareUserIds != "") {
+					prepareUserIds = prepareUserIds.substring(0, prepareUserIds.length - 1);
 				}
-				if(produceUserIds != ""){
-					produceUserIds = produceUserIds.substring(0,produceUserIds.length-1);
+				if (produceUserIds != "") {
+					produceUserIds = produceUserIds.substring(0, produceUserIds.length - 1);
 				}
-				param = param + "&devUserIds="+devUserIds+"&testUserIds="+testUserIds+"&checkUserIds="+checkUserIds+"&prepareUserIds="+prepareUserIds+"&produceUserIds="+produceUserIds;
+				if (testApprovalUserIds != "") {
+					testApprovalUserIds = testApprovalUserIds.substring(0, testApprovalUserIds.length - 1);
+				}
+				if (checkApprovalUserIds != "") {
+					checkApprovalUserIds = checkApprovalUserIds.substring(0, checkApprovalUserIds.length - 1);
+				}
+				if (prepareApprovalUserIds != "") {
+					prepareApprovalUserIds = prepareApprovalUserIds.substring(0, prepareApprovalUserIds.length - 1);
+				}
+				if (produceApprovalUserIds != "") {
+					produceApprovalUserIds = produceApprovalUserIds.substring(0, produceApprovalUserIds.length - 1);
+				}
+				param = param + "&devUserIds=" + devUserIds + "&testUserIds=" + testUserIds + "&checkUserIds=" + checkUserIds + "&prepareUserIds=" + prepareUserIds + "&produceUserIds=" + produceUserIds + "&testApprovalUserIds=" + testApprovalUserIds + "&checkApprovalUserIds=" + checkApprovalUserIds + "&prepareApprovalUserIds=" + prepareApprovalUserIds + "&produceApprovalUserIds=" + produceApprovalUserIds;
 				//console.log(param);
 				tool.post("../devProject/setActor", param, postCallBack, false);
 				return false;
 			});
 			//下拉框监听事件
-			pform.on('select(devUserId)', function(data){
-				 //如果不存在则增加
-				 if($("#devUserList_div").find("#u_"+data.value).length == 0){
-					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
-					 $(btnStr).appendTo("#devUserList_div");
-				 }
-				 
-			});
-			pform.on('select(testUserId)', function(data){
+			pform.on('select(devUserId)', function(data) {
 				//如果不存在则增加
-				 if($("#testUserList_div").find("#u_"+data.value).length == 0){
-					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
-					 $(btnStr).appendTo("#testUserList_div");
-				 }
+				if ($("#devUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#devUserList_div");
+				}
+
 			});
-			pform.on('select(checkUserId)', function(data){
+			pform.on('select(testUserId)', function(data) {
 				//如果不存在则增加
-				 if($("#checkUserList_div").find("#u_"+data.value).length == 0){
-					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
-					 $(btnStr).appendTo("#checkUserList_div");
-				 }
+				if ($("#testUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#testUserList_div");
+				}
 			});
-			pform.on('select(prepareUserId)', function(data){
+			pform.on('select(checkUserId)', function(data) {
 				//如果不存在则增加
-				 if($("#prepareUserList_div").find("#u_"+data.value).length == 0){
-					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
-					 $(btnStr).appendTo("#prepareUserList_div");
-				 }
+				if ($("#checkUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#checkUserList_div");
+				}
 			});
-			pform.on('select(produceUserId)', function(data){
+			pform.on('select(prepareUserId)', function(data) {
 				//如果不存在则增加
-				 if($("#produceUserList_div").find("#u_"+data.value).length == 0){
-					 var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+$(data.elem).find("option:selected").text()+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
-					 $(btnStr).appendTo("#produceUserList_div");
-				 }
+				if ($("#prepareUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#prepareUserList_div");
+				}
+			});
+			pform.on('select(produceUserId)', function(data) {
+				//如果不存在则增加
+				if ($("#produceUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#produceUserList_div");
+				}
+			});
+
+			pform.on('select(testApprovalUserId)', function(data) {
+				//如果不存在则增加
+				if ($("#testApprovalUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#testApprovalUserList_div");
+				}
+			});
+			pform.on('select(checkApprovalUserId)', function(data) {
+				//如果不存在则增加
+				if ($("#checkApprovalUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#checkApprovalUserList_div");
+				}
+			});
+			pform.on('select(prepareApprovalUserId)', function(data) {
+				//如果不存在则增加
+				if ($("#prepareApprovalUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#prepareApprovalUserList_div");
+				}
+			});
+			pform.on('select(produceApprovalUserId)', function(data) {
+				//如果不存在则增加
+				if ($("#produceApprovalUserList_div").find("#u_" + data.value).length == 0) {
+					var btnStr = "<button id=\"u_"+data.value+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + $(data.elem).find("option:selected").text() + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					$(btnStr).appendTo("#produceApprovalUserList_div");
+				}
 			});
 			//初始化出发数据加载
 			loadData();
@@ -496,7 +595,7 @@
 		//打开人员配置窗口
 		function showUserSetting(projectId) {
 			//重置
-		    $("#win-setting-object").find("button[type='reset']").trigger("click");
+			$("#win-setting-object").find("button[type='reset']").trigger("click");
 			//设置项目ID
 			$("#win-setting-object").find("#id").val(projectId);
 			//情况上次操作记录
@@ -505,44 +604,73 @@
 			$("#checkUserList_div").empty();
 			$("#prepareUserList_div").empty();
 			$("#produceUserList_div").empty();
+
+			$("#testApprovalUserList_div").empty();
+			$("#checkApprovalUserList_div").empty();
+			$("#prepareApprovalUserList_div").empty();
+			$("#produceApprovalUserList_div").empty();
 			//获取所有用户信息
-			var param = "projectId="+projectId+"&_csrf=" + $("#_csrf").val();
-			tool.post("../devProjectActor/getUserListByProjectId", param, function(vo){
-				var buttonStr1="";
-				for(var i = 0;i < vo.devUserList.length; i++){
+			var param = "projectId=" + projectId + "&_csrf=" + $("#_csrf").val();
+			tool.post("../devProjectActor/getUserListByProjectId", param, function(vo) {
+				var buttonStr1 = "";
+				for (var i = 0; i < vo.devUserList.length; i++) {
 					var u = vo.devUserList[i];
-					buttonStr1 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					buttonStr1 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
-				var buttonStr2="";
-				for(var i = 0;i < vo.testUserList.length; i++){
+				var buttonStr2 = "";
+				for (var i = 0; i < vo.testUserList.length; i++) {
 					var u = vo.testUserList[i];
-					buttonStr2 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					buttonStr2 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
-				var buttonStr3="";
-				for(var i = 0;i < vo.checkUserList.length; i++){
+				var buttonStr3 = "";
+				for (var i = 0; i < vo.checkUserList.length; i++) {
 					var u = vo.checkUserList[i];
-					buttonStr3 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					buttonStr3 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
-				var buttonStr4="";
-				for(var i = 0;i < vo.prepareUserList.length; i++){
+				var buttonStr4 = "";
+				for (var i = 0; i < vo.prepareUserList.length; i++) {
 					var u = vo.prepareUserList[i];
-					buttonStr4 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					buttonStr4 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
-				var buttonStr5="";
-				for(var i = 0;i < vo.produceUserList.length; i++){
+				var buttonStr5 = "";
+				for (var i = 0; i < vo.produceUserList.length; i++) {
 					var u = vo.produceUserList[i];
-					buttonStr5 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">"+u.nickName+"&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+					buttonStr5 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
 				}
-				
+
+				var buttonStr6 = "";
+				for (var i = 0; i < vo.testApprovalUserList.length; i++) {
+					var u = vo.testApprovalUserList[i];
+					buttonStr6 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+				}
+				var buttonStr7 = "";
+				for (var i = 0; i < vo.checkApprovalUserList.length; i++) {
+					var u = vo.checkApprovalUserList[i];
+					buttonStr7 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+				}
+				var buttonStr8 = "";
+				for (var i = 0; i < vo.prepareApprovalUserList.length; i++) {
+					var u = vo.prepareApprovalUserList[i];
+					buttonStr8 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+				}
+				var buttonStr9 = "";
+				for (var i = 0; i < vo.produceApprovalUserList.length; i++) {
+					var u = vo.produceApprovalUserList[i];
+					buttonStr9 += "<button id=\"u_"+u.id+"\" class=\"layui-btn layui-btn-primary layui-btn-small\" onclick=\"return false;\" style=\"cursor: text;margin: 2px;\">" + u.nickName + "&nbsp;&nbsp;<i class=\"layui-icon layui-tab-close\" style=\"color: red;cursor: pointer;\" onclick=\"deleteMe(this)\">ဆ</i></button>";
+				}
+
 				$(buttonStr1).appendTo("#devUserList_div");
 				$(buttonStr2).appendTo("#testUserList_div");
 				$(buttonStr3).appendTo("#checkUserList_div");
 				$(buttonStr4).appendTo("#prepareUserList_div");
 				$(buttonStr5).appendTo("#produceUserList_div");
+				$(buttonStr6).appendTo("#testApprovalUserList_div");
+				$(buttonStr7).appendTo("#checkApprovalUserList_div");
+				$(buttonStr8).appendTo("#prepareApprovalUserList_div");
+				$(buttonStr9).appendTo("#produceApprovalUserList_div");
 			}, false);
 			//获取项目的人员配置信息
-			
-			
+
 			var index = layer.open({
 				title : '人员配置',
 				maxmin : false,
@@ -551,7 +679,7 @@
 			});
 			layer.full(index);
 		}
-		function deleteMe(thisObj){
+		function deleteMe(thisObj) {
 			$(thisObj).parent().remove();
 		}
 	</script>

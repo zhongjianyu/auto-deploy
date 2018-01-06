@@ -1,5 +1,8 @@
 package auto.deploy.service.dev.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.gitlab.api.models.GitlabProject;
@@ -83,7 +86,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 
 	@Override
 	@Transactional
-	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds) {
+	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds,
+			String testApprovalUserIds, String checkApprovalUserIds, String prepareApprovalUserIds, String produceApprovalUserIds) {
 		RetMsg retMsg = new RetMsg();
 
 		String[] devUserIdsArr = devUserIds.split(",");
@@ -91,11 +95,20 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		String[] checkUserIdsArr = checkUserIds.split(",");
 		String[] prepareUserIdsArr = prepareUserIds.split(",");
 		String[] produceUserIdsArr = produceUserIds.split(",");
+
+		String[] testApprovalUserIdsArr = testApprovalUserIds.split(",");
+		String[] checkApprovalUserIdsArr = checkApprovalUserIds.split(",");
+		String[] prepareApprovalUserIdsArr = prepareApprovalUserIds.split(",");
+		String[] produceApprovalUserIdsArr = produceApprovalUserIds.split(",");
+
 		DevProject project = selectById(obj.getId());
 		// 先删除在增加
 		Where<DevProjectActor> where0 = new Where<DevProjectActor>();
 		where0.eq("project_id", obj.getId());
 		devProjectActorService.delete(where0);
+
+		// 一次插入
+		List<DevProjectActor> list = new ArrayList<DevProjectActor>();
 		// 开发
 		for (String id : devUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
@@ -107,7 +120,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(1);
-				devProjectActorService.insert(devProjectActor);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 测试
@@ -121,7 +135,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(2);
-				devProjectActorService.insert(devProjectActor);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 验收
@@ -135,7 +150,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(3);
-				devProjectActorService.insert(devProjectActor);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 预发
@@ -149,7 +165,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(4);
-				devProjectActorService.insert(devProjectActor);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 生产
@@ -163,8 +180,73 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(5);
-				devProjectActorService.insert(devProjectActor);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
 			}
+		}
+
+		// 测试审批
+		for (String id : testApprovalUserIdsArr) {
+			if (StringUtils.isNotEmpty(id)) {
+				AutUser user = autUserService.selectById(Long.parseLong(id));
+				DevProjectActor devProjectActor = new DevProjectActor();
+				devProjectActor.setUserId(user.getId());
+				devProjectActor.setUserName(user.getUserName());
+				devProjectActor.setProjectId(project.getId());
+				devProjectActor.setProjectName(project.getProjectName());
+				devProjectActor.setIsActive(1);
+				devProjectActor.setProjectStage(6);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
+			}
+		}
+		// 验收审批
+		for (String id : checkApprovalUserIdsArr) {
+			if (StringUtils.isNotEmpty(id)) {
+				AutUser user = autUserService.selectById(Long.parseLong(id));
+				DevProjectActor devProjectActor = new DevProjectActor();
+				devProjectActor.setUserId(user.getId());
+				devProjectActor.setUserName(user.getUserName());
+				devProjectActor.setProjectId(project.getId());
+				devProjectActor.setProjectName(project.getProjectName());
+				devProjectActor.setIsActive(1);
+				devProjectActor.setProjectStage(7);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
+			}
+		}
+		// 预发审批
+		for (String id : prepareApprovalUserIdsArr) {
+			if (StringUtils.isNotEmpty(id)) {
+				AutUser user = autUserService.selectById(Long.parseLong(id));
+				DevProjectActor devProjectActor = new DevProjectActor();
+				devProjectActor.setUserId(user.getId());
+				devProjectActor.setUserName(user.getUserName());
+				devProjectActor.setProjectId(project.getId());
+				devProjectActor.setProjectName(project.getProjectName());
+				devProjectActor.setIsActive(1);
+				devProjectActor.setProjectStage(8);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
+			}
+		}
+		// 生产审批
+		for (String id : produceApprovalUserIdsArr) {
+			if (StringUtils.isNotEmpty(id)) {
+				AutUser user = autUserService.selectById(Long.parseLong(id));
+				DevProjectActor devProjectActor = new DevProjectActor();
+				devProjectActor.setUserId(user.getId());
+				devProjectActor.setUserName(user.getUserName());
+				devProjectActor.setProjectId(project.getId());
+				devProjectActor.setProjectName(project.getProjectName());
+				devProjectActor.setIsActive(1);
+				devProjectActor.setProjectStage(9);
+				list.add(devProjectActor);
+				// devProjectActorService.insert(devProjectActor);
+			}
+		}
+		if (list.size() > 0) {
+			devProjectActorService.insertBatch(list);
 		}
 
 		retMsg.setCode(0);

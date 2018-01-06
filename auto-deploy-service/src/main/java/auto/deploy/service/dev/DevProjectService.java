@@ -62,5 +62,6 @@ public interface DevProjectService extends IService<DevProject> {
 	 *
 	 * @时间：2017年7月16日 下午11:00:59
 	 */
-	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds);
+	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds,
+			String testApprovalUserIds, String checkApprovalUserIds, String prepareApprovalUserIds, String produceApprovalUserIds);
 }
