@@ -20,7 +20,6 @@ import org.gitlab.api.models.GitlabUpload;
 import org.gitlab.api.models.GitlabUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.info.GitProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.core.env.Environment;
