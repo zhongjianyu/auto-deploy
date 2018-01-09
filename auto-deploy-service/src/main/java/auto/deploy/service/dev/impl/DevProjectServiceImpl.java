@@ -119,9 +119,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(1);
+				devProjectActor.setProjectStage(2);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 测试
@@ -134,9 +133,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(2);
+				devProjectActor.setProjectStage(4);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 验收
@@ -149,9 +147,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(3);
+				devProjectActor.setProjectStage(6);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 预发
@@ -164,9 +161,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(4);
+				devProjectActor.setProjectStage(8);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 生产
@@ -179,9 +175,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(5);
+				devProjectActor.setProjectStage(10);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 
@@ -195,9 +190,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(6);
+				devProjectActor.setProjectStage(3);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 验收审批
@@ -210,9 +204,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(7);
+				devProjectActor.setProjectStage(5);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 预发审批
@@ -225,9 +218,8 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setProjectId(project.getId());
 				devProjectActor.setProjectName(project.getProjectName());
 				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(8);
+				devProjectActor.setProjectStage(7);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		// 生产审批
@@ -242,7 +234,6 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 				devProjectActor.setIsActive(1);
 				devProjectActor.setProjectStage(9);
 				list.add(devProjectActor);
-				// devProjectActorService.insert(devProjectActor);
 			}
 		}
 		if (list.size() > 0) {

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" exporter="Camunda Modeler" exporterVersion="1.8.2">
   <process id="it_project_develop_cycle" name="IT项目开发周期流程" isExecutable="true">
-    <userTask id="task_branch" name="项目分支" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_dev" name="日常开发" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_test" name="日常测试" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_prepare" name="预发环境" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_check" name="验收测试" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
-    <userTask id="task_produce" name="生产环境" activiti:candidateGroups="${developUserId}" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_branch" name="项目分支" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_dev" name="日常开发" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_test" name="日常测试" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_prepare" name="预发环境" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_check" name="验收测试" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
+    <userTask id="task_produce" name="生产环境" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" camunda:candidateGroups="${roleId}"></userTask>
     <startEvent id="develop_start"></startEvent>
     <endEvent id="EndEvent_1w5ynzz"></endEvent>
-    <userTask id="task_test_approval" name="日常测试审批" activiti:candidateGroups="${testUserId}"></userTask>
-    <userTask id="task_check_approval" name="验收测试审批" activiti:candidateGroups="${checkUserId}"></userTask>
-    <userTask id="task_produce_approval" name="生产环境审批" activiti:candidateGroups="${produceUserId}"></userTask>
-    <userTask id="task_prepare_approval" name="预发环境审批" activiti:candidateGroups="${prepareUserId}"></userTask>
+    <userTask id="task_test_approval" name="日常测试审批"></userTask>
+    <userTask id="task_check_approval" name="验收测试审批"></userTask>
+    <userTask id="task_produce_approval" name="生产环境审批"></userTask>
+    <userTask id="task_prepare_approval" name="预发环境审批"></userTask>
     <sequenceFlow id="flow1" sourceRef="develop_start" targetRef="task_branch"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="task_branch" targetRef="task_dev"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="task_dev" targetRef="task_test_approval"></sequenceFlow>

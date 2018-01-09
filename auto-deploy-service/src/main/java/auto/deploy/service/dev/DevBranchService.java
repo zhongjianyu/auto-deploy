@@ -1,5 +1,7 @@
 package auto.deploy.service.dev;
 
+import org.activiti.engine.runtime.ProcessInstance;
+
 import com.baomidou.mybatisplus.plugins.Page;
 import auto.deploy.object.PageBean;
 import auto.deploy.dao.entity.dev.DevBranch;
@@ -38,4 +40,16 @@ public interface DevBranchService extends IService<DevBranch> {
 	 * @时间：2017年7月25日 下午10:00:03
 	 */
 	public void add(DevBranch obj, Long userId) throws Exception;
+
+	/**
+	 * 
+	 * @描述：设置候选人
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2018年1月9日 下午9:47:07
+	 */
+	public void setCandidateUser(ProcessInstance processInstance, Long projectId) throws Exception;
 }
