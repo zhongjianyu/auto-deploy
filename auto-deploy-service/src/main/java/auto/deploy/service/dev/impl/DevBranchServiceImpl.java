@@ -97,12 +97,12 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 		obj.setParentBranchName(branch.getBranchName());
 		obj.setParentBranchId(branch.getId());
 		insert(obj);
-		// 新建远程分支
-		gitlabService.addBranch(project.getGitlabProjectId(), obj.getBranchName(), branch.getBranchName());
 		// 启动流程
 		identityService.setAuthenticatedUserId(userId.toString());
 		ProcessInstance processInstance = activitiService.startProcess("it_project_develop_cycle");
 		setCandidateUser(processInstance, obj.getProjectId());
+		// 新建远程分支
+		gitlabService.addBranch(project.getGitlabProjectId(), obj.getBranchName(), branch.getBranchName());
 	}
 
 	@Override
