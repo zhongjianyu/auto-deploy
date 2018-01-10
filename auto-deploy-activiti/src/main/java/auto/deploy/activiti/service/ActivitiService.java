@@ -112,7 +112,7 @@ public interface ActivitiService {
 
 	/**
 	 * 
-	 * @描述：任务提交
+	 * @描述：启动流程
 	 *
 	 * @返回：void
 	 *
@@ -121,5 +121,17 @@ public interface ActivitiService {
 	 * @时间：2017年11月18日 下午5:00:01
 	 */
 	public ProcessInstance startProcess(String processId);
+	
+	/**
+	 * 
+	 * @描述：启动流程
+	 *
+	 * @返回：void
+	 *
+	 * @作者：zhongjy
+	 *
+	 * @时间：2017年11月18日 下午5:00:01
+	 */
+	public ProcessInstance startProcess(String processId,Map<String,String> param);
 
 }

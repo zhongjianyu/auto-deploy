@@ -96,4 +96,11 @@ public class ActivitiServiceImpl implements ActivitiService {
 		return processInstance;
 	}
 
+	@Override
+	public ProcessInstance startProcess(String processId, Map<String, String> param) {
+		String businessKey = param.get("projectId") + "," + param.get("branchId");
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processId, businessKey);
+		return processInstance;
+	}
+
 }

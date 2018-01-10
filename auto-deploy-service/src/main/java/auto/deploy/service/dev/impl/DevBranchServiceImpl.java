@@ -1,6 +1,8 @@
 package auto.deploy.service.dev.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -99,7 +101,10 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 		insert(obj);
 		// 启动流程
 		identityService.setAuthenticatedUserId(userId.toString());
-		ProcessInstance processInstance = activitiService.startProcess("it_project_develop_cycle");
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("projectId", String.valueOf(obj.getProjectId()));
+		param.put("branchId", String.valueOf(obj.getId()));
+		ProcessInstance processInstance = activitiService.startProcess("it_project_develop_cycle", param);
 		setCandidateUser(processInstance, obj.getProjectId());
 		// 新建远程分支
 		gitlabService.addBranch(project.getGitlabProjectId(), obj.getBranchName(), branch.getBranchName());

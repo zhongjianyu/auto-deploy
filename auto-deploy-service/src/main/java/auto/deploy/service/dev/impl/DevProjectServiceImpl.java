@@ -2,9 +2,14 @@ package auto.deploy.service.dev.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.IdentityLink;
+import org.activiti.engine.task.Task;
 import org.gitlab.api.models.GitlabProject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +51,10 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 	private DevProjectActorService devProjectActorService;
 	@Resource
 	private AutUserService autUserService;
+	@Resource
+	private TaskService taskService;
+	@Resource
+	private RuntimeService runtimeService;
 
 	@Override
 	public Page<DevProject> list(PageBean pageBean, DevProject obj) throws Exception {
@@ -106,7 +115,7 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		Where<DevProjectActor> where0 = new Where<DevProjectActor>();
 		where0.eq("project_id", obj.getId());
 		devProjectActorService.delete(where0);
-
+		
 		// 一次插入
 		List<DevProjectActor> list = new ArrayList<DevProjectActor>();
 		// 开发
@@ -238,6 +247,55 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		}
 		if (list.size() > 0) {
 			devProjectActorService.insertBatch(list);
+		}
+		
+		
+		/*String[] devUserIdsArr = devUserIds.split(",");
+		String[] testUserIdsArr = testUserIds.split(",");
+		String[] checkUserIdsArr = checkUserIds.split(",");
+		String[] prepareUserIdsArr = prepareUserIds.split(",");
+		String[] produceUserIdsArr = produceUserIds.split(",");
+
+		String[] testApprovalUserIdsArr = testApprovalUserIds.split(",");
+		String[] checkApprovalUserIdsArr = checkApprovalUserIds.split(",");
+		String[] prepareApprovalUserIdsArr = prepareApprovalUserIds.split(",");
+		String[] produceApprovalUserIdsArr = produceApprovalUserIds.split(",");*/
+
+		// 给项目分支项目分支设置流程候选人
+		List<Task> taskList = taskService.createTaskQuery().processInstanceBusinessKeyLike(project.getId().toString())
+				.processDefinitionKey("it_project_develop_cycle").list();
+		for (Task task : taskList) {
+			//获取已有的任务-用户关系
+			List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
+			for (IdentityLink identityLink : identityLinkList) {
+//				identityLink.getType()
+			}
+			
+			String taskKey = task.getTaskDefinitionKey();
+			if ("task_branch".equals(taskKey)) {
+
+			} else if ("task_dev".equals(taskKey)) {
+
+			} else if ("task_test_approval".equals(taskKey)) {
+
+			} else if ("task_test".equals(taskKey)) {
+
+			} else if ("task_check_approval".equals(taskKey)) {
+
+			} else if ("task_check".equals(taskKey)) {
+
+			} else if ("task_prepare_approval".equals(taskKey)) {
+
+			} else if ("task_prepare".equals(taskKey)) {
+
+			} else if ("task_produce_approval".equals(taskKey)) {
+
+			} else if ("task_produce".equals(taskKey)) {
+
+			}
+		}
+		for (DevProjectActor devProjectActor : list) {
+			Long projectId = devProjectActor.getProjectId();
 		}
 
 		retMsg.setCode(0);
