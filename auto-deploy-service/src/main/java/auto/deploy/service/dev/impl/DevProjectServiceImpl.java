@@ -1,6 +1,8 @@
 package auto.deploy.service.dev.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -93,211 +95,248 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		deleteById(obj.getId());
 	}
 
+	private DevProjectActor makeDevProjectActor(String id, DevProject project, Integer projectStage) throws Exception {
+		AutUser user = autUserService.selectById(Long.parseLong(id));
+		DevProjectActor devProjectActor = new DevProjectActor();
+		devProjectActor.setUserId(user.getId());
+		devProjectActor.setUserName(user.getUserName());
+		devProjectActor.setProjectId(project.getId());
+		devProjectActor.setProjectName(project.getProjectName());
+		devProjectActor.setIsActive(1);
+		devProjectActor.setProjectStage(projectStage);
+		return devProjectActor;
+	}
+
 	@Override
 	@Transactional
 	public RetMsg setActor(DevProject obj, String devUserIds, String testUserIds, String checkUserIds, String prepareUserIds, String produceUserIds,
-			String testApprovalUserIds, String checkApprovalUserIds, String prepareApprovalUserIds, String produceApprovalUserIds) {
+			String testApprovalUserIds, String checkApprovalUserIds, String prepareApprovalUserIds, String produceApprovalUserIds) throws Exception {
 		RetMsg retMsg = new RetMsg();
 
-		String[] devUserIdsArr = devUserIds.split(",");
-		String[] testUserIdsArr = testUserIds.split(",");
-		String[] checkUserIdsArr = checkUserIds.split(",");
-		String[] prepareUserIdsArr = prepareUserIds.split(",");
-		String[] produceUserIdsArr = produceUserIds.split(",");
+		List<String> devUserIdsArr = Arrays.asList(devUserIds.split(","));
+		List<String> testUserIdsArr = Arrays.asList(testUserIds.split(","));
+		List<String> checkUserIdsArr = Arrays.asList(checkUserIds.split(","));
+		List<String> prepareUserIdsArr = Arrays.asList(prepareUserIds.split(","));
+		List<String> produceUserIdsArr = Arrays.asList(produceUserIds.split(","));
 
-		String[] testApprovalUserIdsArr = testApprovalUserIds.split(",");
-		String[] checkApprovalUserIdsArr = checkApprovalUserIds.split(",");
-		String[] prepareApprovalUserIdsArr = prepareApprovalUserIds.split(",");
-		String[] produceApprovalUserIdsArr = produceApprovalUserIds.split(",");
+		List<String> testApprovalUserIdsArr = Arrays.asList(testApprovalUserIds.split(","));
+		List<String> checkApprovalUserIdsArr = Arrays.asList(checkApprovalUserIds.split(","));
+		List<String> prepareApprovalUserIdsArr = Arrays.asList(prepareApprovalUserIds.split(","));
+		List<String> produceApprovalUserIdsArr = Arrays.asList(produceApprovalUserIds.split(","));
 
 		DevProject project = selectById(obj.getId());
 		// 先删除在增加
 		Where<DevProjectActor> where0 = new Where<DevProjectActor>();
 		where0.eq("project_id", obj.getId());
 		devProjectActorService.delete(where0);
-		
+
 		// 一次插入
 		List<DevProjectActor> list = new ArrayList<DevProjectActor>();
 		// 开发
 		for (String id : devUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(2);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 2));
 			}
 		}
 		// 测试
 		for (String id : testUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(4);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 4));
 			}
 		}
 		// 验收
 		for (String id : checkUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(6);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 6));
 			}
 		}
 		// 预发
 		for (String id : prepareUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(8);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 8));
 			}
 		}
 		// 生产
 		for (String id : produceUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(10);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 10));
 			}
 		}
 
 		// 测试审批
 		for (String id : testApprovalUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(3);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 3));
 			}
 		}
 		// 验收审批
 		for (String id : checkApprovalUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(5);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 5));
 			}
 		}
 		// 预发审批
 		for (String id : prepareApprovalUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(7);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 7));
 			}
 		}
 		// 生产审批
 		for (String id : produceApprovalUserIdsArr) {
 			if (StringUtils.isNotEmpty(id)) {
-				AutUser user = autUserService.selectById(Long.parseLong(id));
-				DevProjectActor devProjectActor = new DevProjectActor();
-				devProjectActor.setUserId(user.getId());
-				devProjectActor.setUserName(user.getUserName());
-				devProjectActor.setProjectId(project.getId());
-				devProjectActor.setProjectName(project.getProjectName());
-				devProjectActor.setIsActive(1);
-				devProjectActor.setProjectStage(9);
-				list.add(devProjectActor);
+				list.add(makeDevProjectActor(id, project, 9));
 			}
 		}
 		if (list.size() > 0) {
 			devProjectActorService.insertBatch(list);
 		}
-		
-		
-		/*String[] devUserIdsArr = devUserIds.split(",");
-		String[] testUserIdsArr = testUserIds.split(",");
-		String[] checkUserIdsArr = checkUserIds.split(",");
-		String[] prepareUserIdsArr = prepareUserIds.split(",");
-		String[] produceUserIdsArr = produceUserIds.split(",");
-
-		String[] testApprovalUserIdsArr = testApprovalUserIds.split(",");
-		String[] checkApprovalUserIdsArr = checkApprovalUserIds.split(",");
-		String[] prepareApprovalUserIdsArr = prepareApprovalUserIds.split(",");
-		String[] produceApprovalUserIdsArr = produceApprovalUserIds.split(",");*/
 
 		// 给项目分支项目分支设置流程候选人
 		List<Task> taskList = taskService.createTaskQuery().processInstanceBusinessKeyLike(project.getId().toString())
 				.processDefinitionKey("it_project_develop_cycle").list();
 		for (Task task : taskList) {
-			//获取已有的任务-用户关系
+			// 获取已有的任务-用户关系
 			List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
+			// 原来的候选用户
+			Set<String> orgnlCandidateUserIdSet = new HashSet<String>();
+			// 将要增加的候选用户
+			Set<String> addCandidateUserIdSet = new HashSet<String>();
+			// 将要删除的候选用户
+			Set<String> delCandidateUserIdSet = new HashSet<String>();
 			for (IdentityLink identityLink : identityLinkList) {
-//				identityLink.getType()
+				if ("candidate".equals(identityLink.getType()) && StringUtils.isNotEmpty(identityLink.getUserId())) {
+					orgnlCandidateUserIdSet.add(identityLink.getUserId());
+				}
 			}
-			
+
 			String taskKey = task.getTaskDefinitionKey();
-			if ("task_branch".equals(taskKey)) {
-
-			} else if ("task_dev".equals(taskKey)) {
-
+			if ("task_branch".equals(taskKey) || "task_dev".equals(taskKey)) {
+				// 计算新增
+				for (String id : devUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!devUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_test_approval".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : testApprovalUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!testApprovalUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_test".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : testUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!testUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_check_approval".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : checkApprovalUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!checkApprovalUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_check".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : checkUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!checkUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_prepare_approval".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : prepareApprovalUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!prepareApprovalUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_prepare".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : prepareUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!prepareUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_produce_approval".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : produceApprovalUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!produceApprovalUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			} else if ("task_produce".equals(taskKey)) {
-
+				// 计算新增
+				for (String id : produceUserIdsArr) {
+					if (!orgnlCandidateUserIdSet.contains(id)) {
+						addCandidateUserIdSet.add(id);
+					}
+				}
+				// 计算删除
+				for (String id : orgnlCandidateUserIdSet) {
+					if (!produceUserIdsArr.contains(id)) {
+						delCandidateUserIdSet.add(id);
+					}
+				}
 			}
-		}
-		for (DevProjectActor devProjectActor : list) {
-			Long projectId = devProjectActor.getProjectId();
-		}
+			// 删除和设置候选用户
+			for (String uid : delCandidateUserIdSet) {
+				taskService.deleteCandidateUser(task.getId(), uid);
+			}
+			for (String uid : addCandidateUserIdSet) {
+				taskService.addCandidateUser(task.getId(), uid);
+			}
 
+		}
 		retMsg.setCode(0);
 		retMsg.setMessage("操作成功");
 		return retMsg;
