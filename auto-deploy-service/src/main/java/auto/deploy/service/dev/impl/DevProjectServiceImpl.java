@@ -192,7 +192,7 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 		}
 
 		// 给项目分支项目分支设置流程候选人
-		List<Task> taskList = taskService.createTaskQuery().processInstanceBusinessKeyLike(project.getId().toString())
+		List<Task> taskList = taskService.createTaskQuery().processInstanceBusinessKeyLike(project.getId().toString() + "%")
 				.processDefinitionKey("it_project_develop_cycle").list();
 		for (Task task : taskList) {
 			// 获取已有的任务-用户关系
@@ -213,127 +213,127 @@ public class DevProjectServiceImpl extends ServiceImpl<DevProjectMapper, DevProj
 			if ("task_branch".equals(taskKey) || "task_dev".equals(taskKey)) {
 				// 计算新增
 				for (String id : devUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!devUserIdsArr.contains(id)) {
+					if (!devUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_test_approval".equals(taskKey)) {
 				// 计算新增
 				for (String id : testApprovalUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!testApprovalUserIdsArr.contains(id)) {
+					if (!testApprovalUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_test".equals(taskKey)) {
 				// 计算新增
 				for (String id : testUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!testUserIdsArr.contains(id)) {
+					if (!testUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_check_approval".equals(taskKey)) {
 				// 计算新增
 				for (String id : checkApprovalUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!checkApprovalUserIdsArr.contains(id)) {
+					if (!checkApprovalUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_check".equals(taskKey)) {
 				// 计算新增
 				for (String id : checkUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!checkUserIdsArr.contains(id)) {
+					if (!checkUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_prepare_approval".equals(taskKey)) {
 				// 计算新增
 				for (String id : prepareApprovalUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!prepareApprovalUserIdsArr.contains(id)) {
+					if (!prepareApprovalUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_prepare".equals(taskKey)) {
 				// 计算新增
 				for (String id : prepareUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!prepareUserIdsArr.contains(id)) {
+					if (!prepareUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_produce_approval".equals(taskKey)) {
 				// 计算新增
 				for (String id : produceApprovalUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!produceApprovalUserIdsArr.contains(id)) {
+					if (!produceApprovalUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			} else if ("task_produce".equals(taskKey)) {
 				// 计算新增
 				for (String id : produceUserIdsArr) {
-					if (!orgnlCandidateUserIdSet.contains(id)) {
+					if (!orgnlCandidateUserIdSet.contains(id) && StringUtils.isNotEmpty(id)) {
 						addCandidateUserIdSet.add(id);
 					}
 				}
 				// 计算删除
 				for (String id : orgnlCandidateUserIdSet) {
-					if (!produceUserIdsArr.contains(id)) {
+					if (!produceUserIdsArr.contains(id) && StringUtils.isNotEmpty(id)) {
 						delCandidateUserIdSet.add(id);
 					}
 				}
 			}
 			// 删除和设置候选用户
 			for (String uid : delCandidateUserIdSet) {
-				taskService.deleteCandidateUser(task.getId(), uid);
+				taskService.deleteUserIdentityLink(task.getId(), uid, "candidate");
 			}
 			for (String uid : addCandidateUserIdSet) {
-				taskService.addCandidateUser(task.getId(), uid);
+				taskService.addUserIdentityLink(task.getId(), uid, "candidate");
 			}
 
 		}
