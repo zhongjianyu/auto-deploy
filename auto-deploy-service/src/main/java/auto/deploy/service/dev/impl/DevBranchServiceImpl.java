@@ -1,15 +1,20 @@
 package auto.deploy.service.dev.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.gitlab.api.models.GitlabBranch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +30,7 @@ import auto.deploy.dao.entity.dev.DevProjectActor;
 import auto.deploy.dao.mapper.dev.DevBranchMapper;
 import auto.deploy.gitlab.service.GitlabService;
 import auto.deploy.object.PageBean;
+import auto.deploy.object.aut.vo.DevTaskVO;
 import auto.deploy.service.dev.DevBranchService;
 import auto.deploy.service.dev.DevProjectActorService;
 import auto.deploy.service.dev.DevProjectService;
@@ -52,6 +58,10 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 	private TaskService taskService;
 	@Resource
 	private DevProjectActorService devProjectActorService;
+	@Resource
+	private RuntimeService runtimeService;
+	@Resource
+	private DevBranchService devBranchService;
 
 	@Override
 	public Page<DevBranch> list(PageBean pageBean, DevBranch obj) throws Exception {
@@ -154,6 +164,92 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 		for (DevProjectActor devProjectActor : list) {
 			taskService.addUserIdentityLink(task.getId(), devProjectActor.getUserId().toString(), "candidate");
 		}
+	}
+
+	@Override
+	public Page<DevTaskVO> getProcessBranch(PageBean pageBean, Map<String, String> param) throws Exception {
+		Page<DevTaskVO> devTaskVOListPage = new Page<DevTaskVO>();
+		List<DevTaskVO> devTaskVOList = new ArrayList<DevTaskVO>();
+		// taskKey实际上是标志不同的开发阶段
+		String taskKey = param.get("taskKey");
+		// 用户ID，过来候选权限
+		String userId = param.get("userId");
+		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId).taskDefinitionKey(taskKey);
+		// 获取任务数量
+		Long count = query.count();
+		// 获取任务结果集
+		List<Task> taskList = query.orderByTaskCreateTime().desc().list();
+		// 获取所有任务的流程实例
+		Set<String> processInstanceIdSet = new HashSet<String>();
+		for (Task task : taskList) {
+			processInstanceIdSet.add(task.getProcessInstanceId());
+		}
+		// 流程实例集合，其中key是流程实例ID的，value是对应的流程实例
+		Map<String, ProcessInstance> processInstanceMap = new HashMap<String, ProcessInstance>();
+
+		// 流程实例id-项目
+		Map<String, DevProject> instanceProjectMap = new HashMap<String, DevProject>();
+		Map<String, String> instanceProjectIdMap = new HashMap<String, String>();
+		Map<String, DevProject> projectMap = new HashMap<String, DevProject>();
+		// 所有项目id的set
+		Set<String> projectIdSet = new HashSet<String>();
+
+		// 流程实例id-分支
+		Map<String, DevBranch> instanceBranchMap = new HashMap<String, DevBranch>();
+		Map<String, String> instanceBranchIdMap = new HashMap<String, String>();
+		Map<String, DevBranch> branchMap = new HashMap<String, DevBranch>();
+		// 所有分支id的set
+		Set<String> branchIdSet = new HashSet<String>();
+
+		// 构造processInstanceMap
+		if (processInstanceIdSet.size() > 0) {
+			List<ProcessInstance> processInstanceList = runtimeService.createProcessInstanceQuery().processInstanceIds(processInstanceIdSet).list();
+			for (ProcessInstance processInstance : processInstanceList) {
+				processInstanceMap.put(processInstance.getProcessInstanceId(), processInstance);
+				String[] projectIdAndBranchIdArr = processInstance.getBusinessKey().split(",");
+				String projectId = projectIdAndBranchIdArr[0];
+				String branchId = projectIdAndBranchIdArr[1];
+				instanceProjectIdMap.put(processInstance.getProcessInstanceId(), projectId);
+				instanceBranchIdMap.put(processInstance.getProcessInstanceId(), branchId);
+				projectIdSet.add(projectId);
+				branchIdSet.add(branchId);
+			}
+		}
+		// 构造instanceProjectMap
+		if (projectIdSet.size() > 0) {
+			Where<DevProject> projectWhere = new Where<DevProject>();
+			projectWhere.in("id", projectIdSet);
+			List<DevProject> projectList = devProjectService.selectList(projectWhere);
+			for (DevProject devProject : projectList) {
+				projectMap.put(devProject.getId().toString(), devProject);
+			}
+		}
+		for (Map.Entry<String, String> entry : instanceProjectIdMap.entrySet()) {
+			String instanceId = entry.getKey();
+			String projectId = entry.getValue();
+			instanceProjectMap.put(instanceId, projectMap.get(projectId));
+		}
+
+		// 构造instanceDevBranchMap
+		if (branchIdSet.size() > 0) {
+			Where<DevBranch> branchWhere = new Where<DevBranch>();
+			branchWhere.in("id", branchIdSet);
+			List<DevBranch> branchList = devBranchService.selectList(branchWhere);
+			for (DevBranch devBranch : branchList) {
+				branchMap.put(devBranch.getId().toString(), devBranch);
+			}
+		}
+		for (Map.Entry<String, String> entry : instanceBranchIdMap.entrySet()) {
+			String instanceId = entry.getKey();
+			String branchId = entry.getValue();
+			instanceBranchMap.put(instanceId, branchMap.get(branchId));
+		}
+
+		devTaskVOListPage.setRecords(devTaskVOList);
+		devTaskVOListPage.setTotal(count.intValue());
+		devTaskVOListPage.setSize(pageBean.getPageSize());
+		devTaskVOListPage.setCurrent(pageBean.getPageNum());
+		return devTaskVOListPage;
 	}
 
 }
