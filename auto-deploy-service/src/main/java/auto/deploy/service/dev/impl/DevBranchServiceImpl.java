@@ -114,6 +114,8 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("projectId", String.valueOf(obj.getProjectId()));
 		param.put("branchId", String.valueOf(obj.getId()));
+		param.put("projectName", project.getProjectName());
+		param.put("branchName", obj.getBranchName());
 		ProcessInstance processInstance = activitiService.startProcess("it_project_develop_cycle", param);
 		setCandidateUser(processInstance, obj.getProjectId());
 		// 新建远程分支
@@ -174,16 +176,25 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 		String taskKey = param.get("taskKey");
 		// 用户ID，过来候选权限
 		String userId = param.get("userId");
-		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId).taskDefinitionKey(taskKey);
+		// 查询关键字(匹配项目名，分支名以及节点名称)
+		String searchKey = param.get("searchKey");
+
+		TaskQuery query = taskService.createTaskQuery().taskCandidateUser(userId).taskDefinitionKey(taskKey).taskDescriptionLikeIgnoreCase(searchKey);
+
 		// 获取任务数量
 		Long count = query.count();
 		// 获取任务结果集
-		List<Task> taskList = query.orderByTaskCreateTime().desc().list();
+		// 分页开始索引
+		int firstResult = (pageBean.getPageNum() - 1) * pageBean.getPageSize();
+		// 分页查询记录数
+		int maxResults = pageBean.getPageSize();
+		List<Task> taskList = query.orderByTaskCreateTime().desc().listPage(firstResult, maxResults);
 		// 获取所有任务的流程实例
 		Set<String> processInstanceIdSet = new HashSet<String>();
 		for (Task task : taskList) {
 			processInstanceIdSet.add(task.getProcessInstanceId());
 		}
+
 		// 流程实例集合，其中key是流程实例ID的，value是对应的流程实例
 		Map<String, ProcessInstance> processInstanceMap = new HashMap<String, ProcessInstance>();
 
@@ -243,6 +254,31 @@ public class DevBranchServiceImpl extends ServiceImpl<DevBranchMapper, DevBranch
 			String instanceId = entry.getKey();
 			String branchId = entry.getValue();
 			instanceBranchMap.put(instanceId, branchMap.get(branchId));
+		}
+		// 构造返回对象
+		for (Task task : taskList) {
+			DevTaskVO vo = new DevTaskVO();
+			vo.setAssignee(task.getAssignee());
+			vo.setCategory(task.getCategory());
+			vo.setCreateTime(task.getCreateTime());
+			vo.setDescription(task.getDescription());
+			vo.setDevBranch(instanceBranchMap.get(task.getProcessInstanceId()));
+			vo.setDevProject(instanceProjectMap.get(task.getProcessInstanceId()));
+			vo.setDueDate(task.getDueDate());
+			vo.setExecutionId(task.getExecutionId());
+			vo.setFormKey(task.getFormKey());
+			vo.setId(task.getId());
+			vo.setName(task.getName());
+			vo.setOwner(task.getOwner());
+			vo.setParentTaskId(task.getParentTaskId());
+			vo.setPriority(task.getPriority());
+			vo.setProcessDefinitionId(task.getProcessDefinitionId());
+			vo.setProcessInstanceId(task.getProcessInstanceId());
+			vo.setProcessVariables(task.getProcessVariables());
+			vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
+			vo.setTaskLocalVariables(task.getTaskLocalVariables());
+			vo.setTenantId(task.getTenantId());
+			devTaskVOList.add(vo);
 		}
 
 		devTaskVOListPage.setRecords(devTaskVOList);

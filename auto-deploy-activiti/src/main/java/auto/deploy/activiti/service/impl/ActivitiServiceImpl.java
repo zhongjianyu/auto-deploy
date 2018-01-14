@@ -1,5 +1,6 @@
 package auto.deploy.activiti.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
 
 import auto.deploy.activiti.service.ActivitiService;
@@ -100,6 +102,12 @@ public class ActivitiServiceImpl implements ActivitiService {
 	public ProcessInstance startProcess(String processId, Map<String, String> param) {
 		String businessKey = param.get("projectId") + "," + param.get("branchId");
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processId, businessKey);
+		// 设置任务描述(项目名称-分支名称-任务名称)
+		List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).list();
+		for (Task task : taskList) {
+			task.setDescription(param.get("projectName") + "-" + param.get("branchName") + "-" + task.getName());
+			taskService.saveTask(task);
+		}
 		return processInstance;
 	}
 
